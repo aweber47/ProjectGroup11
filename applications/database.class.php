@@ -50,6 +50,3 @@ class Database
         return $this->param['tblMenu'];
     }
 }
-    }
-
-}
