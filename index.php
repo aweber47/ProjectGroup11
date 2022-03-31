@@ -1,9 +1,9 @@
 <?php
 /*
- * Author: your name*
- * Date: 3/31/2022*
- * File: index.php*
- * Description:
+ * Author: Enter a Name
+ * Date: 3/31/2022
+ * File: index.php
+ * Description: Home page for the website
 */
 ?>
 <!DOCTYPE html>
