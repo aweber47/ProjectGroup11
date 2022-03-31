@@ -15,7 +15,7 @@
     </head>
     <body>
         <header>
-            Inset Header Shit
+            Insert Header Shit
         </header>
         <section>
             <h2>We are all screwed!</h2>
