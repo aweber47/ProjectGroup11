@@ -22,7 +22,8 @@
             <p>We might have something now.</p>
         </section>
         <footer>
-        
+            <p>&copy; 2008-<span id="copyright">20XX</span>. Insert Business Name</p>
+            <script src="scripts/copyright.js"></script>
         </footer>
     </body>
 </html>
