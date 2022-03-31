@@ -1,8 +1,10 @@
-?php
-/*** Author: your name*
+<?php
+/*
+ * Author: your name*
  * Date: 3/31/2022*
  * File: index.php*
- * Description: */
+ * Description:
+*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
