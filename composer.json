@@ -1,0 +1,14 @@
+{
+  "name": "vendor_name/ProjectGroup11",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "AlexWeber",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+  }
+}
