@@ -4,58 +4,46 @@
  * Date: 4/5/2022*
  * File: index_view.class.php*
  * Description: */
-class IndexView
-{
 
+class IndexView{
     //this method displays the page header
-    static public function displayHeader($page_title)
-    {
+    static public function displayHeader($title){
         ?>
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title> <?php echo $page_title ?> </title>
-            <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-            <link rel='shortcut icon' href='<?= BASE_URL ?>/www/img/favicon.ico' type='image/x-icon'/>
-            <link type='text/css' rel='stylesheet' href='<?= BASE_URL ?>/www/css/app_style.css'/>
-            <script>
-                //create the JavaScript variable for the base url
-                var base_url = "<?= BASE_URL ?>";
-            </script>
-        </head>
-        <body>
-        <div id="top"></div>
-        <div id='wrapper'>
-        <div id="banner">
-            <a href="<?= BASE_URL ?>/index.php" style="text-decoration: none" title="Kung Fu Panda Media Library">
-                <div id="left">
-                    <img src='<?= BASE_URL ?>/www/img/logo.png' style="width: 180px; border: none"/>
-                    <span style='color: #000; font-size: 36pt; font-weight: bold; vertical-align: top'>
-                                    Media Library!
-                                </span>
-                    <div style='color: #000; font-size: 14pt; font-weight: bold'>An interactive application designed
-                        with MVC pattern
-                    </div>
-                </div>
-            </a>
-            <div id="right">
-                <img src="<?= BASE_URL ?>/www/img/kungfupanda.png" style="width: 400px; border: none"/>
-            </div>
-        </div>
+            <!DOCTYPE html>
+            <html lang="en">
+                <head>
+                    <title><?php echo $title; ?></title>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="stylesheet" href="../style.css">
+                    <script>
+                        //create the JavaScript variable for the base url
+                        var base_url = "<?= BASE_URL ?>";
+                    </script>
+                </head>
+                <body>
+                    <div id='wrapper'>
+                        <header>
+                            <h1 style='color: #000; font-weight: bold; text-align: center'>
+                                Lewie's Chinese Bistro
+                            </h1>
+                            <h3 style='color: #000; font-weight: bold; text-align: center'>
+                                Please eat our food!
+                            </h3>
+                        </header>
         <?php
     }//end of displayHeader function
 
     //this method displays the page footer
-    public static function displayFooter()
-    {
+    public static function displayFooter(){
         ?>
-        <br><br><br>
-        <div id="push"></div>
-        </div>
-        <div id="footer"><br>&copy 2016 Kung Fu Panda Media Library. All Rights Reserved.</div>
-        <script type="text/javascript" src="<?= BASE_URL ?>/www/js/ajax_autosuggestion.js"></script>
-        </body>
-        </html>
+                    </div>
+                    <footer>
+                        <p style="text-align: center">&copy; 2008-<span id="copyright">20XX</span>. Lewie's Chinese Bistro</p>
+                        <script src="scripts/copyright.js"></script>
+                    </footer>
+                </body>
+            </html>
         <?php
     } //end of displayFooter function
 }
