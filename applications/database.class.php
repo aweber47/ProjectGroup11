@@ -11,7 +11,7 @@ class Database
         'host' => 'localhost',
         'login' => 'root',
         'password' => '',
-        'database' => 'entrees_louies',
+        'database' => 'lewiesdb',
         'tblMenu'=> 'menu_items'
     );
 
