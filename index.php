@@ -5,25 +5,11 @@
  * File: index.php
  * Description: Home page for the website
 */
-?>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Title Goes Here</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <header>
-            Insert Header Shit
-        </header>
-        <section>
-            <h2>We are all screwed!</h2>
-            <p>We might have something now.</p>
-        </section>
-        <footer>
-            <p>&copy; 2008-<span id="copyright">20XX</span>. Insert Business Name</p>
-            <script src="scripts/copyright.js"></script>
-        </footer>
-    </body>
-</html>
+//load application settings
+require_once("applications/config.php");
+
+//load autoloader
+require_once("vendor/autoload.php");
+
+//load the dispatcher that dissects a request URL
+new Dispatcher();
