@@ -6,12 +6,25 @@
  * Description: */
 class MenuIndexView extends IndexView
 {
-    public static function displayHeader($title){
+    public static function displayHeader($title)
+    {
         parent::displayHeader($title)
         ?>
-<!----
-Script and media type, forms, suggestions and search box would go here.
--->
+        <!----
+        Script and media type, forms, suggestions and search box would go here.
+        -->
+        <script>
+            var media = 'menuItem';
+        </script>
+        <!--create the search bar -->
+        <div id="searchbar">
+            <form method="get" action="<?= BASE_URL ?>/menu/search/">
+                <input type="text" name="query-terms" id="searchtextbox" placeholder="Search menu items by title"
+                       autocomplete="off" onkeyup="handleKeyUp(event)">
+                <input type="submit" value="Go"/>
+            </form>
+            <div id="suggestionDiv"></div>
+        </div>
         <?php
     }
 

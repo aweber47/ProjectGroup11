@@ -7,6 +7,15 @@
 class IndexView{
     //this method displays the page header
     static public function displayHeader($title){
+        // start a session
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+            echo "Session began";
+        }else{
+            echo "session active";
+        }
+        // user login
+        $_SESSION['username'] = 2;
         ?>
             <!DOCTYPE html>
             <html lang="en">
@@ -28,9 +37,6 @@ class IndexView{
                             </h1>
                             <nav>
                                 <a href="<?= BASE_URL ?>/index.php">Home</a>
-                                <a href="<?= BASE_URL ?>/menu_index_view.class.php">Menu</a>
-                                <a href="login.php">Login</a>
-                                <a href="head.php">Something</a>
                             </nav>
                         </header>
         <?php
@@ -43,6 +49,7 @@ class IndexView{
                     <footer>
                         <p style="text-align: center">&copy; 2008-<span id="copyright">20XX</span>. Lewie's Chinese Bistro</p>
                         <script src="scripts/copyright.js"></script>
+                        <script type="text/javascript" src="<?= BASE_URL ?>/js/ajax_autosuggestion.js"></script>
                     </footer>
                 </body>
             </html>

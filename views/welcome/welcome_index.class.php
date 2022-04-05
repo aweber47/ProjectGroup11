@@ -12,6 +12,14 @@ class WelcomeIndex extends IndexView{
 
         ?>
             <p style="text-align: center">Possible introduction for this shit</p>
+
+
+        <nav>
+            <a href="<?= BASE_URL?>/menu/index">Click me</a>
+
+
+
+        </nav>
         <?php
         //display page footer
         parent::displayFooter();

@@ -12,7 +12,8 @@ class Database
         'login' => 'root',
         'password' => '',
         'database' => 'lewiesdb',
-        'tblMenu'=> 'menu_items'
+        'tblMenu'=> 'menu_items',
+        'tblCategory' => 'categories'
     );
 
     // define the database connection object
@@ -28,12 +29,14 @@ class Database
             $this->param['database']
         );
         if (mysqli_connect_errno() != 0) {
-            exit("Connecting to database failed: " . mysqli_connect_error());
+            $message = "Connecting database failed: ".mysqli_connect_error() . ".";
+            include 'error.php';
+            exit();
         }
     }
 
     //static method to ensure there is just one Database instance
-    static public function getInstance() {
+    static public function getDatabase() {
         if (self::$_instance == NULL) {
             self::$_instance = new Database();
         }
@@ -48,5 +51,8 @@ class Database
     //returns the name of the table storing books
     public function getMenuTable() {
         return $this->param['tblMenu'];
+    }
+    public function getCategoryTable(){
+        return $this->param['tblCategory'];
     }
 }

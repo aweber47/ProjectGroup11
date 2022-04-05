@@ -6,7 +6,9 @@
  * Description: */
 class MenuIndex extends MenuIndexView
 {
+    public static function displayHeader($title){
 
+    }
     public function display($menuItems)
     {
         //display page header
@@ -21,16 +23,15 @@ class MenuIndex extends MenuIndexView
             } else {
                 // display the menu items; 6 menu per row
                 foreach ($menuItems as $i => $menuItem) {
-                    $Item_id = $menuItem->getItem_id();
-                    $Product_name = $menuItem->getProduct_name();
-                    $Category_id = $menuItem->getCategory_id();
-                    $Price = $menuItem->getPrice();
-                    $Description = $menuItem->getDescription();
-
+                    $id = $menuItem->getId();
+                    $product = $menuItem->getProduct();
+                    $category = $menuItem->getCategory();
+                    $price = $menuItem->getPrice();
+                    $description = $menuItem->getDescription();
                     if ($i % 6 == 0) {
                         echo "<div class='row'>";
                     }
-                    echo "<div class='col'><p><a href='", BASE_URL, "/menu/detail/$Item_id'></a><span>$Product_name<br>Category $Category_id<br> Price $Price<br> Description $Description<br>" . "</span></p></div>";
+                    echo "<div class='col'><p><a href='", BASE_URL, "/menu/detail/$id'></a><span>$product<br>Category: $category<br> Price: $price<br> Description: $description . "."</span></p></div>";
                     ?>
                     <?php
                     if ($i % 6 == 5 || $i == count($menuItems) - 1) {
@@ -40,6 +41,7 @@ class MenuIndex extends MenuIndexView
             }
             ?>
         </div>
+        <a href="<?= BASE_URL ?>/menu/addDisplay">Add an Item</a>
 
         <?php
         //display page footer

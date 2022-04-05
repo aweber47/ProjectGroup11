@@ -2,10 +2,11 @@
 
 /*** Author: your name*
  * Date: 4/5/2022*
- * File: menu_detail.class.php*
+ * File: menu_delete.class.php*
  * Description: */
-class MenuDetail extends MenuIndexView
+class MenuDelete extends MenuIndexView
 {
+
     public function display($menuItem, $confirm = "")
     {
         // display page header
@@ -31,17 +32,17 @@ class MenuDetail extends MenuIndexView
                     <p><strong>Price:</strong></p>
                     <p><strong>Description:</strong></p>
                     <div id="button-group">
-                        <input type="button" id="edit-button" value="   Edit   "
-                               onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">&nbsp;
-                        <input type="button" id="delete-button" value="   Delete Item   "
-                               onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">&nbsp;
+                        <input type="button" id="delete-button" value="   Are you sure you want to delete?   "
+                               onclick="window.location.href = '<?= BASE_URL ?>/menu/delete/<?= $id ?>'">&nbsp;
+                    </div>
+                    <div id="button-group">
+                        <input type="button" id="cancel-button" value="   Cancel   "
+                               onclick="window.location.href = '<?= BASE_URL ?>/menu/detail/<?= $id ?>'">&nbsp;
                     </div>
                 </td>
                 <td>
                     <p><?= $product ?></p>
-
                     <p><?= $category ?></p>
-
                     <p><?= $price ?></p>
                     <p class="media-description"><?= $description ?></p>
                     <div id="confirm-message"><?= $confirm ?></div>
@@ -55,4 +56,3 @@ class MenuDetail extends MenuIndexView
         parent::displayFooter();
     }
 }
-
