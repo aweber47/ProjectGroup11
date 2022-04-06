@@ -1,8 +1,114 @@
-/*Author: James Ritter
+/*
+  Author: Group 1
   Date: 
-  Description: 
- */
+  Description: Style sheet for Lewie's website
+*/
 
-body {
+        /*  **  Handles the background for the entire site  **  */
+body{
+    background-image: url("images/dragon_red.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: rgba(0,0,0,0.75);
+}
 
+        /*  **  index_view.class.php  **  */
+header{
+    /* For all headers */
+    font-family: "Lucida Calligraphy", cursive;
+    border: 5px solid black;
+    background-color: rgba(255, 215, 0, 0.75);
+}
+
+header h1{
+    text-align: center;
+    font-weight: bold;
+    font-size: xxx-large;
+}
+
+footer{
+    /* For all footers */
+    background-color: rgba(255, 215, 0, 0.75);
+    border: 5px solid black;
+}
+
+footer #copyright-complete{
+    font-family: Arial, serif;
+    font-size: 1em;
+}
+
+#copyright-complete{
+    text-align: center;
+    font-weight: bold;
+}
+
+        /*  **  welcome_index.class.php  **  */
+nav{
+    /*display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;*/
+    text-align: center;
+}
+
+nav a{
+    font-weight: bold;
+    font-size: x-large;
+    color: black;
+    text-decoration: none;
+    border: 1px dotted black;
+    padding: 5px;
+    margin: 5px;
+    background-color: rgba(255, 215, 0, 0.75);
+}
+
+nav a:hover{
+    background-color: red;
+}
+
+nav a:active{
+    background-color: grey;
+}
+
+.nav-left{
+    float: left;
+}
+
+.nav-right{
+    float: right;
+}
+
+#intro{
+    padding: 25px 100px;
+    margin: 50px 0;
+    line-height: 30px;
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: gold;
+}
+
+#featured{
+    /* Displays some offered dishes */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+#featured img{
+    width: 300px;
+    height: 210px;
+}
+
+#first-featured p, #second-featured p, #third-featured p, #fourth-featured p{
+    /* Label under picture */
+    background-color: rgba(255, 215, 0, 0.75);
+    margin-top: 0;
+    padding: 10px 0;
+    border-left: 5px dotted black;
+    border-bottom: 5px solid black;
+    border-right: 5px dotted black;
+    width: 290px;
+    font-weight: bold;
 }
