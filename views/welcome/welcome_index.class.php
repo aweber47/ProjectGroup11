@@ -36,19 +36,19 @@ class WelcomeIndex extends IndexView{
                 
                 <div id="featured">
                     <div id="first-featured">
-                        <img src="images/General_Tso.jpg" alt="General Tso" style="width: 200px; height: 140px">
+                        <img src="images/General_Tso.jpg" alt="General Tso" >
                         <p>General Tso Chicken</p>
                     </div>
                     <div id="second-featured">
-                        <img src="images/chow_mein.jpg" alt="Chow Mein" style="width: 200px; height: 140px">
+                        <img src="images/chow_mein.jpg" alt="Chow Mein">
                         <p>Chow Mein</p>
                     </div>
                     <div id="third-featured">
-                        <img src="images/wonton_soup.jpg" alt="Wonton Soup" style="width: 200px; height: 140px">
+                        <img src="images/wonton_soup.jpg" alt="Wonton Soup">
                         <p>Wonton Soup</p>
                     </div>
                     <div id="fourth-featured">
-                        <img src="images/crab_rangoon.jpg" alt="Crab Rangoon" style="width: 200px; height: 140px">
+                        <img src="images/crab_rangoon.jpg" alt="Crab Rangoon">
                         <p>Crab Rangoon</p>
                     </div>
                 </div>
