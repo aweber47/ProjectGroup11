@@ -30,12 +30,6 @@ class MenuDetail extends MenuIndexView
                     <p><strong>Category:</strong></p>
                     <p><strong>Price:</strong></p>
                     <p><strong>Description:</strong></p>
-                    <div id="button-group">
-                        <input type="button" id="edit-button" value="   Edit   "
-                               onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">&nbsp;
-                        <input type="button" id="delete-button" value="   Delete Item   "
-                               onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">&nbsp;
-                    </div>
                 </td>
                 <td>
                     <p><?= $product ?></p>
@@ -44,10 +38,17 @@ class MenuDetail extends MenuIndexView
 
                     <p><?= $price ?></p>
                     <p class="media-description"><?= $description ?></p>
-                    <div id="confirm-message"><?= $confirm ?></div>
                 </td>
             </tr>
         </table>
+        <div id="button-group">
+            <input type="button" id="edit-button" value="   Edit   "
+                   onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">&nbsp;
+            <input type="button" id="delete-button" value="   Delete Item   "
+                   onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">&nbsp;
+        </div>
+        <div id="confirm-message"><?= $confirm ?></div>
+
         <a href="<?= BASE_URL ?>/menu/index">Go to menu list</a>
 
         <?php

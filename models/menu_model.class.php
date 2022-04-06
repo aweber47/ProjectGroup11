@@ -48,7 +48,7 @@ class MenuModel
         // loop through all rows
         $categories = array();
         while ($obj = $query->fetch_object()) {
-            $categories[$obj->food_type] = $obj->category_id;
+            $categories[$obj->category_id] = $obj->food_type;
         }
         return $categories;
     }
@@ -182,40 +182,25 @@ class MenuModel
 
     public function add_menuItem()
     {
-        try {
+
             $product = filter_input(INPUT_POST, "product", FILTER_SANITIZE_STRING);
-            $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_STRING);
+            $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
             $price = filter_input(INPUT_POST, "price", FILTER_SANITIZE_STRING);
             $description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
 
-            //If empty, throw to instantiate a new DataMissingException object that holds the string data below.
-            if (empty($product) || empty($category) || empty($price) || empty($description)) {
-                throw new DataMissingException("Error: Please fill all fields.<br>");
-            }
+
 
             // insert query
-            $sql = "INSERT INTO " . $this->db->getMenuTable() . " VALUES(NULL, '$product', '$category', '$price', '$description')";
+            $sql = "INSERT INTO " . $this->db->getMenuTable() . " VALUES(NULL,'" . $product . "','" . $category ."','" .$price ."','" . $description ."')";
 
             //execute the query and return true if successful or false if failed
             if ($this->dbConnection->query($sql) === TRUE) {
                 return "Congratulations! You have added a(n) new menu item!";
             } else {
-                throw new DatabaseException("Fatal Error:Database connection failure.<br>");
+                return false;
             }
-            //catch the instantiated objects and call the pre-built function getMessage to display $ex.
-            //$ex = the object, $message displays the string return from the method getMessage
-        } catch (DataMissingException $ex) {
-            return $message = $ex->getMessage();
-        } catch (DataLengthException $ex) {
-            return $message = $ex->getMessage();
-        } catch (EmailFormatException $ex) {
-            return $message = $ex->getMessage();
-        } catch (DatabaseException $ex) {
-            return $message = $ex->getMessage();
-        } catch (Exception $ex) {
-            return $message = $ex->getMessage();
+            return false;
         }
-    }
 
     public function delete_menuItem($id)
     {
