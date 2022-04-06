@@ -1,20 +1,23 @@
 <?php
-/*** Author: your name*
+/*
+ * Author: Group 1
  * Date: 4/5/2022*
  * File: index_view.class.php*
- * Description: */
+ * Description:
+*/
 
 class IndexView{
-    //this method displays the page header
+    //This method displays the page header
     static public function displayHeader($title){
         // start a session
         if(session_status() == PHP_SESSION_NONE){
             session_start();
-            echo "Session began";
-        }else{
-            echo "session active";
+            echo "Session Began";
+        } else{
+            echo "Session Active";
         }
-        // user login
+        
+        //User login
         $_SESSION['username'] = 2;
         ?>
             <!DOCTYPE html>
@@ -23,31 +26,26 @@ class IndexView{
                     <title><?php echo $title; ?></title>
                     <meta charset="utf-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <link rel="stylesheet" href="../style.css">
+                    <link type='text/css' rel='stylesheet' href="<?= BASE_URL ?>/style.css">
                     <script>
-                        //create the JavaScript variable for the base url
+                        //Create the JavaScript variable for the base url
                         var base_url = "<?= BASE_URL ?>";
                     </script>
                 </head>
                 <body>
-                    <div id='wrapper'>
-                        <header>
-                            <h1 style='color: #000; font-weight: bold; text-align: center'>
-                                Lewie's Chinese Bistro
-                            </h1>
-                            <nav>
-                                <a href="<?= BASE_URL ?>/index.php">Home</a>
-                            </nav>
-                        </header>
+                    <header>
+                        <h1>Lewie's Chinese Bistro</h1>
+                    </header>
         <?php
-    }//end of displayHeader function
+    }//End of displayHeader function
 
-    //this method displays the page footer
+    //Displays the page footer
     public static function displayFooter(){
         ?>
-                    </div>
                     <footer>
-                        <p style="text-align: center">&copy; 2008-<span id="copyright">20XX</span>. Lewie's Chinese Bistro</p>
+                        <p id="copyright-complete">
+                            &copy; 2008-<span id="copyright">20XX</span>. Lewie's Chinese Bistro
+                        </p>
                         <script src="scripts/copyright.js"></script>
                         <script type="text/javascript" src="<?= BASE_URL ?>/js/ajax_autosuggestion.js"></script>
                     </footer>
