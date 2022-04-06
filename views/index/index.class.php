@@ -2,9 +2,9 @@
 
 /*** Author: your name*
  * Date: 4/5/2022*
- * File: welcome_index.class.php*
+ * File: index.class.php*
  * Description: */
-class WelcomeIndex extends IndexView{
+class Index extends IndexView{
 
     public function display(){
         //display page header

@@ -15,6 +15,3 @@ define("BASE_URL", "http://localhost/ProjectGroup11");
 /*************************************************************************************
  *                       settings for movies                                         *
  ************************************************************************************/
-
-//define default path for media images
-define("MOVIE_IMG", "www/img/movies/");

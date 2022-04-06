@@ -6,6 +6,7 @@
 $page_title = "Error";
 //display header
 IndexView::displayHeader($page_title);
+$message = "Error";
 
 ?>
     <div id="main-header">Error</div>

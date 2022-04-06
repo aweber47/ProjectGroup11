@@ -36,7 +36,7 @@ class IndexView{
                                 Lewie's Chinese Bistro
                             </h1>
                             <nav>
-                                <a href="<?= BASE_URL ?>/index.php">Home</a>
+                                <a href="<?= BASE_URL ?>/index">Home</a>
                             </nav>
                         </header>
         <?php

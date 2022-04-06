@@ -33,7 +33,24 @@ class MenuModel
         if (!isset($_SESSION['categories'])) {
             $categories = $this->get_categories();
             $_SESSION['categories'] = $categories;
+
         }
+    }
+    // get categories
+    private function get_categories()
+    {
+        $sql = "SELECT * FROM " . $this->tblCategory;
+        $query = $this->dbConnection->query($sql);
+
+        if (!$query) {
+            return false;
+        }
+        // loop through all rows
+        $categories = array();
+        while ($obj = $query->fetch_object()) {
+            $categories[$obj->food_type] = $obj->category_id;
+        }
+        return $categories;
     }
 
     public static function getMenuModel()
@@ -82,7 +99,7 @@ class MenuModel
     public function view_menu($id)
     {
         // select sql
-        $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " AND " . $this->tblMenu . ".id-'$id'";
+        $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " AND " . $this->tblMenu . ".id='$id'";
 
         // execute the thing above
         $query = $this->dbConnection->query($sql);
@@ -205,22 +222,4 @@ class MenuModel
         $sql = "DELETE FROM " . $this->tblMenu . " WHERE id='$id'";
         return $this->dbConnection->query($sql);
     }
-
-    // get categories
-    private function get_categories()
-    {
-        $sql = "SELECT * FROM " . $this->tblCategory;
-        $query = $this->dbConnection->query($sql);
-
-        if (!$query) {
-            return false;
-        }
-        // loop through all rows
-        $categories = array();
-        while ($obj = $query->fetch_assoc()) {
-            $categories[$obj->category_id] = $obj->food_type;
-        }
-        return $categories;
-    }
-
 }
