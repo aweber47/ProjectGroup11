@@ -13,16 +13,16 @@ class Index extends IndexView{
         ?>
         <nav>
             <a class="nav-left" href="<?= BASE_URL ?>">
-                <img src="images/home.png" alt="Home Page" style="width: 50px">
+                <img src="images/home.jpg" alt="Home Page" style="width: 50px">
             </a>
             <a class="nav-left" href="<?= BASE_URL ?>/menu/index">
-                <img src="images/menu.png" alt="Menu Page" style="width: 50px">
+                <img src="images/menu.jpg" alt="Menu Page" style="width: 50px">
             </a>
             <a class="nav-right" href="<?= BASE_URL ?>">
-                <img src="images/login.png" alt="Login" style="width: 50px">
+                <img src="images/login.jpg" alt="Login" style="width: 50px">
             </a>
             <a class="nav-right" href="<?= BASE_URL ?>">
-                <img src="images/cart.png" alt="Shopping Cart" style="width: 50px">
+                <img src="images/cart.jpg" alt="Shopping Cart" style="width: 50px">
             </a>
         </nav>
 
