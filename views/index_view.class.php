@@ -23,7 +23,7 @@ class IndexView{
                     <title><?php echo $title; ?></title>
                     <meta charset="utf-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <link rel="stylesheet" href="/ProjectGroup11/includes/style.css">
+                    <link rel="stylesheet" href="/ProjectGroup11/www/style.css">
                     <script>
                         //create the JavaScript variable for the base url
                         var base_url = "<?= BASE_URL ?>";
@@ -37,16 +37,16 @@ class IndexView{
                             </h1>
                             <nav>
                                 <a class="nav-left" href="<?= BASE_URL ?>">
-                                    <img src="/ProjectGroup11/includes/images/home.png" alt="Home Page" style="width: 50px">
+                                    <img src="/ProjectGroup11/www/images/home.png" alt="Home Page" style="width: 50px">
                                 </a>
                                 <a class="nav-left" href="<?= BASE_URL ?>/menu/index">
-                                    <img src="/ProjectGroup11/includes/images/menu.png" alt="Menu Page" style="width: 50px">
+                                    <img src="/ProjectGroup11/www/images/menu.png" alt="Menu Page" style="width: 50px">
                                 </a>
                                 <a class="nav-right" href="<?= BASE_URL ?>">
-                                    <img src="/ProjectGroup11/includes/images/login.png" alt="Login" style="width: 50px">
+                                    <img src="/ProjectGroup11/www/images/login.png" alt="Login" style="width: 50px">
                                 </a>
                                 <a class="nav-right" href="<?= BASE_URL ?>">
-                                    <img src="/ProjectGroup11/includes/images/cart.png" alt="Shopping Cart" style="width: 50px">
+                                    <img src="/ProjectGroup11/www/images/cart.png" alt="Shopping Cart" style="width: 50px">
                                 </a>
                             </nav>
                         </header>
@@ -59,8 +59,8 @@ class IndexView{
                     </div>
                     <footer>
                         <p style="text-align: center">&copy; 2008-<span id="copyright">20XX</span>. Lewie's Chinese Bistro</p>
-                        <script src="/ProjectGroup11/includes/js/copyright.js"></script>
-                        <script type="text/javascript" src="<?= BASE_URL ?>ProjectGroup11/includes/js/ajax_autosuggestion.js"></script>
+                        <script src="/ProjectGroup11/www/js/copyright.js"></script>
+                        <script type="text/javascript" src="<?= BASE_URL ?>ProjectGroup11/www/js/ajax_autosuggestion.js"></script>
                     </footer>
                 </body>
             </html>
