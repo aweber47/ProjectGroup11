@@ -117,13 +117,15 @@ nav a:active{
         /*  ** menu_index.class.php **  */
 .menu-detail{
     background-color: rgba(255, 215, 0, 0.75);
-
+    padding: 10px;
+    margin-top: 10px;
 }
 
 .product{
     font-weight: bold;
     text-decoration: none;
-    margin-bottom: -10px;
+    margin-bottom: -20px;
+    margin-top: -5px;
 }
 
 .category{
@@ -135,12 +137,16 @@ nav a:active{
     background-color: rgba(255, 215, 0, 0.75);
 }
 
-/*  ** menu_edit.class.php **  */
+#button-group{
+    margin: 10px 0;
+}
+
+        /*  ** menu_edit.class.php **  */
 #edit-form{
     background-color: rgba(255, 215, 0, 0.75);
 }
 
-/*  ** menu_index_view.class.php **  */
+        /*  ** menu_index_view.class.php **  */
 #searchbar{
     text-align: center;
     margin-top: 20px;
@@ -148,4 +154,10 @@ nav a:active{
 
 #search-button{
 
+}
+
+        /*  ** menu_index_view.class.php **  */
+#menu-list-button{
+    text-decoration: none;
+    color: black;
 }
