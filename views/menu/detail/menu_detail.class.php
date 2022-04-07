@@ -23,7 +23,7 @@ class MenuDetail extends MenuIndexView
         <div id="main-header">Menu Details</div>
         <hr>
         <!-- display movie details in a table -->
-        <table id="detail">
+        <table id="menu-detail-ind">
             <tr>
                 <td style="width: 130px;">
                     <p><strong>Product:</strong></p>

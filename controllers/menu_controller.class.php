@@ -20,7 +20,7 @@ class MenuController
         // retrieve all menu items and store them
         $menuItems = $this->menu_model->list_menu();
 
-        echo "Is this running?";
+        //echo "Is this running?";
         if(!$menuItems){
             // display error
             $message = "There was a problem displaying the menu items";

@@ -10,9 +10,9 @@ class IndexView{
         // start a session
         if(session_status() == PHP_SESSION_NONE){
             session_start();
-            echo "Session began";
+            echo "_";
         }else{
-            echo "session active";
+            echo "_";
         }
         // user login
         $_SESSION['username'] = 2;

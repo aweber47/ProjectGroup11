@@ -18,6 +18,7 @@ header{
     font-family: "Lucida Calligraphy", cursive;
     border: 5px solid black;
     background-color: rgba(255, 215, 0, 0.75);
+
 }
 
 header h1{
@@ -122,5 +123,14 @@ nav a:active{
 .product{
     font-weight: bold;
     text-decoration: none;
+    margin-bottom: -10px;
+}
 
+.category{
+    margin-bottom: -10px;
+}
+
+        /*  ** menu_detail.class.php **  */
+#menu-detail-ind{
+    background-color: rgba(255, 215, 0, 0.75);
 }
