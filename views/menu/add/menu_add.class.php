@@ -12,7 +12,7 @@ class MenuAdd extends MenuIndexView
         //display page header
         parent::displayHeader("Add Menu Item");
 
-        //get videogame ratings from a session variable
+        //get menu categories from a session variable
         if (isset($_SESSION['categories'])) {
             $categories = $_SESSION['categories'];
         }
