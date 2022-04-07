@@ -23,7 +23,7 @@ class IndexView{
                     <title><?php echo $title; ?></title>
                     <meta charset="utf-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <link rel="stylesheet" href="../style.css">
+                    <link rel="stylesheet" href="../includes/style.css">
                     <script>
                         //create the JavaScript variable for the base url
                         var base_url = "<?= BASE_URL ?>";
@@ -48,8 +48,8 @@ class IndexView{
                     </div>
                     <footer>
                         <p style="text-align: center">&copy; 2008-<span id="copyright">20XX</span>. Lewie's Chinese Bistro</p>
-                        <script src="scripts/copyright.js"></script>
-                        <script type="text/javascript" src="<?= BASE_URL ?>/js/ajax_autosuggestion.js"></script>
+                        <script src="../includes/js/copyright.js"></script>
+                        <script type="text/javascript" src="<?= BASE_URL ?>/includes/js/ajax_autosuggestion.js"></script>
                     </footer>
                 </body>
             </html>
