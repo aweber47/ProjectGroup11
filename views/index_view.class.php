@@ -1,5 +1,5 @@
 <?php
-/*** Author: your name*
+/*** Author: Group 1
  * Date: 4/5/2022*
  * File: index_view.class.php*
  * Description: */
@@ -59,8 +59,8 @@ class IndexView{
                     </div>
                     <footer>
                         <p style="text-align: center">&copy; 2008-<span id="copyright">20XX</span>. Lewie's Chinese Bistro</p>
-                        <script src="../includes/js/copyright.js"></script>
-                        <script type="text/javascript" src="<?= BASE_URL ?>/includes/js/ajax_autosuggestion.js"></script>
+                        <script src="/ProjectGroup11/includes/js/copyright.js"></script>
+                        <script type="text/javascript" src="<?= BASE_URL ?>ProjectGroup11/includes/js/ajax_autosuggestion.js"></script>
                     </footer>
                 </body>
             </html>

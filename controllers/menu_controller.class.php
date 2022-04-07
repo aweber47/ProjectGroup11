@@ -42,7 +42,7 @@ class MenuController
             $this->error($message);
             return;
         }
-        // display movie details
+        //Display menu details
         $view = new MenuDetail();
         $view->display($menuItem);
 
@@ -57,7 +57,7 @@ class MenuController
         $error->display($message);
 
     }
-    //search videogames
+    //search menu item
     public function search() {
         //retrieve query terms from search form
         $query_terms = trim($_GET['query-terms']);
@@ -99,7 +99,7 @@ class MenuController
 
     //update a(n) menu item in the database
     public function update($id) {
-        //update the videogame
+        //update the menu item
         $update = $this->menu_model->update_menu($id);
         if (!$update) {
             //handle errors
@@ -110,7 +110,7 @@ class MenuController
         }
 
         //display the updated menu item's details
-        $confirm = "The videogame was successfully updated.";
+        $confirm = "The menu item  was successfully updated.";
         //$menuItem = $this->menu_model->view_menu($id);
 
         $view = new MenuUpdate();

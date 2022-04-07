@@ -85,7 +85,7 @@ nav a:active{
     text-align: center;
     font-size: large;
     font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.80);
     color: gold;
 }
 
@@ -133,4 +133,19 @@ nav a:active{
         /*  ** menu_detail.class.php **  */
 #menu-detail-ind{
     background-color: rgba(255, 215, 0, 0.75);
+}
+
+/*  ** menu_edit.class.php **  */
+#edit-form{
+    background-color: rgba(255, 215, 0, 0.75);
+}
+
+/*  ** menu_index_view.class.php **  */
+#searchbar{
+    text-align: center;
+    margin-top: 20px;
+}
+
+#search-button{
+
 }

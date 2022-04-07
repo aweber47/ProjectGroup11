@@ -29,7 +29,7 @@ class MenuEdit extends MenuIndexView
         <div id="main-header">Edit Menu Item Details</div>
 
         <!-- display menu item details in a form -->
-        <form class="new-media" id="edit_form" action='<?= BASE_URL . "/menu/update/" . $id ?>' method="post"
+        <form class="new-media" id="edit-form" action='<?= BASE_URL . "/menu/update/" . $id ?>' method="post"
               style="border: 1px solid #bbb; margin-top: 10px; padding: 10px;">
             <input type="hidden" name="id" value="<?= $id ?>">
             <p><strong>Item Name</strong>: <input name="product" type="text" size="100" value="<?= $product ?>" required
@@ -45,7 +45,7 @@ class MenuEdit extends MenuIndexView
             <p><strong>Description</strong>:<br>
                 <textarea name="description" rows="8" cols="100"><?= $description ?></textarea></p>
             <input type="submit" name="action" value="Update menuItem">
-            <input type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL . "/menu/detail/" ?>"'>
+            <input type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL . "/menu/detail/$id" ?>"'>
         </form>
         <?php
         //display page footer

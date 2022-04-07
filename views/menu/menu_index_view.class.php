@@ -10,18 +10,16 @@ class MenuIndexView extends IndexView
     {
         parent::displayHeader($title)
         ?>
-        <!----
-        Script and media type, forms, suggestions and search box would go here.
-        -->
+        <!-- Script and media type, forms, suggestions and search box would go here. -->
         <script>
             var media = 'menuItem';
         </script>
         <!--create the search bar -->
         <div id="searchbar">
             <form method="get" action="<?= BASE_URL ?>/menu/search/">
-                <input type="text" name="query-terms" id="searchtextbox" placeholder="Search menu items by title"
+                <input type="text" name="query-terms" id="searchtextbox"  placeholder="Search menu items by name"
                        autocomplete="off" onkeyup="handleKeyUp(event)">
-                <input type="submit" value="Go"/>
+                <input id="search-button" type="submit" value="Go"/>
             </form>
             <div id="suggestionDiv"></div>
         </div>
