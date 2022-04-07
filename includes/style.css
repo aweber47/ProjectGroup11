@@ -112,3 +112,15 @@ nav a:active{
     width: 290px;
     font-weight: bold;
 }
+
+        /*  ** menu_index.class.php **  */
+.menu-detail{
+    background-color: rgba(255, 215, 0, 0.75);
+
+}
+
+.product{
+    font-weight: bold;
+    text-decoration: none;
+
+}

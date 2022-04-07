@@ -31,7 +31,7 @@ class MenuIndex extends MenuIndexView
                     if ($i % 6 == 0) {
                         echo "<div class='row'>";
                     }
-                    echo "<div class='col'><p><a href='", BASE_URL, "/menu/detail/$id'><span>$product</a><br>Category: $category<br> Price: $price<br> Description: $description . "."</span></p></div>";
+                    echo "<div class='menu-detail'><p><a href='", BASE_URL, "/menu/detail/$id'><span><p class='product'>$product</p></a><br>Category: $category<br> Price: $price<br> Description: $description . "."</span></p></div>";
                     ?>
                     <?php
                     if ($i % 6 == 5 || $i == count($menuItems) - 1) {
