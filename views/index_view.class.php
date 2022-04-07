@@ -36,7 +36,18 @@ class IndexView{
                                 Lewie's Chinese Bistro
                             </h1>
                             <nav>
-                                <a href="<?= BASE_URL ?>/index">Home</a>
+                                <a class="nav-left" href="<?= BASE_URL ?>">
+                                    <img src="/ProjectGroup11/includes/images/home.png" alt="Home Page" style="width: 50px">
+                                </a>
+                                <a class="nav-left" href="<?= BASE_URL ?>/menu/index">
+                                    <img src="/ProjectGroup11/includes/images/menu.png" alt="Menu Page" style="width: 50px">
+                                </a>
+                                <a class="nav-right" href="<?= BASE_URL ?>">
+                                    <img src="/ProjectGroup11/includes/images/login.png" alt="Login" style="width: 50px">
+                                </a>
+                                <a class="nav-right" href="<?= BASE_URL ?>">
+                                    <img src="/ProjectGroup11/includes/images/cart.png" alt="Shopping Cart" style="width: 50px">
+                                </a>
                             </nav>
                         </header>
         <?php

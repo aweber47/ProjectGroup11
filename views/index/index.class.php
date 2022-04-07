@@ -11,20 +11,7 @@ class Index extends IndexView{
         parent::displayHeader("Lewie's Chinese Bistro");
         
         ?>
-        <nav>
-            <a class="nav-left" href="<?= BASE_URL ?>">
-                <img src="images/home.jpg" alt="Home Page" style="width: 50px">
-            </a>
-            <a class="nav-left" href="<?= BASE_URL ?>/menu/index">
-                <img src="images/menu.jpg" alt="Menu Page" style="width: 50px">
-            </a>
-            <a class="nav-right" href="<?= BASE_URL ?>">
-                <img src="images/login.jpg" alt="Login" style="width: 50px">
-            </a>
-            <a class="nav-right" href="<?= BASE_URL ?>">
-                <img src="images/cart.jpg" alt="Shopping Cart" style="width: 50px">
-            </a>
-        </nav>
+
 
         <br><br><br>
         <section>
