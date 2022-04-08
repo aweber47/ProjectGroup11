@@ -29,6 +29,42 @@ class UserModel
         return self::$_instance;
     }
 
+    // list users
+    public function list_user()
+    {
+        $sql = "SELECT * FROM $this->tblUsers";
+
+        $query = $this->dbConnection->query($sql);
+
+        // if the query failed, return false.
+        if (!$query)
+            //echo 'no query';
+            return 'false';
+
+        //if the query succeeded, but no user was found.
+        if ($query->num_rows == 0)
+            //echo 'no rows';
+            return 0;
+
+        //handle the result
+        //create an array to store all users
+        $users = array();
+
+        //loop through all rows in the returned recordsets
+        while ($obj = $query->fetch_object()) {
+            //echo stripslashes($obj->title);
+            //echo $query->num_rows;
+            $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email));
+            //echo $obj->id;
+            //set the id for the videogame
+            $user->setId($obj->id);
+
+            //add the videogame into the array
+            $users[] = $user;
+        }
+        return $users;
+    }
+
     public function add_user()
     {
         //retrieve user inputs from the registration form
@@ -43,7 +79,7 @@ class UserModel
         echo "$username, $password, $firstname, $lastname, $email";
 
         //INSERT query
-        $sql = "INSERT INTO " . $this->db->getUsersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email', '$description')";
+        $sql = "INSERT INTO " . $this->db->getUsersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email')";
 
         //execute the query and return true if successful or false if failed
         if ($this->dbConnection->query($sql) === TRUE) {
@@ -90,7 +126,6 @@ class UserModel
     {
         //the select sql statement
         $sql = "SELECT * FROM " . $this->tblUsers . " WHERE id='$id'";
-        echo $sql;
         //execute the query
         $query = $this->dbConnection->query($sql);
 
@@ -100,7 +135,7 @@ class UserModel
             //create an user object
             $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email));
             //set the id for the user
-            //$user->setId($obj->id);
+            $user->setId($obj->id);
             echo "worked";
             return $user;
         }
@@ -110,7 +145,6 @@ class UserModel
     //the update_user method updates an existing user in the database. Details of the user are posted in a form. Return true if succeed; false otherwise.
     public function update_user($id)
     {
-
     }
 
     public function get_user_id()

@@ -6,13 +6,15 @@
  * Description: */
 class UserDetail extends UserIndexView
 {
-    public function display($user_id, $user, $reviews, $confirm = "") {
+    public function display($user_id, $user, $confirm = "") {
         //display page header
         parent::displayHeader("Display User Details");
 
         //retrieve user details by calling get methods
         $id = $user->getId();
         $username = $user->getUsername();
+        $firstname = $user->getFirstname();
+        $lastname = $user->getLastname();
         $email = $user->getEmail();
         ?>
 
@@ -21,11 +23,10 @@ class UserDetail extends UserIndexView
         <!-- display user details in a table -->
         <table id="detail">
             <tr>
-                <td style="width: 150px;">
-                    <img src="<?= $image ?>" alt="<?= $title ?>" />
-                </td>
                 <td style="width: 130px;">
                     <p><strong>Username:</strong></p>
+                    <p><strong>First Name:</strong></p>
+                    <p><strong>Last Name:</strong></p>
                     <p><strong>Email:</strong></p>
                     <div id="review-list">
 
@@ -33,6 +34,8 @@ class UserDetail extends UserIndexView
                 </td>
                 <td>
                     <p><?= $username ?></p>
+                    <p><?= $firstname ?></p>
+                    <p><?= $lastname ?></p>
                     <p><?= $email ?></p>
                     <div id="confirm-message"><?= $confirm ?></div>
                 </td>
@@ -41,11 +44,9 @@ class UserDetail extends UserIndexView
         <?php
         //echo $reviewlist;
         ?>
-        <a href="<?= BASE_URL ?>/user/index">Go to game list</a>
+        <a href="<?= BASE_URL ?>/user/index">Go to User List</a>
 
         <?php
-        $reviewList = new UserReviewIndex();
-        $reviewList->display($user_id, $reviews);
         //display page footer
         parent::displayFooter();
     }

@@ -53,6 +53,9 @@ class User
     }
 
     //setters
+    function setId($id){
+        $this->id = $id;
+    }
     function setUsername($username)
     {
         $this->username = $username;

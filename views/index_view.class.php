@@ -42,7 +42,7 @@ class IndexView{
                                 <a class="nav-left" href="<?= BASE_URL ?>/menu/index">
                                     <img src="/ProjectGroup11/www/images/menu.png" alt="Menu Page" style="width: 50px">
                                 </a>
-                                <a class="nav-right" href="<?= BASE_URL ?>">
+                                <a class="nav-right" href="<?= BASE_URL ?>/user/index">
                                     <img src="/ProjectGroup11/www/images/login.png" alt="Login" style="width: 50px">
                                 </a>
                                 <a class="nav-right" href="<?= BASE_URL ?>">

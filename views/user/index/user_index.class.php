@@ -1,0 +1,54 @@
+<?php
+
+/*** Author: your name*
+ * Date: 4/8/2022*
+ * File: user_index.class.php*
+ * Description: */
+class UserIndex
+{
+    /*
+     * the display method accepts an array of user objects and displays
+     * them in a grid.
+     */
+    public static function displayHeader($title)
+    {
+
+    }
+
+    public function display($users)
+    {
+        ?>
+        <div id="main-header"> Known Registered Users</div>
+
+        <div class="grid-container">
+            <?php
+            if ($users === 0) {
+                echo "No user was found.<br><br><br><br><br>";
+            } else {
+                //display the users in a grid; six users per row
+                foreach ($users as $i => $user) {
+                    $id = $user->getId();
+                    $username = $user->getUsername();
+                    //$password = $user->getPassword();
+                    $firstname = $user->getFirstname();
+                    $lastname = $user->getLastname();
+                    $email = $user->getEmail();
+                    if ($i % 6 == 0) {
+                        echo "<div class='row'>";
+                    }
+                    echo "<div class='col'><p><a href='", BASE_URL, "/user/detail/$id'><span>$username</a><br>First Name: $firstname<br>" . "<br>Last Name: $lastname<br>" . "<br> Email: $email<br>" . "</span></p></div>";
+                    ?>
+                    <?php
+                    if ($i % 6 == 5 || $i == count($users) - 1) {
+                        echo "</div>";
+                    }
+                }
+            }
+            ?>
+        </div>
+        <a href="<?= BASE_URL ?>/user/addDisplay">Register</a>
+
+
+<?php
+    } //end of display method
+}
