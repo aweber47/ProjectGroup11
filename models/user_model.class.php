@@ -145,6 +145,25 @@ class UserModel
     //the update_user method updates an existing user in the database. Details of the user are posted in a form. Return true if succeed; false otherwise.
     public function update_user($id)
     {
+        if (!filter_has_var(INPUT_POST, 'username') ||
+            !filter_has_var(INPUT_POST, 'password') ||
+            !filter_has_var(INPUT_POST, 'firstname') ||
+            !filter_has_var(INPUT_POST, 'lastname') ||
+            !filter_has_var(INPUT_POST, 'email')) {
+            return false;
+        }
+        $username = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING)));
+        $password = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING)));
+        $firstname = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING)));
+        $lastname = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING)));
+        $email = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL)));
+
+        //update query
+        $sql = "UPDATE " . $this->tblUsers .
+            " SET username='$username', password='$password', firstname='$firstname', "
+            . "lastname='$lastname' , email='$email' WHERE id='$id'";
+        //execute
+        return $this->dbConnection->query($sql);
     }
 
     public function get_user_id()
@@ -152,8 +171,10 @@ class UserModel
 
     }
 
-    public function delete_user()
+    public function delete_user($id)
     {
+        $sql = " DELETE FROM " . $this->tblUsers . " WHERE id='$id'";
+        return $this->dbConnection->query($sql);
 
     }
 

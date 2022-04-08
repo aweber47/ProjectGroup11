@@ -7,22 +7,21 @@
 class UserController
 {
     private $user_model;
-   // private $review_model;
 
     //default constructor
     public function __construct()
     {
-        //create an instance of the VideogameModel class
+        //create an instance of the UserModel class
         $this->user_model = UserModel::getUserModel();
-      //  $this->review_model = ReviewModel::getReviewModel();
     }
 
     //index action that displays all users
-    public function index(){
+    public function index()
+    {
         // retrieve all users and store them in an array
         $users = $this->user_model->list_user();
 
-        if(!$users){
+        if (!$users) {
             //error
             $message = "There was a problem with displaying the users";
             $this->error($message);
@@ -32,11 +31,14 @@ class UserController
         $view = new UserIndex();
         $view->display($users);
     }
-    public function addDisplay(){
+
+    public function addDisplay()
+    {
         // create an object
         $error = new UserRegister();
         $error->display();
     }
+
     public function add()
     {
         //retrieve all users and store them in an array
@@ -48,7 +50,7 @@ class UserController
             return;
         }
         $detail = new UserVerify();
-        $detail->display("The user has been added");
+        $detail->display("Login Successful");
     }
 
     //show details of a user
@@ -56,7 +58,7 @@ class UserController
     {
         //retrieve the specific user
         $user = $this->user_model->view_user($id);
-      //  $reviews = $this->review_model->list_review($id);
+        //  $reviews = $this->review_model->list_review($id);
 
         if (!$user) {
             //display an error
@@ -67,13 +69,30 @@ class UserController
 
         //display user details
         $view = new UserDetail();
-        //$reviewList = new UserReviewIndex();
-        //$view->display($user, $reviewlist);
-        //$reviewlist->display($id, $reviews);
         $view->display($id, $user);
     }
+
+    // edit a users information
+    public function edit($id)
+    {
+        // retrieve user info
+        $user = $this->user_model->view_user($id);
+
+        // error handle
+        if (!$user) {
+            // display
+            $message = "There was a problem displaying the users information id='" . $id . "'.";
+            $this->error($message);
+            return;
+        }
+
+        $view = new UserEdit();
+        $view->display($user);
+    }
+
     //update a user in the database
-    public function update($id) {
+    public function update($id)
+    {
         //update the user
         $update = $this->user_model->update_user($id);
         if (!$update) {
@@ -83,34 +102,41 @@ class UserController
             return;
         }
 
-        //display the updateed user details
+        //display the updated user details
         $confirm = "The user was successfully updated.";
-        $user = $this->user_model->view_user($id);
+        //$user = $this->user_model->view_user($id);
 
-        $view = new UserDetail();
-        $view->display($user, $confirm);
+        $view = new UserUpdate();
+        $view->display($confirm, $id);
     }
+
     //register
-    public function register(){
+    public function register()
+    {
         $register = new UserRegister();
         $register->display();
     }
 
     //login
-    public function login(){
+    public function login()
+    {
         $login = new UserLogin();
         $login->display();
     }
+
     //verify
-    public function verify(){
+    public function verify()
+    {
         //echo "called";
         $verify = $this->user_model->verify_user();
 
         $verificationPage = new UserVerify();
         $verificationPage->display($verify);
     }
+
     //handle an error
-    public function error($message) {
+    public function error($message)
+    {
         //create an object of the Error class
         $error = new UserError();
 
@@ -118,8 +144,40 @@ class UserController
         $error->display($message);
     }
 
+    // delete display
+    public function deleteDisplay($id)
+    {
+        $user = $this->user_model->view_user($id);
+
+        // error handle
+        if (!$user) {
+            $message = "There was an issue trying to obtain user id='" . $id . "'.";
+            $this->error($message);
+            return;
+        }
+        $error = new UserDelete();
+        $error->display($user);
+
+    }
+
+    //deletes the user
+    public function delete($id)
+    {
+        $user = $this->user_model->delete_user($id);
+
+        // error handle
+        if (!$user) {
+            $message = "There was an issue trying to delete user id='" . $id . "'.";
+            $this->error($message);
+            return;
+        }
+        $detail = new UserVerify();
+        $detail->display("The User has been removed from the database");
+    }
+
     //handle calling inaccessible methods
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         //$message = "Route does not exist.";
         // Note: value of $name is case sensitive.
         $message = "Calling method '$name' caused errors. Route does not exist.";

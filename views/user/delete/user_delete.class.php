@@ -1,12 +1,12 @@
 <?php
 
 /*** Author: your name*
- * Date: 4/7/2022*
- * File: user_detail.class.php*
+ * Date: 4/8/2022*
+ * File: user_delete.class.php*
  * Description: */
-class UserDetail extends UserIndexView
+class UserDelete extends UserIndexView
 {
-    public function display($user_id, $user, $confirm = "")
+    public function display($user, $confirm = "")
     {
         //display page header
         parent::displayHeader("Display User Details");
@@ -29,30 +29,29 @@ class UserDetail extends UserIndexView
                     <p><strong>First Name:</strong></p>
                     <p><strong>Last Name:</strong></p>
                     <p><strong>Email:</strong></p>
+                    <div id="button-group">
+                        <input type="button" id="delete-button" value="   Are you sure you want to delete?   "
+                               onclick="window.location.href = '<?= BASE_URL ?>/user/delete/<?= $id ?>'">&nbsp;
+                    </div>
+                    <div id="button-group">
+                        <input type="button" id="cancel-button" value="   Cancel   "
+                               onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'">&nbsp;
+                    </div>
                 </td>
                 <td>
                     <p><?= $username ?></p>
-
                     <p><?= $firstname ?></p>
-
                     <p><?= $lastname ?></p>
-
                     <p><?= $email ?></p>
-
                     <div id="confirm-message"><?= $confirm ?></div>
                 </td>
             </tr>
         </table>
-        <div id="button-group">
-            <input type="button" id="edit-button" value="   Edit   "
-                   onclick="window.location.href = '<?= BASE_URL ?>/user/edit/<?= $id ?>'">&nbsp;
-            <input type="button" id="delete-button" value="   Delete Item   "
-                   onclick="window.location.href = '<?= BASE_URL ?>/user/deleteDisplay/<?= $id ?>'">&nbsp;
-            <button>
-                <a id="menu-list-button" href="<?= BASE_URL ?>/user/index">Return to User Display</a>
-            </button>
-        </div>
-        <div id="confirm-message"><?= $confirm ?></div>
+        <?php
+        //echo $reviewlist;
+        ?>
+        <a href="<?= BASE_URL ?>/welcome/index">Home Page</a>
+
         <?php
         //display page footer
         parent::displayFooter();

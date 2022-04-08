@@ -7,6 +7,7 @@
 class UserVerify extends UserIndexView
 {
 
+
     //put your code here
     public function display($message)
     {
@@ -23,6 +24,8 @@ class UserVerify extends UserIndexView
             <?php
             echo '<p><strong>' . $message . '</strong><br>';
             ?>
+            <input type="button" value="View Account Details"
+                   onclick='window.location.href = "<?= BASE_URL . "/user/detail/$id" ?>"'>
             <input type="button" value="Continue to Index"
                    onclick='window.location.href = "<?= BASE_URL . "/welcome/index/" ?>"'>
 

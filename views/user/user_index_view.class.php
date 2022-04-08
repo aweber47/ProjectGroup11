@@ -28,5 +28,4 @@ class UserIndexView extends IndexView
     public static function displayFooter() {
         parent::displayFooter();
     }
-
 }

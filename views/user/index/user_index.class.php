@@ -4,7 +4,7 @@
  * Date: 4/8/2022*
  * File: user_index.class.php*
  * Description: */
-class UserIndex
+class UserIndex extends UserIndexView
 {
     /*
      * the display method accepts an array of user objects and displays
@@ -12,7 +12,7 @@ class UserIndex
      */
     public static function displayHeader($title)
     {
-
+        parent::displayHeader("Search User");
     }
 
     public function display($users)
@@ -49,6 +49,11 @@ class UserIndex
         <a href="<?= BASE_URL ?>/user/addDisplay">Register</a>
 
 
-<?php
+        <?php
     } //end of display method
+
+    public static function displayFooter()
+    {
+        parent::displayFooter();
+    }
 }
