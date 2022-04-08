@@ -13,5 +13,7 @@ date_default_timezone_set('America/New_York');
 define("BASE_URL", "http://localhost/ProjectGroup11");
 
 /*************************************************************************************
- *                       settings for movies                                         *
+ *                       settings for menu                        *
  ************************************************************************************/
+// path for the menu item images
+define("MENU_IMG", "www/images/menuimg/");

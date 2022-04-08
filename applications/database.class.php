@@ -12,8 +12,9 @@ class Database
         'login' => 'root',
         'password' => '',
         'database' => 'lewiesdb',
-        'tblMenu'=> 'menu_items',
-        'tblCategory' => 'categories'
+        'tblMenu' => 'menu_items',
+        'tblCategory' => 'categories',
+        'tblUsers' => 'users'
     );
 
     // define the database connection object
@@ -21,7 +22,8 @@ class Database
     static private $_instance = NULL;
 
     // constructor
-    public function __construct(){
+    public function __construct()
+    {
         $this->objDBConnection = @new mysqli(
             $this->param['host'],
             $this->param['login'],
@@ -29,14 +31,15 @@ class Database
             $this->param['database']
         );
         if (mysqli_connect_errno() != 0) {
-            $message = "Connecting database failed: ".mysqli_connect_error() . ".";
+            $message = "Connecting database failed: " . mysqli_connect_error() . ".";
             include 'error.php';
             exit();
         }
     }
 
     //static method to ensure there is just one Database instance
-    static public function getDatabase() {
+    static public function getDatabase()
+    {
         if (self::$_instance == NULL) {
             self::$_instance = new Database();
         }
@@ -44,15 +47,24 @@ class Database
     }
 
     //this function returns the database connection object
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->objDBConnection;
     }
 
-    //returns the name of the table storing books
-    public function getMenuTable() {
+    //returns the name of the table menu item books
+    public function getMenuTable()
+    {
         return $this->param['tblMenu'];
     }
-    public function getCategoryTable(){
+
+    public function getCategoryTable()
+    {
         return $this->param['tblCategory'];
+    }
+
+    public function getUsersTable()
+    {
+        return $this->param['tblUsers'];
     }
 }

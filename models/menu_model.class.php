@@ -36,6 +36,7 @@ class MenuModel
 
         }
     }
+
     // get categories
     private function get_categories()
     {
@@ -84,7 +85,7 @@ class MenuModel
 
         // loopy through the stuff
         while ($obj = $query->fetch_object()) {
-            $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+            $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
 
             // set the id for the menu item
             $menuItem->setId($obj->id);
@@ -108,7 +109,7 @@ class MenuModel
             $obj = $query->fetch_object();
 
             // create the menu object
-            $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+            $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
 
             // set the id for the menu object
             $menuItem->setId($obj->id);
@@ -147,7 +148,7 @@ class MenuModel
 
         // loopy through the stuff
         while ($obj = $query->fetch_object()) {
-            $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+            $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
 
             // set the id for the menu item
             $menuItem->setId($obj->id);
@@ -162,19 +163,21 @@ class MenuModel
     public function update_menu($id)
     {
         if (!filter_has_var(INPUT_POST, 'product') ||
+            !filter_has_var(INPUT_POST, 'image') ||
             !filter_has_var(INPUT_POST, 'category') ||
             !filter_has_var(INPUT_POST, 'price') ||
             !filter_has_var(INPUT_POST, 'description')) {
             return false;
         }
         $product = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'product', FILTER_SANITIZE_STRING)));
+        $image = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'image', FILTER_SANITIZE_STRING)));
         $category = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'category', FILTER_SANITIZE_STRING)));
         $price = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'price', FILTER_SANITIZE_STRING)));
         $description = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING)));
 
         //update query
         $sql = "UPDATE " . $this->tblMenu .
-            " SET product='$product', category='$category', "
+            " SET product='$product', image='$image', category='$category', "
             . "price='$price' , description='$description' WHERE id='$id'";
         //execute
         return $this->dbConnection->query($sql);
@@ -183,24 +186,24 @@ class MenuModel
     public function add_menuItem()
     {
 
-            $product = filter_input(INPUT_POST, "product", FILTER_SANITIZE_STRING);
-            $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
-            $price = filter_input(INPUT_POST, "price", FILTER_SANITIZE_STRING);
-            $description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
+        $product = filter_input(INPUT_POST, "product", FILTER_SANITIZE_STRING);
+        $image = filter_input(INPUT_POST, 'image', FILTER_SANITIZE_STRING);
+        $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
+        $price = filter_input(INPUT_POST, "price", FILTER_SANITIZE_STRING);
+        $description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
 
 
+        // insert query
+        $sql = "INSERT INTO " . $this->db->getMenuTable() . " VALUES(NULL,'" . $product . "','" . $image . "','" . $category . "','" . $price . "','" . $description . "')";
 
-            // insert query
-            $sql = "INSERT INTO " . $this->db->getMenuTable() . " VALUES(NULL,'" . $product . "','" . $category ."','" .$price ."','" . $description ."')";
-
-            //execute the query and return true if successful or false if failed
-            if ($this->dbConnection->query($sql) === TRUE) {
-                return "Congratulations! You have added a(n) new menu item!";
-            } else {
-                return false;
-            }
+        //execute the query and return true if successful or false if failed
+        if ($this->dbConnection->query($sql) === TRUE) {
+            return "Congratulations! You have added a(n) new menu item!";
+        } else {
             return false;
         }
+        return false;
+    }
 
     public function delete_menuItem($id)
     {

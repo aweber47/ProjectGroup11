@@ -14,9 +14,14 @@ class MenuDetail extends MenuIndexView
         // retrieve menu details
         $id = $menuItem->getId();
         $product = $menuItem->getProduct();
+        $image = $menuItem->getImage();
         $category = $menuItem->getCategory();
         $price = $menuItem->getPrice();
         $description = $menuItem->getDescription();
+        if (strpos($image, "http://") === false AND strpos($image, "https://") === false) {
+            $image = BASE_URL . $image;
+        }
+
         ?>
         <!-- Display menu details-->
 
@@ -25,6 +30,9 @@ class MenuDetail extends MenuIndexView
         <!-- display movie details in a table -->
         <table id="menu-detail-ind">
             <tr>
+                <td>
+                    <img src="<?= $image ?>" alt="<?= $product ?>"
+                </td>
                 <td style="width: 130px;">
                     <p><strong>Product:</strong></p>
                     <p><strong>Category:</strong></p>

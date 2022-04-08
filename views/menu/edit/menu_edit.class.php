@@ -20,6 +20,7 @@ class MenuEdit extends MenuIndexView
         // retrieve menu details
         $id = $menuItem->getId();
         $product = $menuItem->getProduct();
+        $image = $menuItem->getImage();
         $category = $menuItem->getCategory();
         $price = $menuItem->getPrice();
         $description = $menuItem->getDescription();
@@ -34,6 +35,8 @@ class MenuEdit extends MenuIndexView
             <input type="hidden" name="id" value="<?= $id ?>">
             <p><strong>Item Name</strong>: <input name="product" type="text" size="100" value="<?= $product ?>" required
                                                   autofocus></p>
+            <p><strong>Image</strong>: url (http:// or https://) or local file including path and file extension<br>
+                <input name="image" type="text" size="100" required value="<?= $image ?>"></p>
             <p><strong>Category</strong>:
                 <select name="category" form="edit_form" value="<?= $category ?>">
                     <option value="1">App</option>
