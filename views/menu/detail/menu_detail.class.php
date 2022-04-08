@@ -23,10 +23,12 @@ class MenuDetail extends MenuIndexView
         }
 
         ?>
+        
         <!-- Display menu details-->
-
         <div id="main-header">Menu Details</div>
+        
         <hr>
+        
         <!-- display movie details in a table -->
         <table id="menu-detail-ind">
             <tr>
@@ -49,16 +51,17 @@ class MenuDetail extends MenuIndexView
                 </td>
             </tr>
         </table>
+        
         <div id="button-group">
             <input type="button" id="edit-button" value="   Edit   "
                    onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">&nbsp;
             <input type="button" id="delete-button" value="   Delete Item   "
                    onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">&nbsp;
+            <button>
+                <a id="menu-list-button" href="<?= BASE_URL ?>/menu/index">Return to Menu</a>
+            </button>
         </div>
         <div id="confirm-message"><?= $confirm ?></div>
-
-        <a href="<?= BASE_URL ?>/menu/index">Go to menu list</a>
-
         <?php
         // display page footer
         parent::displayFooter();
