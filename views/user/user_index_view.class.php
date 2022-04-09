@@ -14,14 +14,6 @@ class UserIndexView extends IndexView
             //the media type
             var media = "users";
         </script>
-        <!--create the search bar -->
-        <div id="searchbar">
-            <form method="get" action="<?= BASE_URL ?>/user/search">
-                <input type="text" name="query-terms" id="searchtextbox" placeholder="Search users by name" autocomplete="off" onkeyup="handleKeyUp(event)">
-                <input type="submit" value="Go" />
-            </form>
-            <div id="suggestionDiv"></div>
-        </div>
         <?php
     }
 

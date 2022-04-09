@@ -39,9 +39,9 @@ class UserEdit extends UserIndexView
                                                    required=""></p><br>
             <p><strong>Last Name</strong>: <input name="lastname" type="text" size="50" value="<?= $lastname ?>"
                                                   required=""></p><br>
-            <p><strong>Email</strong>: <input name="lastname" type="email" size="50" value="<?= $email ?>" required="">
+            <p><strong>Email</strong>: <input name="email" type="email" size="50" value="<?= $email ?>" required="">
             </p><br>
-            <input type="submit" name="action" value="Update user">
+            <input type="submit" name="action" value="Update User">
             <input type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL . "/user/detail/$id" ?>"'>
         </form>
         <?php

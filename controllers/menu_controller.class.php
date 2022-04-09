@@ -7,21 +7,47 @@
 class MenuController
 {
     private $menu_model;
+    private $cart_model;
+
+    private $cart;
 
     //construct
     public function __construct()
     {
         // create an instance of the MenuModel class
         $this->menu_model = MenuModel::getMenuModel();
+        $this->cart_model = CartModel::getCartModel();
+
+        // verify that a session has been started
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        // verify if the user logging in is an admin user
+        if(!isset($_SESSION['user'])) {
+            $_SESSION['user'] = false;
+        }
+        if(!isset($_SESSION['admin'])) {
+            $_SESSION['admin'] = false;
+        }
+        if (!isset($_SESSION['categories'])) {
+            $categories = $this->menu_model->get_categories();
+            $_SESSION['categories'] = $categories;
+        }
+        if(!isset($_SESSION['cart'])) {
+
+            //session_destroy();
+            $_SESSION['cart'] = array();
+        }
     }
 
     // index action to display all menu items
-    public function index(){
+    public function index()
+    {
         // retrieve all menu items and store them
         $menuItems = $this->menu_model->list_menu();
 
         //echo "Is this running?";
-        if(!$menuItems){
+        if (!$menuItems) {
             // display error
             $message = "There was a problem displaying the menu items";
             $this->error($message);
@@ -33,7 +59,8 @@ class MenuController
     }
 
     // displays the detail of a menu item
-    public function detail($id){
+    public function detail($id)
+    {
         // retrieve the menu item
         $menuItem = $this->menu_model->view_menu($id);
         if (!$menuItem) {
@@ -47,6 +74,7 @@ class MenuController
         $view->display($menuItem);
 
     }
+
     //handle an error
     public function error($message)
     {
@@ -57,8 +85,10 @@ class MenuController
         $error->display($message);
 
     }
+
     //search menu item
-    public function search() {
+    public function search()
+    {
         //retrieve query terms from search form
         $query_terms = trim($_GET['query-terms']);
 
@@ -82,7 +112,8 @@ class MenuController
     }
 
     //display a menu Item in a form for editing
-    public function edit($id) {
+    public function edit($id)
+    {
         //retrieve the specific menu item
         $menuItem = $this->menu_model->view_menu($id);
 
@@ -98,7 +129,8 @@ class MenuController
     }
 
     //update a(n) menu item in the database
-    public function update($id) {
+    public function update($id)
+    {
         //update the menu item
         $update = $this->menu_model->update_menu($id);
         if (!$update) {
@@ -118,7 +150,8 @@ class MenuController
     }
 
     //autosuggestion
-    public function suggest($terms) {
+    public function suggest($terms)
+    {
         //retrieve query terms
         $query_terms = urldecode(trim($terms));
         $menuItems = $this->menu_model->search_menu($query_terms);
@@ -134,7 +167,8 @@ class MenuController
         //echo json_encode($products);
     }
 
-    public function addDisplay() {
+    public function addDisplay()
+    {
         //create an object of the Error class
         $error = new MenuAdd();
 
@@ -142,7 +176,8 @@ class MenuController
         $error->display();
     }
 
-    public function add() {
+    public function add()
+    {
         $menuItem = $this->menu_model->add_menuItem();
         if (!$menuItem) {
             //handle errors
@@ -155,7 +190,8 @@ class MenuController
         $detail->display("Menu Item has been added");
     }
 
-    public function deleteDisplay($id) {
+    public function deleteDisplay($id)
+    {
         //create an object of the Error class
         $menuItem = $this->menu_model->view_menu($id);
         if (!$menuItem) {
@@ -171,7 +207,8 @@ class MenuController
         $error->display($menuItem);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $menuItem = $this->menu_model->delete_menuItem($id);
         if (!$menuItem) {
             //handle errors
@@ -183,8 +220,43 @@ class MenuController
         $detail->display("Menu Item has been deleted");
     }
 
+    // methods for the cart view
+
+    //following is for the cart
+
+    public function addToCart($id)
+    {
+        $menuItem = $this->menu_model->view_menu($id);
+
+        array_push($_SESSION["cart"], $menuItem);
+
+        $menuItems = $this->menu_model->list_menu();
+
+        $view = new MenuIndex();
+        $view->display($menuItems);
+    }
+
+    public function clearCart()
+    {
+        $_SESSION["cart"] = array();
+        $cart = $_SESSION['cart'];
+
+        $view = new CartIndex();
+        $view->display($cart);
+    }
+
+    public function showCart()
+    {
+        $cart = $_SESSION["cart"];
+
+        $view = new CartIndex();
+        $view->display($cart);
+    }
+
+
     //handle calling inaccessible methods
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         //$message = "Route does not exist.";
         // Note: value of $name is case sensitive.
         $message = "Calling method '$name' caused errors. Route does not exist.";

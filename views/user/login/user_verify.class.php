@@ -12,13 +12,13 @@ class UserVerify extends UserIndexView
     public function display($message)
     {
         //display page header
-        parent::displayHeader("Signup");
+        parent::displayHeader("Verify");
 
         ?>
 
-        <div id="main-header">Login</div>
+<!--        <div id="main-header">Login</div>-->
 
-        <!-- display movie details in a form -->
+        <!-- display user  details in a form -->
         <div class="new-media" style="border: 1px solid #bbb; margin-top: 10px; padding: 10px;">
             <input type="hidden" name="id" value="<?= $id ?>">
             <?php

@@ -45,7 +45,7 @@ class IndexView{
                                 <a class="nav-right" href="<?= BASE_URL ?>/user/login">
                                     <img src="/ProjectGroup11/www/images/login.png" alt="Login" style="width: 50px">
                                 </a>
-                                <a class="nav-right" href="<?= BASE_URL ?>">
+                                <a class="nav-right" href="<?= BASE_URL ?>/menu/showCart">
                                     <img src="/ProjectGroup11/www/images/cart.png" alt="Shopping Cart" style="width: 50px">
                                 </a>
                             </nav>

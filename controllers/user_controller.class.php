@@ -95,8 +95,10 @@ class UserController
     {
         //update the user
         $update = $this->user_model->update_user($id);
+        var_dump($update);
         if (!$update) {
             //handle errors
+            echo $update;
             $message = "There was a problem updating the user id='" . $id . "'.";
             $this->error($message);
             return;
@@ -104,8 +106,6 @@ class UserController
 
         //display the updated user details
         $confirm = "The user was successfully updated.";
-        //$user = $this->user_model->view_user($id);
-
         $view = new UserUpdate();
         $view->display($confirm, $id);
     }
@@ -122,6 +122,12 @@ class UserController
     {
         $login = new UserLogin();
         $login->display();
+    }
+
+    // logout
+    public function logout(){
+        $logout = new UserLogout();
+        $logout->display();
     }
 
     //verify

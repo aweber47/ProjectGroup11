@@ -9,7 +9,7 @@ class UserDelete extends UserIndexView
     public function display($user, $confirm = "")
     {
         //display page header
-        parent::displayHeader("Display User Details");
+        parent::displayHeader("Delete User Details");
 
         //retrieve user details by calling get methods
         $id = $user->getId();

@@ -11,6 +11,14 @@ class MenuDetail extends MenuIndexView
         // display page header
         parent::displayHeader("Product Details");
 
+        // retrieve user and role session variables for this file.
+        if (isset($_SESSION['user'])) {
+            $user = $_SESSION['user'];
+        }
+        if (isset($_SESSION['admin'])) {
+            $role = $_SESSION['admin'];
+        }
+
         // retrieve menu details
         $id = $menuItem->getId();
         $product = $menuItem->getProduct();
@@ -18,17 +26,17 @@ class MenuDetail extends MenuIndexView
         $category = $menuItem->getCategory();
         $price = $menuItem->getPrice();
         $description = $menuItem->getDescription();
-        if (strpos($image, "http://") === false AND strpos($image, "https://") === false) {
+        if (strpos($image, "http://") === false and strpos($image, "https://") === false) {
             $image = BASE_URL . $image;
         }
 
         ?>
-        
+
         <!-- Display menu details-->
         <div id="main-header">Menu Details</div>
-        
+
         <hr>
-        
+
         <!-- display movie details in a table -->
         <table id="menu-detail-ind">
             <tr>
@@ -51,14 +59,18 @@ class MenuDetail extends MenuIndexView
                 </td>
             </tr>
         </table>
-        
+
         <div id="button-group">
+
             <input type="button" id="edit-button" value="   Edit   "
-                   onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">&nbsp;
+                   onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">&nbsp;|
             <input type="button" id="delete-button" value="   Delete Item   "
                    onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">&nbsp;
             <button>
                 <a id="menu-list-button" href="<?= BASE_URL ?>/menu/index">Return to Menu</a>
+            </button>
+            <button>
+                <a id="menu-list-button" href="<?= BASE_URL ?>/menu/addToCart/<?= $id ?>"> Add to Cart</a>
             </button>
         </div>
         <div id="confirm-message"><?= $confirm ?></div>

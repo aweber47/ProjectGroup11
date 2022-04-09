@@ -12,7 +12,7 @@ class UserIndex extends UserIndexView
      */
     public static function displayHeader($title)
     {
-        parent::displayHeader("Search User");
+       // parent::displayHeader("Search User");
     }
 
     public function display($users)

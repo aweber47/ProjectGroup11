@@ -13,7 +13,7 @@ class MenuModel
     private $tblMenu;
     private $tblCategory;
 
-    private function __construct()
+    public function __construct()
     {
         $this->db = Database::getDatabase();
         $this->dbConnection = $this->db->getConnection();
@@ -38,7 +38,7 @@ class MenuModel
     }
 
     // get categories
-    private function get_categories()
+    public function get_categories()
     {
         $sql = "SELECT * FROM " . $this->tblCategory;
         $query = $this->dbConnection->query($sql);

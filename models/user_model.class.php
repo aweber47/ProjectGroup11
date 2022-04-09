@@ -91,6 +91,12 @@ class UserModel
 
     public function verify_user()
     {
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        // setting login status
+        $_SESSION['login_status'] = 2;
+
         // retrieve the username and password
         $username = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
         $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
@@ -107,16 +113,12 @@ class UserModel
             $hash = $result_row['password'];
             if (password_verify($password, $hash)) {
                 setcookie("username", $username, time() + 60, "/");
-                $sql = "SELECT id FROM " . $this->db->getUsersTable() . " WHERE username='$username'";
+                $sql = "SELECT * FROM " . $this->db->getUsersTable() . " WHERE username='$username'";
                 $query = $this->dbConnection->query($sql);
                 $result_row = $query->fetch_assoc();
                 $user_id = $result_row['id'];
-                //echo $user_id;
-                setcookie("user_id", $user_id, time() + 60, "/");
-                /* name is your cookie's name
-                  value is cookie's value
-                  $int is time of cookie expires */
-                //setcookie("user", $username);
+                // display the users first and last name as their login information.
+                $_SESSION['login_status'] = 1;
                 return "Congratulations! You are a verified user.";
             }
         }
