@@ -16,7 +16,8 @@ class Index extends IndexView{
         <br><br><br>
         <section>
             <p id="intro">
-                At Lewie's Chinese Bistro we don't know what we are doing and probably never will.  Dining with us could be the worst decision ever made in your life.  Good luck!
+                At Lewie's Chinese Bistro we don't know what we are doing and probably never will. <br>Dining with us could be the worst decision ever made in your life.
+                <br>Good luck!
             </p>
 
             <div id="featured">

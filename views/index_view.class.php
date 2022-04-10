@@ -32,24 +32,24 @@ class IndexView{
                 <body>
                     <div id='wrapper'>
                         <header>
-                            <h1 style='color: #000; font-weight: bold; text-align: center'>
+                            <h1>
                                 Lewie's Chinese Bistro
                             </h1>
-                            <nav>
-                                <a class="nav-left" href="<?= BASE_URL ?>">
-                                    <img src="/ProjectGroup11/www/images/home.png" alt="Home Page" style="width: 50px">
-                                </a>
-                                <a class="nav-left" href="<?= BASE_URL ?>/menu/index">
-                                    <img src="/ProjectGroup11/www/images/menu.png" alt="Menu Page" style="width: 50px">
-                                </a>
-                                <a class="nav-right" href="<?= BASE_URL ?>/user/login">
-                                    <img src="/ProjectGroup11/www/images/login.png" alt="Login" style="width: 50px">
-                                </a>
-                                <a class="nav-right" href="<?= BASE_URL ?>/menu/showCart">
-                                    <img src="/ProjectGroup11/www/images/cart.png" alt="Shopping Cart" style="width: 50px">
-                                </a>
-                            </nav>
                         </header>
+                        <nav>
+                            <a class="nav-left" href="<?= BASE_URL ?>">
+                                <img src="/ProjectGroup11/www/images/home.png" alt="Home Page" style="width: 50px">
+                            </a>
+                            <a class="nav-left" href="<?= BASE_URL ?>/menu/index">
+                                <img src="/ProjectGroup11/www/images/menu.png" alt="Menu Page" style="width: 50px">
+                            </a>
+                            <a class="nav-right" href="<?= BASE_URL ?>/user/login">
+                                <img src="/ProjectGroup11/www/images/login.png" alt="Login" style="width: 50px">
+                            </a>
+                            <a class="nav-right" href="<?= BASE_URL ?>/menu/showCart">
+                                <img src="/ProjectGroup11/www/images/cart.png" alt="Shopping Cart" style="width: 50px">
+                            </a>
+                        </nav>
         <?php
     }//end of displayHeader function
 

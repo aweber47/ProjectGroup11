@@ -17,9 +17,9 @@ class MenuIndexView extends IndexView
         <!--create the search bar -->
         <div id="searchbar">
             <form method="get" action="<?= BASE_URL ?>/menu/search/">
-                <input type="text" name="query-terms" id="searchtextbox"  placeholder="Search menu items by name"
-                       autocomplete="off" onkeyup="handleKeyUp(event)">
-                <input id="search-button" type="submit" value="Go"/>
+                <label for="searchtextbox"></label>
+                <input type="search" name="query-terms" id="searchtextbox" placeholder="Search Menu" autocomplete="off" onkeyup="handleKeyUp(event)">
+                <input id="search-button" type="submit" value="Search">
             </form>
             <div id="suggestionDiv"></div>
         </div>
