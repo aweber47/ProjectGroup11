@@ -33,7 +33,7 @@ class MenuIndexView extends IndexView
             <br>
 
             <form method="get" action="<?= BASE_URL ?>/menu/search/">
-                <label for="searchtextbox"></label>
+                <label id="searchtextbox"></label>
 
                 <input type="search" name="query-terms" id="searchtextbox" placeholder="Search Menu" autocomplete="off"
                        onkeyup="handleKeyUp(event)">

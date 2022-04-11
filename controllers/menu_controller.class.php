@@ -239,9 +239,10 @@ class MenuController
     }
 
     // methods for the cart view
-
+    /*************************************************************************************
+     *         Cart Features below                        *
+     ************************************************************************************/
     //following is for the cart
-
     public function addToCart($id)
     {
         $menuItem = $this->menu_model->view_menu($id);
@@ -256,10 +257,10 @@ class MenuController
 
     public function clearCart()
     {
-        $_SESSION["cart"] = array();
+        $_SESSION['cart'] = array();
         $cart = $_SESSION['cart'];
 
-        $view = new CartIndex();
+        $view = new CartCheckout();
         $view->display($cart);
     }
 
