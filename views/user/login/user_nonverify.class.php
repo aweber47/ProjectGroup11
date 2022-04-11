@@ -27,10 +27,12 @@ class UserNonVerify extends UserIndexView
             echo '<h4><strong>Please check your username and password</strong></h4>';
             echo '<h5><strong>If you have not created an account before, please register now!</strong></h5>';
             ?>
-            <input type="button" value="Register an Account"
-                   onclick='window.location.href = "<?= BASE_URL . "/user/register/" ?>"'>
-            <input type="button" value="Back to Login Page"
-                   onclick='window.location.href = "<?= BASE_URL . "/user/login/" ?>"'>
+            <div id="button-group">
+                <input class="edit-buttons" type="button" value="Register an Account"
+                       onclick='window.location.href = "<?= BASE_URL . "/user/register/" ?>"'>
+                <input class="edit-buttons" type="button" value="Back to Login Page"
+                       onclick='window.location.href = "<?= BASE_URL . "/user/login/" ?>"'>
+            </div>
 
         </div>
         <?php

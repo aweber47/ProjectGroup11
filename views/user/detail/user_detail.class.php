@@ -44,11 +44,11 @@ class UserDetail extends UserIndexView
             </tr>
         </table>
         <div id="button-group">
-            <input type="button" id="edit-button" value="   Edit   "
+            <input class="edit-buttons" type="button" id="edit-button" value="   Edit   "
                    onclick="window.location.href = '<?= BASE_URL ?>/user/edit/<?= $id ?>'">&nbsp;|
-            <input type="button" id="delete-button" value="   Delete Account   "
+            <input class="edit-buttons" type="button" id="delete-button" value="   Delete Account   "
                    onclick="window.location.href = '<?= BASE_URL ?>/user/deleteDisplay/<?= $id ?>'">&nbsp;|
-            <input type="button" id="cancel-button" value="  Return to Account  "
+            <input class="edit-buttons" type="button" id="cancel-button" value="  Return to Account  "
                    onclick="window.location.href = '<?= BASE_URL ?>/user/login/'">
         </div>
         <div id="confirm-message"><?= $confirm ?></div>

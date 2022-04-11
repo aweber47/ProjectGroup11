@@ -278,7 +278,8 @@ nav a:active{
     border-radius: 4px;
 }
 .pagination li a:hover {
-    background-color: orangered;
+    color: red;
+    background-color: black;
 }
 .pagination .next a, .pagination .prev a {
     text-transform: uppercase;

@@ -41,7 +41,7 @@ class MenuSearch extends MenuIndexView
                 }
 
                 echo "<div class='menu-detail'>
-                            <p class='box-style-menu' ><a href='", BASE_URL, "/menu/detail/$id'><p class='product'>$product</p><br><img class='menu-pic' alt='Food Item' src='" . $image . "'></a><br><p class='category'>Category: $category</p><br> Price: $price<br> Description: $description . " . "</p>
+                            <p class='box-style-menu' ><a href='", BASE_URL, "/menu/detail/$id'><img class='menu-pic' alt='Food Item' src='" . $image . "'></a><p class='product'>$product</p><br><p class='category'>Category: $category</p><br> Price: $price<br> Description: $description . " . "</p>
                         </div>"; ?>
 
                 <?php

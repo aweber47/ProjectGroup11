@@ -36,9 +36,9 @@ class UserLogin extends UserIndexView
             ?>
             <input type="hidden" name="id" value="<?= $id ?>">
             <!-- allow the user to view their details and edit/delete account -->
-            <input type="button" value="View Account"
+            <input class="edit-buttons" type="button" value="View Account"
                    onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'"> |
-            <input type='button' value='Logout' onclick='window.location.href = "<?= BASE_URL . "/user/logout/" ?>"'>
+            <input class="edit-buttons" type='button' value='Logout' onclick='window.location.href = "<?= BASE_URL . "/user/logout/" ?>"'>
         <?php } ?>
 
         <?php
@@ -56,10 +56,10 @@ class UserLogin extends UserIndexView
                 <p><strong>Password</strong><br>
                     <input name="password" type="password" size="100" placeholder="password"
                            onfocus="this.placeholder = ' '" required></p>
-                <input type="submit" name="action" value="Login">
-                <input type="button" value="Cancel"
+                <input class="edit-buttons" type="submit" name="action" value="Login">
+                <input class="edit-buttons" type="button" value="Cancel"
                        onclick='window.location.href = "<?= BASE_URL . "/welcome/index/" ?>"'>
-                <input type="button" value="Signup"
+                <input class="edit-buttons" type="button" value="Signup"
                        onclick='window.location.href = "<?= BASE_URL . "/user/register/" ?>"'>
             </form>
         <?php } ?>

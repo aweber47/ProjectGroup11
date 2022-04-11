@@ -29,14 +29,6 @@ class UserDelete extends UserIndexView
                     <p><strong>First Name:</strong></p>
                     <p><strong>Last Name:</strong></p>
                     <p><strong>Email:</strong></p>
-                    <div id="button-group">
-                        <input type="button" id="delete-button" value="   Are you sure you want to delete?   "
-                               onclick="window.location.href = '<?= BASE_URL ?>/user/delete/<?= $id ?>'">&nbsp;
-                    </div>
-                    <div id="button-group">
-                        <input type="button" id="cancel-button" value="   Cancel   "
-                               onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'">&nbsp;
-                    </div>
                 </td>
                 <td>
                     <p><?= $username ?></p>
@@ -47,8 +39,14 @@ class UserDelete extends UserIndexView
                 </td>
             </tr>
         </table>
+        <div id="button-group">
+            <input class="edit-buttons" type="button" id="delete-button"
+                   value="   Are you sure you want to delete?   "
+                   onclick="window.location.href = '<?= BASE_URL ?>/user/delete/<?= $id ?>'">&nbsp;
+            <input class="edit-buttons" type="button" id="cancel-button" value="   Cancel   "
+                   onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'">&nbsp;
+        </div>
         <?php
-        //echo $reviewlist;
         ?>
 
         <?php

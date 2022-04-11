@@ -41,8 +41,12 @@ class UserEdit extends UserIndexView
                                                   required=""></p><br>
             <p><strong>Email</strong>: <input name="email" type="email" size="50" value="<?= $email ?>" required="">
             </p><br>
-            <input type="submit" name="action" value="Update User">
-            <input type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL . "/user/detail/$id" ?>"'>
+
+            <div id="button-group">
+                <input class="edit-buttons" type="submit" name="action" value="Update User">
+                <input class="edit-buttons" type="button" value="Cancel"
+                       onclick='window.location.href = "<?= BASE_URL . "/user/detail/$id" ?>"'>
+            </div>
         </form>
         <?php
         //display page footer

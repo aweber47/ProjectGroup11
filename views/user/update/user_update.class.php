@@ -18,8 +18,10 @@ class UserUpdate extends UserIndexView
             <?php
             echo '<p><strong>' . $message . '</strong><br>';
             ?>
-            <input type="button" value="Continue to Details"
-                   onclick='window.location.href = "<?= BASE_URL . "/user/detail/$id" ?>"'>
+            <div id="button-group">
+                <input class="edit-buttons" type="button" value="Continue to Details"
+                       onclick='window.location.href = "<?= BASE_URL . "/user/detail/$id" ?>"'>
+            </div>
         </div>
         <?php
         parent::displayFooter();
