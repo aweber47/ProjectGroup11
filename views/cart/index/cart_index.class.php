@@ -24,7 +24,7 @@ class CartIndex extends CartIndexView
         $total = 0;
 
         if (!isset($_SESSION['cart']) || !$_SESSION['cart']) {
-            echo "Your list is empty.<br><br>";
+            echo "You currently have no items within your cart<br><br>";
             exit();
         } else {
             foreach ($cart as $menuItem) {
@@ -33,7 +33,7 @@ class CartIndex extends CartIndexView
                 $price = $menuItem->getPrice();
                 echo "<div class='menu-detail'><span><p class='product'>$Product</p><br><p class='category'>Category: $category</p><br> Price: $price . "."</span></p></div>";
              //   echo $price . "<br>";
-                // setting a price var that hots the amount of the order.
+                // setting a price var that holds the amount of the order.
             }
            $total = $price++;
         }

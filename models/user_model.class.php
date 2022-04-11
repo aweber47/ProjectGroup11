@@ -1,9 +1,9 @@
 <?php
 
-/*** Author: your name*
- * Date: 4/7/2022*
+/*** Author: Alex Weber*
+ * Date: 4/11/2022*
  * File: user_model.class.php*
- * Description: */
+ * Description: Models for the User Controller. Holds, update, details, view, delete, add, and more!  */
 class UserModel
 {
     // private data
@@ -54,12 +54,12 @@ class UserModel
         while ($obj = $query->fetch_object()) {
             //echo stripslashes($obj->title);
             //echo $query->num_rows;
-            $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email));
+            $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email), stripcslashes($obj->role));
             //echo $obj->id;
-            //set the id for the videogame
+            //set the id for the user
             $user->setId($obj->id);
 
-            //add the videogame into the array
+            //add the users into the array
             $users[] = $user;
         }
         return $users;
@@ -73,13 +73,14 @@ class UserModel
         $lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_STRING);
         $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-
         //hash the password
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         echo "$username, $password, $firstname, $lastname, $email";
 
-        //INSERT query
-        $sql = "INSERT INTO " . $this->db->getUsersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email')";
+        // set the users role to 2 (2 will be default user)
+        $role = 2;
+        // INSERT query
+        $sql = "INSERT INTO " . $this->db->getUsersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email', '$role')";
 
         //execute the query and return true if successful or false if failed
         if ($this->dbConnection->query($sql) === TRUE) {
@@ -91,7 +92,7 @@ class UserModel
 
     public function verify_user()
     {
-        if(session_status() == PHP_SESSION_NONE){
+        if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         // setting login status
@@ -117,10 +118,30 @@ class UserModel
                 $query = $this->dbConnection->query($sql);
                 $result_row = $query->fetch_assoc();
                 $user_id = $result_row['id'];
+                $user_detail = $result_row['username'];
+                $user_role = $result_row['role'];
+
+                //Session variable that holds the user id
+                $_SESSION['user_id'] = $user_id;
+
                 // display the users first and last name as their login information.
                 $_SESSION['login_status'] = 1;
+
+                // session var to store logged in username
+                $_SESSION['name'] = $user_detail;
+
+                // obtain the user role, store it in a session variable
+                $_SESSION['role'] = $user_role;
+
+                //echo the role number to verify it is reading correctly
+                echo $_SESSION['role'];
+
                 return "Congratulations! You are a verified user.";
+            } else {
+                $verify = "Invalid Password, Try again.";
             }
+        } else {
+            $verify = "Invalid account, please register or check your username and password";
         }
     }
 
@@ -135,10 +156,9 @@ class UserModel
             $obj = $query->fetch_object();
 
             //create an user object
-            $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email));
+            $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email), stripcslashes($obj->role));
             //set the id for the user
             $user->setId($obj->id);
-            echo "worked";
             return $user;
         }
         return false;

@@ -13,21 +13,17 @@ if (isset($_SESSION['cart'])) {
 } else {
     $cart = array();  //initialize an empty array
 }
-
-//if book id cannot be found, or it is not an integer, terminate script.
-if (!isset($_GET['ID']) || !(int)$_GET['ID']) {
-    $error = "Invalid book or movie id detected. Operation cannot proceed.";
-    header("Location: error.php?m=$error");
-    die();
+if (filter_has_var(INPUT_GET, 'id')) {
+    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 }
 
-//retrieve book id and make sure it is a numeric value.
-$id = $_GET['ID'];
+// determine if Id is found
+if (!$id) {
+    $error = "Invalid menu item selected. Cannot proceed.";
+    exit();
+}
 
-/*
- * If the same book alreadt exists in the shopping card, increment the quantity by 1.
- * If not, add the book id into the cart and set the quantity to 1.
- */
+//set qty as per selection.
 if (array_key_exists($id, $cart)) {
     $cart[$id] = $cart[$id] + 1;
 } else {

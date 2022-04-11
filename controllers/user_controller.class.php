@@ -1,9 +1,9 @@
 <?php
 
-/*** Author: your name*
- * Date: 4/7/2022*
+/*** Author: Alex Weber*
+ * Date: 4/11/2022*
  * File: user_controller.class.php*
- * Description: */
+ * Description: User Controller holds all actions invoked by the models */
 class UserController
 {
     private $user_model;
@@ -136,8 +136,13 @@ class UserController
         //echo "called";
         $verify = $this->user_model->verify_user();
 
-        $verificationPage = new UserVerify();
-        $verificationPage->display($verify);
+        if(!$verify){
+            $verificationPage = new UserNonVerify();
+            $verificationPage->display($verify);
+        }else{
+            $verificationPage = new UserVerify();
+            $verificationPage->display($verify);
+        }
     }
 
     //handle an error

@@ -7,7 +7,8 @@
 class UserIndexView extends IndexView
 {
 
-    public static function displayHeader($title) {
+    public static function displayHeader($title)
+    {
         parent::displayHeader($title)
         ?>
         <script>
@@ -17,7 +18,8 @@ class UserIndexView extends IndexView
         <?php
     }
 
-    public static function displayFooter() {
+    public static function displayFooter()
+    {
         parent::displayFooter();
     }
 }

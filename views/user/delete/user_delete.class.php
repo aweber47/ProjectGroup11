@@ -50,7 +50,6 @@ class UserDelete extends UserIndexView
         <?php
         //echo $reviewlist;
         ?>
-        <a href="<?= BASE_URL ?>/welcome/index">Home Page</a>
 
         <?php
         //display page footer

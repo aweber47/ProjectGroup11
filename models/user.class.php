@@ -8,10 +8,10 @@ class User
 {
 
     //private data members
-    private $id, $username, $password, $firstname, $lastname, $email;
+    private $id, $username, $password, $firstname, $lastname, $email, $role;
 
     //the constructor
-    public function __construct($id, $username, $password, $firstname, $lastname, $email)
+    public function __construct($id, $username, $password, $firstname, $lastname, $email, $role)
     {
         $this->id = $id;
         $this->username = $username;
@@ -19,6 +19,7 @@ class User
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
+        $this->role = $role;
     }
 
     //getters
@@ -52,6 +53,10 @@ class User
         return $this->email;
     }
 
+    function getRole(){
+        return $this->role;
+    }
+
     //setters
     function setId($id){
         $this->id = $id;
@@ -79,5 +84,9 @@ class User
     function setEmail($email)
     {
         $this->email = $email;
+    }
+
+    function setRole($role){
+        $this->role = $role;
     }
 }

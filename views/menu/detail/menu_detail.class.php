@@ -1,23 +1,26 @@
 <?php
 
-/*** Author: your name*
- * Date: 4/5/2022*
+/*** Author: Alex Weber*
+ * Date: 4/11/2022*
  * File: menu_detail.class.php*
- * Description: */
+ * Description: The menu detail page displays the buttons and menu detail of an item. The buttons are controlled by a session variable 'role' defined in the user controller.*/
 class MenuDetail extends MenuIndexView
 {
     public function display($menuItem, $confirm = "")
     {
         // display page header
         parent::displayHeader("Product Details");
+        //session
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['role'])) {
+            $role = $_SESSION['role'];
+        }
+        $role;
+        // echo is here (and commented out to fool the variable).
+        //echo $role;
 
-        // retrieve user and role session variables for this file.
-        if (isset($_SESSION['user'])) {
-            $user = $_SESSION['user'];
-        }
-        if (isset($_SESSION['admin'])) {
-            $role = $_SESSION['admin'];
-        }
 
         // retrieve menu details
         $id = $menuItem->getId();
@@ -30,6 +33,7 @@ class MenuDetail extends MenuIndexView
             $image = BASE_URL . $image;
         }
 
+
         ?>
 
         <!-- Display menu details-->
@@ -37,7 +41,7 @@ class MenuDetail extends MenuIndexView
 
         <hr>
 
-        <!-- display movie details in a table -->
+        <!-- display menu details in a table -->
         <table id="menu-detail-ind">
             <tr>
                 <td>
@@ -62,13 +66,21 @@ class MenuDetail extends MenuIndexView
 
         <div id="button-group">
 
-            <input type="button" id="edit-button" value="   Edit   "
-                   onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">&nbsp;|
-            <input type="button" id="delete-button" value="   Delete Item   "
-                   onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">&nbsp;
+            <?php
+            error_reporting(0);
+            // display edit and delete buttons if user role is 1
+            if ($role == 1) {
+                ?>
+                <input type="button" id="edit-button" value="   Edit   "
+                       onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">&nbsp;|
+                <input type="button" id="delete-button" value="   Delete Item   "
+                       onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">&nbsp;|
+                <?php
+            }
+            ?>
             <button>
                 <a id="menu-list-button" href="<?= BASE_URL ?>/menu/index">Return to Menu</a>
-            </button>
+            </button> |
             <button>
                 <a id="menu-list-button" href="<?= BASE_URL ?>/menu/addToCart/<?= $id ?>"> Add to Cart</a>
             </button>

@@ -12,6 +12,7 @@ class MenuModel
     static private $_instance = NULL;
     private $tblMenu;
     private $tblCategory;
+    private $tblUsers;
 
     public function __construct()
     {
@@ -19,6 +20,7 @@ class MenuModel
         $this->dbConnection = $this->db->getConnection();
         $this->tblMenu = $this->db->getMenuTable();
         $this->tblCategory = $this->db->getCategoryTable();
+        $this->tblUsers = $this->db->getUsersTable();
 
         //Escapes special characters in a string for use in an SQL statement. This stops SQL inject in POST vars.
         foreach ($_POST as $key => $value) {
@@ -95,6 +97,7 @@ class MenuModel
 
         }
         return $menuItems;
+        echo $_SESSION['role'];
     }
 
     public function view_menu($id)
