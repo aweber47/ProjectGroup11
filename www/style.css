@@ -256,3 +256,38 @@ nav a:active{
     font-weight: bold;
     font-style: italic;
 }
+.pagination {
+    list-style-type: none;
+    padding: 10px 0;
+    display: inline-flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.pagination li {
+    box-sizing: border-box;
+    padding-right: 10px;
+}
+.pagination li a {
+    box-sizing: border-box;
+    background-color: black;
+    padding: 8px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgba(255, 215, 0, 0.75);
+    border-radius: 4px;
+}
+.pagination li a:hover {
+    background-color: orangered;
+}
+.pagination .next a, .pagination .prev a {
+    text-transform: uppercase;
+    font-size: 12px;
+}
+.pagination .currentpage a {
+    background-color: darkorange;
+    color: #fff;
+}
+.pagination .currentpage a:hover {
+    background-color: darkorange;
+}

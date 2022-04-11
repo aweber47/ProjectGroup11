@@ -6,6 +6,8 @@
  * Description: */
 class MenuModel
 {
+
+
     // private data members
     private $db;
     private $dbConnection;
@@ -13,6 +15,7 @@ class MenuModel
     private $tblMenu;
     private $tblCategory;
     private $tblUsers;
+
 
     public function __construct()
     {
@@ -67,7 +70,37 @@ class MenuModel
     // list the menu items
     public function list_menu()
     {
-        $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id";
+        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
+        $_SESSION['page'] = $page;
+        /*************************************************************************************
+         *         Paginator Honor Feature                        *
+         ************************************************************************************/
+        // session
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // defining number per page
+        if (!isset($_SESSION['$records_per_page'])) {
+            $_SESSION['$records_per_page'] = 3;
+        } else {
+            if (isset($_POST['items'])) {
+                $_SESSION['$records_per_page'] = $_POST['items'];
+            }
+        }
+        // keeping track of the number of products the user wants
+        $no_of_records_per_page = $_SESSION['$records_per_page'];
+
+        // pagination formula starts here:
+        $offset = ($page - 1) * $no_of_records_per_page;
+        // Getting total number of pages
+        $total_pages_sql = "SELECT COUNT(*) FROM " . $this->tblMenu;
+        $result = mysqli_query($this->dbConnection, $total_pages_sql);
+        $total_rows = mysqli_fetch_array($result)[0];
+        $total_pages = ceil($total_rows / $no_of_records_per_page);
+        // store as a session var
+        $_SESSION['total_page'] = $total_pages;
+        $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " LIMIT " . " $offset, $no_of_records_per_page";
 
         // execute the thing above
         $query = $this->dbConnection->query($sql);
@@ -97,7 +130,6 @@ class MenuModel
 
         }
         return $menuItems;
-        echo $_SESSION['role'];
     }
 
     public function view_menu($id)
@@ -124,43 +156,110 @@ class MenuModel
 
     public function search_menu($terms)
     {
-        $terms = explode(" ", $terms); //explode multiple terms into an array
-        //select statement for AND serach
-        $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory .
-            " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id AND (1";
-
-        foreach ($terms as $term) {
-            $sql .= " AND product LIKE '%" . $term . "%'";
+        // start a php session
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
         }
+        $booly = $_SESSION['boolValue'];
 
-        $sql .= ")";
 
-        //execute the query
-        $query = $this->dbConnection->query($sql);
+        if ($booly == 'true') {
+            $terms = explode(" ", $terms); //explode multiple terms into an array
+            //select statement for AND search
+            $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory .
+                " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id AND (1";
 
-        // the search failed, return false.
-        if (!$query)
-            return false;
+            foreach ($terms as $term) {
+                // individually classify the variables
+                if (isset($_GET["bool1"])) {
+                    $sql .= ' AND product LIKE "%' . $term . '%"';
+                }
+                if (isset($_GET["bool2"])) {
+                    $sql .= ' AND price LIKE "%' . $term . '%"';
+                }
+                if (isset($_GET["bool3"])) {
+                    $sql .= ' AND description LIKE "%' . $term . '%"';
+                }
+                $sql .= ' AND product LIKE "%' . $term . '%"';
+            }
 
-        //search succeeded, but no videogame was found.
-        if ($query->num_rows == 0)
-            return 0;
+            $sql .= ")";
 
-        // create an array to store all returned items
-        $menuItems = array();
+            //execute the query
+            $query = $this->dbConnection->query($sql);
 
-        // loopy through the stuff
-        while ($obj = $query->fetch_object()) {
-            $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+            // the search failed, return false.
+            if (!$query)
+                return false;
 
-            // set the id for the menu item
-            $menuItem->setId($obj->id);
+            //search succeeded, but no menu item found.
+            if ($query->num_rows == 0)
+                return 0;
 
-            // add the menu item into the array
-            $menuItems[] = $menuItem;
+            // create an array to store all returned items
+            $menuItems = array();
 
+            // loopy through the stuff
+            while ($obj = $query->fetch_object()) {
+                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+
+                // set the id for the menu item
+                $menuItem->setId($obj->id);
+
+                // add the menu item into the array
+                $menuItems[] = $menuItem;
+
+            }
+            return $menuItems;
+
+        } else {
+            $terms = explode(" ", $terms); //explode multiple terms into an array
+            //select statement for OR Search
+            $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory .
+                " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id AND (1";
+
+            foreach ($terms as $term) {
+                // individually classify the variables
+                if (isset($_GET["bool1"])) {
+                    $sql .= ' OR product LIKE "%' . $term . '%"';
+                }
+                if (isset($_GET["bool2"])) {
+                    $sql .= ' OR price LIKE "%' . $term . '%"';
+                }
+                if (isset($_GET["bool3"])) {
+                    $sql .= ' OR description LIKE "%' . $term . '%"';
+                }
+            }
+
+            $sql .= ")";
+
+            //execute the query
+            $query = $this->dbConnection->query($sql);
+
+            // the search failed, return false.
+            if (!$query)
+                return false;
+
+            //search succeeded, but no menu item found.
+            if ($query->num_rows == 0)
+                return 0;
+
+            // create an array to store all returned items
+            $menuItems = array();
+
+            // loopy through the stuff
+            while ($obj = $query->fetch_object()) {
+                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+
+                // set the id for the menu item
+                $menuItem->setId($obj->id);
+
+                // add the menu item into the array
+                $menuItems[] = $menuItem;
+
+            }
+            return $menuItems;
         }
-        return $menuItems;
     }
 
     public function update_menu($id)
@@ -186,7 +285,8 @@ class MenuModel
         return $this->dbConnection->query($sql);
     }
 
-    public function add_menuItem()
+    public
+    function add_menuItem()
     {
 
         $product = filter_input(INPUT_POST, "product", FILTER_SANITIZE_STRING);
@@ -208,7 +308,8 @@ class MenuModel
         return false;
     }
 
-    public function delete_menuItem($id)
+    public
+    function delete_menuItem($id)
     {
         $sql = "DELETE FROM " . $this->tblMenu . " WHERE id='$id'";
         return $this->dbConnection->query($sql);

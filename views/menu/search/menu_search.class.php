@@ -4,11 +4,12 @@
  * Date: 4/5/2022*
  * File: menu_search.class.php*
  * Description: */
-class MenuSearch extends MenuIndexView{
-    public function display($terms, $menuItems){
+class MenuSearch extends MenuIndexView
+{
+    public function display($terms, $menuItems)
+    {
         //display page header
         parent::displayHeader("Search Results");
-
         ?>
         <div id="main-header"> Search Results for <i><?= $terms ?></i></div>
         <span class="rcd-numbers">
@@ -27,8 +28,8 @@ class MenuSearch extends MenuIndexView{
                 $product = $menuItem->getProduct();
                 $image = $menuItem->getImage();
 
-                if (strpos($image, "http://") === false AND strpos($image, "https://") === false) {
-                    $image = BASE_URL . "/" . MENU_IMG . $image;
+                if (strpos($image, "http://") === false and strpos($image, "https://") === false) {
+                    $image = BASE_URL . $image;
                 }
 
                 $category = $menuItem->getCategory();
@@ -39,8 +40,9 @@ class MenuSearch extends MenuIndexView{
                     echo "<div class='row'>";
                 }
 
-                echo "<div class='menu-detail'><p><a href='", BASE_URL, "/menu/detail/$id'><span><p class='product'>$product</p><img src='" . $image . "'></a><br><p class='category'>Category: $category</p><br> Price: $price<br> Description: $description . "."</span></p></div>";
-                ?>
+                echo "<div class='menu-detail'>
+                            <p class='box-style-menu' ><a href='", BASE_URL, "/menu/detail/$id'><p class='product'>$product</p><br><img class='menu-pic' alt='Food Item' src='" . $image . "'></a><br><p class='category'>Category: $category</p><br> Price: $price<br> Description: $description . " . "</p>
+                        </div>"; ?>
 
                 <?php
                 if ($i % 6 == 5 || $i == count($menuItems) - 1) {
@@ -49,9 +51,6 @@ class MenuSearch extends MenuIndexView{
             }
         }
         ?>
-        <!--</div>-->
-        <a href="<?= BASE_URL ?>/menu/index">Add an Item</a>
-
         <?php
         //display page footer
         parent::displayFooter();

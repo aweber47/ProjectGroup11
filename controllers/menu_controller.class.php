@@ -89,6 +89,24 @@ class MenuController
     //search menu item
     public function search()
     {
+        // create a php session
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+
+        if(!filter_has_var(INPUT_GET,'w')){
+            echo "Not reading the radio buttons correctly";
+        }
+        // determine the search feature control
+        if(!isset($_SESSION['boolValue'])){
+            $_SESSION['boolValue'] = 'false';
+        }else{
+            if(isset($_GET['w'])) {
+                $_SESSION['boolValue'] = $_GET['w'];
+            }
+        }
+        echo $_SESSION['boolValue'];
+
         //retrieve query terms from search form
         $query_terms = trim($_GET['query-terms']);
 
@@ -108,7 +126,7 @@ class MenuController
         }
         //display matched menu items
         $search = new MenuSearch();
-        $search->display($query_terms, $menuItems);
+        $search->display($query_terms,$menuItems);
     }
 
     //display a menu Item in a form for editing
