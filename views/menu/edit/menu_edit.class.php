@@ -34,24 +34,24 @@ class MenuEdit extends MenuIndexView
                 <legend>Edit Menu Item</legend>
                 <input type="hidden" name="id" value="<?= $id ?>">
                 <label for="Item Name" class="edit-left">Item Name:</label>
-                    <input id="Item Name" name="product" type="text" size="100" value="<?= $product ?>" required autofocus class="edit-right">
+                <input id="Item Name" name="product" type="text" size="100" value="<?= $product ?>" required autofocus class="edit-right">
                 <br>
                 <label for="Image" class="edit-left">Image:</label>
-                    <input id="Image" name="image" type="text" size="100" required value="<?= $image ?>" class="edit-right" placeholder="url (http:// or https://) or local file including path and file extension">
+                <input id="Image" name="image" type="text" size="100" required value="<?= $image ?>" class="edit-right" placeholder="url (http:// or https://) or local file including path and file extension">
                 <br>
                 <label for="<?= $category ?>" class="edit-left">Category:</label>
-                    <select name="category" form="edit_form" id="<?= $category ?>" class="edit-right">
-                        <option value="1">App</option>
-                        <option value="2">Entrees</option>
-                        <option value="3">Soup</option>
-                    </select>
+                <select name="category" form="edit_form" id="<?= $category ?>" class="edit-right">
+                    <option value="1">App</option>
+                    <option value="2">Entrees</option>
+                    <option value="3">Soup</option>
+                </select>
                 <br>
                 <input type="hidden" name="rating" value="1">
                 <label for="Price" class="edit-left">Price:</label>
-                    <input id="Price" name="price" type="text" size="40" value="<?= $price ?>" required="" class="edit-right">
+                <input id="Price" name="price" type="text" size="40" value="<?= $price ?>" required="" class="edit-right">
                 <br>
                 <label for="Description" class="edit-left">Description:</label>
-                    <textarea id="Description" name="description" rows="8" cols="100"><?= $description ?></textarea class="edit-right">
+                <textarea id="Description" name="description" rows="8" cols="100"><?= $description ?></textarea class="edit-right">
             </fieldset>
             <br>
             <input class="edit-buttons" type="submit" name="action" value=" Update ">

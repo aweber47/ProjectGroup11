@@ -11,6 +11,9 @@ class MenuIndex extends MenuIndexView
     }
     public function display($menuItems)
     {
+
+        // attempt to implement cart
+
         //display page header
         parent::displayHeader("List all Menu Items");
 

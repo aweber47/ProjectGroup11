@@ -26,22 +26,22 @@ class MenuSearch extends MenuIndexView{
                 $id = $menuItem->getId();
                 $product = $menuItem->getProduct();
                 $image = $menuItem->getImage();
-                
+
                 if (strpos($image, "http://") === false AND strpos($image, "https://") === false) {
                     $image = BASE_URL . "/" . MENU_IMG . $image;
                 }
-                
+
                 $category = $menuItem->getCategory();
                 $price = $menuItem->getPrice();
                 $description = $menuItem->getDescription();
-                
+
                 if ($i % 6 == 0) {
                     echo "<div class='row'>";
                 }
-                
+
                 echo "<div class='menu-detail'><p><a href='", BASE_URL, "/menu/detail/$id'><span><p class='product'>$product</p><img src='" . $image . "'></a><br><p class='category'>Category: $category</p><br> Price: $price<br> Description: $description . "."</span></p></div>";
                 ?>
-                
+
                 <?php
                 if ($i % 6 == 5 || $i == count($menuItems) - 1) {
                     echo "</div>";

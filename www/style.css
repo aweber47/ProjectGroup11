@@ -4,7 +4,7 @@
   Description: Style sheet for Lewie's website
 */
 
-        /*  **  Handles the background for the entire site  **  */
+/*  **  Handles the background for the entire site  **  */
 body{
     background-image: url("images/dragon_red.png");
     background-size: cover;
@@ -12,7 +12,7 @@ body{
     background-color: rgba(0,0,0,0.75);
 }
 
-        /*  **  index_view.class.php  **  */
+/*  **  index_view.class.php  **  */
 header{
     /* For all headers */
     font-family: "Lucida Calligraphy", cursive;
@@ -42,7 +42,7 @@ footer #copyright-complete{
     text-align: center;
 }
 
-        /*  **  welcome_index.class.php  **  */
+/*  **  welcome_index.class.php  **  */
 nav{
     /*display: flex;
     flex-direction: row;
@@ -114,7 +114,7 @@ nav a:active{
     font-size: 1.25em;
 }
 
-        /*  ** menu_index.class.php **  */
+/*  ** menu_index.class.php **  */
 .menu-detail{
     background-color: rgba(255, 215, 0, 0.75);
     padding: 10px;
@@ -142,7 +142,7 @@ nav a:active{
     margin-bottom: -10px;
 }
 
-        /*  ** menu_detail.class.php **  */
+/*  ** menu_detail.class.php **  */
 #menu-detail-ind{
     background-color: rgba(255, 215, 0, 0.90);
     margin: auto;
@@ -191,7 +191,7 @@ nav a:active{
     text-align: center;
 }
 
-        /*  ** menu_edit.class.php **  */
+/*  ** menu_edit.class.php **  */
 #edit-form{
     background-color: rgba(255, 215, 0, 0.75);
     padding-bottom: 10px;
@@ -233,7 +233,7 @@ nav a:active{
     background-color: black;
 }
 
-        /*  ** menu_index_view.class.php **  */
+/*  ** menu_index_view.class.php **  */
 #searchbar{
     text-align: center;
     margin-top: 20px;
@@ -243,7 +243,7 @@ nav a:active{
 
 }
 
-        /*  ** menu_index_view.class.php **  */
+/*  ** menu_index_view.class.php **  */
 #menu-list-button{
     text-decoration: none;
     color: black;
