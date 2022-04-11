@@ -25,7 +25,7 @@ class MenuError extends MenuIndexView
             </tr>
         </table>
         <br><br><br><br><hr>
-        <a href="<?= BASE_URL ?>/menu/index">Back to movie list</a>
+        <input class="return-button" type="button" value="Return to List" onclick="window.location.href='<?= BASE_URL ?>/menu/index'">
         <?php
         //display page footer
         parent::displayFooter();
