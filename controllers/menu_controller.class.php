@@ -112,19 +112,6 @@ class MenuController
 
         //retrieve query terms from search form
         $query_terms = trim($_GET['query-terms']);
-      /*  if($query_terms == "") {
-            //session var
-            if(session_status() == PHP_SESSION_NONE){
-                session_start();
-            }
-            $_SESSION['$records_per_page'] = 3;
-
-            $menuItems = $this->menu_model->list_menu();
-
-
-            $view = new MenuIndex();
-            $view->display($menuItems);
-        }*/
 
         // if search term is empty, list menu items
         //search the database for matching menu products

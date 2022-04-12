@@ -121,7 +121,7 @@ class MenuModel
         $menuItems = array();
 
         // loopy through the stuff
-        while($obj = mysqli_fetch_object($res_data)){
+        while ($obj = mysqli_fetch_object($res_data)) {
             $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
 
             // set the id for the menu item
@@ -165,28 +165,8 @@ class MenuModel
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
-        $_SESSION['page'] = $page;
-
-        // defining number per page
-        if (isset($_POST['items'])) {
-            $_SESSION['$records_per_page'] = $_POST['items'];
-        }
 
         $booly = $_SESSION['boolValue'];
-
-        // keeping track of the number of products the user wants
-        $no_of_records_per_page = $_SESSION['$records_per_page'];
-
-        // pagination formula starts here:
-        $offset = ($page - 1) * $no_of_records_per_page;
-        // Getting total number of pages
-        $total_pages_sql = "SELECT COUNT(*) FROM " . $this->tblMenu;
-        $result = mysqli_query($this->dbConnection, $total_pages_sql);
-        $total_rows = mysqli_fetch_array($result)[0];
-        $total_pages = ceil($total_rows / $no_of_records_per_page);
-        // store as a session var
-        $_SESSION['total_page'] = $total_pages;
 
 
         if ($booly == 'true') {
@@ -212,16 +192,11 @@ class MenuModel
                 if (isset($_GET["bool3"])) {
                     $sql .= ' AND description LIKE "%' . $term . '%"';
                 }
-                $sql .= ' AND product LIKE "%' . $term . '%"';
+                // $sql .= ' AND product LIKE "%' . $term . '%"';
             }
 
             $sql .= ")";
 
-            // sql statement before the limit statement
-            $before_limit = $sql;
-
-            // final sql statement adds in the limit feature.
-            $sql = $before_limit . " LIMIT " . " $offset, $no_of_records_per_page";
             //execute the query
             $query = $this->dbConnection->query($sql);
 
@@ -234,30 +209,29 @@ class MenuModel
                 return 0;
 
             // create an array to store all returned items
-            $menuItems = array();
+            $searchItems = array();
 
             // loopy through the stuff
             while ($obj = $query->fetch_object()) {
-                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+                $searchItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
 
                 // set the id for the menu item
-                $menuItem->setId($obj->id);
+                $searchItem->setId($obj->id);
 
                 // add the menu item into the array
-                $menuItems[] = $menuItem;
-
+                $searchItems[] = $searchItem;
             }
-            return $menuItems;
+            var_dump($searchItems);
+            return $searchItems;
         } else {
             $terms = explode(" ", $terms); //explode multiple terms into an array
             //select statement for OR Search
-            $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory .
-                " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id AND (1";
+            $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id OR (";
 
             foreach ($terms as $term) {
                 // individually classify the variables
                 if (isset($_GET["bool1"])) {
-                    $sql .= ' OR product LIKE "%' . $term . '%"';
+                    $sql .= ' product LIKE "%' . $term . '%"';
                 }
                 if (isset($_GET["bool2"])) {
                     $sql .= ' OR price LIKE "%' . $term . '%"';
@@ -265,16 +239,11 @@ class MenuModel
                 if (isset($_GET["bool3"])) {
                     $sql .= ' OR description LIKE "%' . $term . '%"';
                 }
-                $sql .= ' OR product LIKE "%' . $term . '%"';
+                //$sql .= ' OR product LIKE "%' . $term . '%"';
             }
 
             $sql .= ")";
 
-            // sql statement before the limit statement
-            $before_limit = $sql;
-
-            // final sql statement adds in the limit feature.
-            $sql = $before_limit . " LIMIT " . " $offset, $no_of_records_per_page";
 
             //execute the query
             $query = $this->dbConnection->query($sql);
@@ -288,19 +257,20 @@ class MenuModel
                 return 0;
 
             // create an array to store all returned items
-            $menuItems = array();
+            $searchItems = array();
 
             // loopy through the stuff
             while ($obj = $query->fetch_object()) {
-                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+                $searchItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
 
                 // set the id for the menu item
-                $menuItem->setId($obj->id);
+                $searchItem->setId($obj->id);
 
                 // add the menu item into the array
-                $menuItems[] = $menuItem;
+                $searchItems[] = $searchItem;
             }
-            return $menuItems;
+            var_dump($searchItems);
+            return $searchItems;
         }
     }
 

@@ -14,10 +14,7 @@ class MenuSearch extends MenuIndexView
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        // retrieve session vars related to paginator
-        $page = $_SESSION['page'];
-        $total_pages = $_SESSION['total_page'];
-        ?>
+           ?>
         <div id="main-header"> Search Results for <i><?= $terms ?></i></div>
         <span class="rcd-numbers">
             <?php
@@ -58,30 +55,6 @@ class MenuSearch extends MenuIndexView
             }
         }
         ?>
-        <div align="center">
-            <ul class="pagination">
-                <li><a href="?page=1">First</a></li>
-                <li class="<?php if ($page <= 1) {
-                    echo 'disabled';
-                } ?>">
-                    <a href="<?php if ($page <= 1) {
-                        echo '#';
-                    } else {
-                        echo "?page=" . ($page - 1);
-                    } ?>">Prev</a>
-                </li>
-                <li class="<?php if ($page >= $total_pages) {
-                    echo 'disabled';
-                } ?>">
-                    <a href="<?php if ($page >= $total_pages) {
-                        echo '#';
-                    } else {
-                        echo "?page=" . ($page + 1);
-                    } ?>">Next</a>
-                </li>
-                <li><a href="?page=<?php echo $total_pages; ?>">Last</a></li>
-            </ul>
-        </div>
         <?php
         //display page footer
         parent::displayFooter();
