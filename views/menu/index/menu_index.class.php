@@ -55,6 +55,7 @@ class MenuIndex extends MenuIndexView
                         echo "</div>";
                     }
                 }
+                $_SESSION['count']++;
             }
             ?>
         </div>

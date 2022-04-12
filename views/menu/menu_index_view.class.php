@@ -20,7 +20,7 @@ class MenuIndexView extends IndexView
             <form action="" method="post">
                 <p>How many products would you like displayed?</p>
                 <label style="color:goldenrod; background-color: black;">
-                    <input type="radio" name="items" value="3" onchange="this.form.submit()"> 3 Products
+                    <input checked type="radio" name="items" value="3" onchange="this.form.submit()"> 3 Products
                 </label>
                 <label style="color:goldenrod; background-color: black;">
                     <input type="radio" name="items" value="5" onchange="this.form.submit()"> 5 Products
@@ -35,9 +35,10 @@ class MenuIndexView extends IndexView
             <form method="get" action="<?= BASE_URL ?>/menu/search/">
                 <label id="searchtextbox"></label>
 
+
                 <input type="search" name="query-terms" id="searchtextbox" placeholder="Search Menu" autocomplete="off"
                        onkeyup="handleKeyUp(event)">
-                <input id="search-button" type="submit" value="Search"><br>
+                <input id="search-button" type="submit" value="Search">><br>
 
                 <?php
                 /*************************************************************************************
@@ -45,7 +46,7 @@ class MenuIndexView extends IndexView
                  ************************************************************************************/
                 ?>
                 <!-- AND SEARCH -->
-                <input style="color:goldenrod; background-color: black;" type="radio" name="w" value="true">
+                <input checked style="color:goldenrod; background-color: black;" type="radio" name="w" value="true">
                 <label style="color:goldenrod; background-color: black;">Find all of my search terms (AND) </label>
 
                 <!-- OR SEARCH -->
@@ -53,8 +54,7 @@ class MenuIndexView extends IndexView
                 <label style="color:goldenrod; background-color: black;">Find all of my search terms (OR) </label><br>
 
                 <!---Limiting the search more!-->
-
-                <input type="checkbox" name="bool1" value="1"<?= (isset($_GET['bool1']) ? ' checked ' : '') ?>>
+                <input checked type="checkbox" name="bool1" value="1"<?= (isset($_GET['bool1']) ? ' checked ' : '') ?>>
                 <label style="color:goldenrod; background-color: black;">Product Name</label>
 
                 <input type="checkbox" name="bool2" value="2"<?= (isset($_GET['bool2']) ? ' checked ' : '') ?>>

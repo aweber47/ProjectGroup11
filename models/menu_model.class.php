@@ -101,7 +101,9 @@ class MenuModel
         // store as a session var
         $_SESSION['total_page'] = $total_pages;
         $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " LIMIT " . " $offset, $no_of_records_per_page";
-
+        $res_data = mysqli_query($this->dbConnection, $sql);
+        $cnt = 1;
+        $_SESSION['count'] = $cnt;
         // execute the thing above
         $query = $this->dbConnection->query($sql);
 
@@ -119,7 +121,7 @@ class MenuModel
         $menuItems = array();
 
         // loopy through the stuff
-        while ($obj = $query->fetch_object()) {
+        while($obj = mysqli_fetch_object($res_data)){
             $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
 
             // set the id for the menu item
@@ -128,6 +130,8 @@ class MenuModel
             // add the menu item into the array
             $menuItems[] = $menuItem;
 
+            // count
+            $cnt++;
         }
         return $menuItems;
     }
@@ -156,11 +160,33 @@ class MenuModel
 
     public function search_menu($terms)
     {
-        // start a php session
+
+        // uwu the session back to life
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+        $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
+        $_SESSION['page'] = $page;
+
+        // defining number per page
+        if (isset($_POST['items'])) {
+            $_SESSION['$records_per_page'] = $_POST['items'];
+        }
+
         $booly = $_SESSION['boolValue'];
+
+        // keeping track of the number of products the user wants
+        $no_of_records_per_page = $_SESSION['$records_per_page'];
+
+        // pagination formula starts here:
+        $offset = ($page - 1) * $no_of_records_per_page;
+        // Getting total number of pages
+        $total_pages_sql = "SELECT COUNT(*) FROM " . $this->tblMenu;
+        $result = mysqli_query($this->dbConnection, $total_pages_sql);
+        $total_rows = mysqli_fetch_array($result)[0];
+        $total_pages = ceil($total_rows / $no_of_records_per_page);
+        // store as a session var
+        $_SESSION['total_page'] = $total_pages;
 
 
         if ($booly == 'true') {
@@ -170,6 +196,12 @@ class MenuModel
                 " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id AND (1";
 
             foreach ($terms as $term) {
+                // prevent random array key errors for unset session vars
+                error_reporting(0);
+                // this is meant so a user can search a key word for the product name and description (for allegries and such)
+                if (isset($_GET['bool1']) && ($_GET['bool3']) == 'true') {
+                    $sql .= ' AND product && description LIKE "%' . $term . '%"';
+                }
                 // individually classify the variables
                 if (isset($_GET["bool1"])) {
                     $sql .= ' AND product LIKE "%' . $term . '%"';
@@ -185,6 +217,11 @@ class MenuModel
 
             $sql .= ")";
 
+            // sql statement before the limit statement
+            $before_limit = $sql;
+
+            // final sql statement adds in the limit feature.
+            $sql = $before_limit . " LIMIT " . " $offset, $no_of_records_per_page";
             //execute the query
             $query = $this->dbConnection->query($sql);
 
@@ -211,7 +248,6 @@ class MenuModel
 
             }
             return $menuItems;
-
         } else {
             $terms = explode(" ", $terms); //explode multiple terms into an array
             //select statement for OR Search
@@ -229,9 +265,16 @@ class MenuModel
                 if (isset($_GET["bool3"])) {
                     $sql .= ' OR description LIKE "%' . $term . '%"';
                 }
+                $sql .= ' OR product LIKE "%' . $term . '%"';
             }
 
             $sql .= ")";
+
+            // sql statement before the limit statement
+            $before_limit = $sql;
+
+            // final sql statement adds in the limit feature.
+            $sql = $before_limit . " LIMIT " . " $offset, $no_of_records_per_page";
 
             //execute the query
             $query = $this->dbConnection->query($sql);
@@ -256,7 +299,6 @@ class MenuModel
 
                 // add the menu item into the array
                 $menuItems[] = $menuItem;
-
             }
             return $menuItems;
         }

@@ -23,17 +23,17 @@ class MenuController
             session_start();
         }
         // verify if the user logging in is an admin user
-        if(!isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user'])) {
             $_SESSION['user'] = false;
         }
-        if(!isset($_SESSION['admin'])) {
+        if (!isset($_SESSION['admin'])) {
             $_SESSION['admin'] = false;
         }
         if (!isset($_SESSION['categories'])) {
             $categories = $this->menu_model->get_categories();
             $_SESSION['categories'] = $categories;
         }
-        if(!isset($_SESSION['cart'])) {
+        if (!isset($_SESSION['cart'])) {
 
             //session_destroy();
             $_SESSION['cart'] = array();
@@ -89,19 +89,22 @@ class MenuController
     //search menu item
     public function search()
     {
+
         // create a php session
-        if(session_status() == PHP_SESSION_NONE){
+        if (session_status() == PHP_SESSION_NONE) {
             session_start();
+            echo "Session started";
         }
 
-        if(!filter_has_var(INPUT_GET,'w')){
+        if (!filter_has_var(INPUT_GET, 'w')) {
             echo "Not reading the radio buttons correctly";
         }
+
         // determine the search feature control
-        if(!isset($_SESSION['boolValue'])){
+        if (!isset($_SESSION['boolValue'])) {
             $_SESSION['boolValue'] = 'false';
-        }else{
-            if(isset($_GET['w'])) {
+        } else {
+            if (isset($_GET['w'])) {
                 $_SESSION['boolValue'] = $_GET['w'];
             }
         }
@@ -109,15 +112,23 @@ class MenuController
 
         //retrieve query terms from search form
         $query_terms = trim($_GET['query-terms']);
+      /*  if($query_terms == "") {
+            //session var
+            if(session_status() == PHP_SESSION_NONE){
+                session_start();
+            }
+            $_SESSION['$records_per_page'] = 3;
 
-        //if search term is empty, list all menu items
-        if ($query_terms == "") {
-            $this->index();
-        }
+            $menuItems = $this->menu_model->list_menu();
 
+
+            $view = new MenuIndex();
+            $view->display($menuItems);
+        }*/
+
+        // if search term is empty, list menu items
         //search the database for matching menu products
         $menuItems = $this->menu_model->search_menu($query_terms);
-
         if ($menuItems === false) {
             //handle error
             $message = "An error has occurred.";
@@ -126,7 +137,7 @@ class MenuController
         }
         //display matched menu items
         $search = new MenuSearch();
-        $search->display($query_terms,$menuItems);
+        $search->display($query_terms, $menuItems);
     }
 
     //display a menu Item in a form for editing
