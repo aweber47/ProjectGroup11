@@ -21,16 +21,13 @@ class MenuIndexView extends IndexView{
                     <input type="search" name="query-terms" id="searchtextbox" placeholder="Search Menu" autocomplete="off" onkeyup="handleKeyUp(event)">
                 
                 <input id="search-button" type="submit" value="Search">>
-
-            </form>
             
             <?php
                 /*************************************************************************************
                  *         Below are honor project Implementations for search features               *
                  ************************************************************************************/
-                ?>
+            ?>
             <div id="pagination">
-                <form id="pagination-form" method="get" action="<?= BASE_URL ?>/menu/search/">
                     <!-- AND SEARCH -->
                     <input checked type="radio" name="w" value="true">
                         <label>Find all of my search terms (AND) </label>
@@ -50,7 +47,6 @@ class MenuIndexView extends IndexView{
     
                     <input type="checkbox" name="bool3" value="3"<?= (isset($_GET['bool3']) ? ' checked ' : '') ?>>
                         <label>Description</label>
-                </form>
     
                 <form id="per-page-form" action="" method="post">
                     <h3>Items Per Page</h3>

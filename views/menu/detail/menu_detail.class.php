@@ -20,8 +20,7 @@ class MenuDetail extends MenuIndexView
         $role;
         // echo is here (and commented out to fool the variable).
         //echo $role;
-
-
+        
         // retrieve menu details
         $id = $menuItem->getId();
         $product = $menuItem->getProduct();
@@ -32,8 +31,7 @@ class MenuDetail extends MenuIndexView
         if (strpos($image, "http://") === false and strpos($image, "https://") === false) {
             $image = BASE_URL . $image;
         }
-
-
+        
         ?>
 
         <!-- Display menu details-->
