@@ -293,6 +293,16 @@ nav a:active{
     margin-bottom: 20px;
 }
 
+/*  ** menu_search.class.php **  */
+#search-results{
+    background-color: rgba(255, 215, 0, 0.85);
+    text-align: center;
+    width: 80%;
+    margin: auto;
+    padding: 10px 0;
+    font-weight: bold;
+}
+
 /* logout page style*/
 .logout{
     text-align: center;

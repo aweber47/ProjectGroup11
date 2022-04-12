@@ -15,12 +15,13 @@ class MenuSearch extends MenuIndexView
             session_start();
         }
            ?>
-        <div id="main-header"> Search Results for <i><?= $terms ?></i></div>
-        <span class="rcd-numbers">
-            <?php
-            echo((!is_array($menuItems)) ? "( 0 - 0 )" : "( 1 - " . count($menuItems) . " )");
-            ?>
-        </span>
+        <div id="search-results"><h3>Search Results for "<?= $terms ?>"</h3>
+            <span>
+                <?php
+                echo((!is_array($menuItems)) ? "( 0 - 0 )" : "( 1 - " . count($menuItems) . " )");
+                ?>
+            </span>
+        </div>
         <?php
         if ($menuItems === 0) {
             echo "No menu items were found.<br><br><br><br><br>";
