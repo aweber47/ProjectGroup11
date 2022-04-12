@@ -29,39 +29,39 @@ class IndexView{
             </script>
         </head>
         <body>
-        <div id='wrapper'>
-        <header>
-            <h1>
-                Lewie's Chinese Bistro
-            </h1>
-        </header>
-        <nav>
-            <a class="nav-left" href="<?= BASE_URL ?>">
-                <img src="/ProjectGroup11/www/images/home.png" alt="Home Page" style="width: 50px">
-            </a>
-            <a class="nav-left" href="<?= BASE_URL ?>/menu/index">
-                <img src="/ProjectGroup11/www/images/menu.png" alt="Menu Page" style="width: 50px">
-            </a>
-            <a class="nav-right" href="<?= BASE_URL ?>/user/login">
-                <img src="/ProjectGroup11/www/images/login.png" alt="Login" style="width: 50px">
-            </a>
-            <a class="nav-right" href="<?= BASE_URL ?>/menu/showCart">
-                <img src="/ProjectGroup11/www/images/cart.png" alt="Shopping Cart" style="width: 50px">
-            </a>
-        </nav>
+            <!-- Header -->
+            <header>
+                <h1>Lewie's Chinese Bistro</h1>
+            </header>
+        
+            <!-- Navigation Menu -->
+            <nav>
+                <a class="nav-left" href="<?= BASE_URL ?>">
+                    <img src="/ProjectGroup11/www/images/home.png" alt="Home Page" style="width: 50px">
+                </a>
+                <a class="nav-left" href="<?= BASE_URL ?>/menu/index">
+                    <img src="/ProjectGroup11/www/images/menu.png" alt="Menu Page" style="width: 50px">
+                </a>
+                <a class="nav-right" href="<?= BASE_URL ?>/user/login">
+                    <img src="/ProjectGroup11/www/images/login.png" alt="Login" style="width: 50px">
+                </a>
+                <a class="nav-right" href="<?= BASE_URL ?>/menu/showCart">
+                    <img src="/ProjectGroup11/www/images/cart.png" alt="Shopping Cart" style="width: 50px">
+                </a>
+            </nav>
         <?php
     }//end of displayHeader function
 
     //this method displays the page footer
     public static function displayFooter(){
         ?>
-        </div>
-        <footer>
-            <p style="text-align: center">&copy; 2008-<span id="copyright">20XX</span>. Lewie's Chinese Bistro</p>
-            <script src="/ProjectGroup11/www/js/copyright.js"></script>
-            <script type="text/javascript" src="<?= BASE_URL ?>/ProjectGroup11/www/js/ajax_autosuggestion.js"></script>
-        </footer>
-        </body>
+                <!-- Footer -->
+                <footer>
+                    <p style="text-align: center">&copy; 2008-<span id="copyright">20XX</span>. Lewie's Chinese Bistro</p>
+                    <script src="/ProjectGroup11/www/js/copyright.js"></script>
+                    <script type="text/javascript" src="<?= BASE_URL ?>/ProjectGroup11/www/js/ajax_autosuggestion.js"></script>
+                </footer>
+            </body>
         </html>
         <?php
     } //end of displayFooter function

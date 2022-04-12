@@ -44,9 +44,6 @@ footer #copyright-complete{
 
 /*  **  welcome_index.class.php  **  */
 nav{
-    /*display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;*/
     text-align: center;
 }
 
@@ -115,15 +112,41 @@ nav a:active{
 }
 
 /*  ** menu_index.class.php **  */
-.menu-detail{
-    background-color: rgba(255, 215, 0, 0.75);
-    padding: 10px;
-    margin-top: 10px;
-    display: grid;
+#menu-index{
+
 }
 
-.box-style-menu{
-    grid-column: 1/1;
+#menu-detail-all{
+    background-color: rgba(255, 215, 0, 0.90);
+    margin: auto;
+    border: 2px solid black;
+    width: 80%;
+}
+
+.detail-image-all{
+    float: left;
+    padding: 10px;
+}
+
+.detail-labels-all, .detail-info-all{
+    display: flex;
+    padding-top: 20px;
+}
+
+.detail-labels-all th, .detail-info-all td{
+    margin-bottom: 10px;
+    font-size: 1.25em;
+}
+
+.detail-labels-all{
+    flex-direction: column;
+    float: left;
+    text-align: right;
+}
+
+.detail-info-all{
+    flex-direction: column;
+    padding-left: 10px;
 }
 
 .menu-pic{
@@ -143,7 +166,7 @@ nav a:active{
 }
 
 /*  ** menu_detail.class.php **  */
-#menu-detail-ind{
+#menu-detail{
     background-color: rgba(255, 215, 0, 0.90);
     margin: auto;
     border: 2px solid black;
@@ -193,7 +216,7 @@ nav a:active{
 
 /*  ** menu_edit.class.php **  */
 #edit-form{
-    background-color: rgba(255, 215, 0, 0.75);
+    background-color: rgba(255, 215, 0, 0.85);
     padding-bottom: 10px;
 }
 
@@ -239,14 +262,35 @@ nav a:active{
     margin-top: 20px;
 }
 
-#search-button{
-
-}
-
-/*  ** menu_index_view.class.php **  */
 #menu-list-button{
     text-decoration: none;
     color: black;
+}
+
+#pagination{
+    background-color: rgba(255, 215, 0, 0.85);
+    width: 600px;
+    margin: auto;
+    padding: 10px 0;
+    color: black;
+    font-weight: bold;
+    border: 2px dashed black;
+}
+
+/*  ** menu_error.class.php **  */
+.menu-error-msg{
+    background-color: rgba(255, 215, 0, 0.85);
+    margin: auto;
+    padding: 100px 10px;
+    text-align: center;
+}
+
+.menu-error-msg h3{
+    color: red;
+}
+
+.menu-error-msg .return-button{
+    margin-bottom: 20px;
 }
 
 /* logout page style*/

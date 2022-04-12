@@ -37,23 +37,23 @@ class MenuDetail extends MenuIndexView
         ?>
 
         <!-- Display menu details-->
-        <div id="main-header">Menu Details</div>
+        <!--<div id="main-header">Menu Details</div>-->
 
-        <hr>
-
+        <br>
+        
         <!-- Display menu details in a table -->
-        <table id="menu-detail-ind">
+        <table id="menu-detail">
             <tr class="detail-image">
                 <td><img src="<?= $image ?>" alt="<?= $product ?>" style="width: 250px; height: 250px"></td>
             </tr>
             <tr class="detail-labels">
-                <th>Product:</th>
+                <th><?= $product ?></th>
                 <th>Category:</th>
                 <th>Price:</th>
                 <th>Description:</th>
             </tr>
             <tr class="detail-info">
-                <td><?= $product ?></td>
+                <td><!--EMPTY--><br></td>
                 <td><?= $category ?></td>
                 <td>$<?= $price ?></td>
                 <td><?= $description ?></td>

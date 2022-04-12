@@ -23,10 +23,10 @@ class MenuIndex extends MenuIndexView
         $total_pages = $_SESSION['total_page'];
 
         //display page header
-        parent::displayHeader("List all Menu Items");
+        parent::displayHeader("Our Menu");
 
         ?>
-        <div id="main-header"> Items within the Menu</div>
+        <!--<div id="main-header"> Items within the Menu</div>-->
         <div class="grid-container">
             <?php
             if ($menuItems === 0) {
@@ -46,9 +46,27 @@ class MenuIndex extends MenuIndexView
                     if ($i % 6 == 0) {
                         echo "<div class='row'>";
                     }
-                    echo "<div class='menu-detail'>
-                            <p class='box-style-menu' ><a href='", BASE_URL, "/menu/detail/$id'><img class='menu-pic' alt='Food Item' src='" . $image . "'></a><p class='product'>$product</p><br><p class='category'>Category: $category</p><br> Price: $price<br> Description: $description . " . "</p>
-                        </div>";
+    
+                    echo "<div id='menu-index'>
+<br>
+                              <table id='menu-detail-all'>
+                                  <tr class='detail-image-all'>
+                                      <td><a href='", BASE_URL, "/menu/detail/$id'><img class='menu-pic' alt='Food Item' src='" . $image . "'></a></td>
+                                  </tr>
+                                  <tr class='detail-labels-all'>
+                                      <th>$product</th>
+                                      <th>Category:</th>
+                                      <th>Price:</th>
+                                      <th>Description:</th>
+                                  </tr>
+                                  <tr class='detail-info-all'>
+                                      <td><!--EMPTY--><br></td>
+                                      <td>$category</td>
+                                      <td>$$price</td>
+                                      <td>$description</td>
+                                  </tr>
+                              </table>
+                          </div>";
                     ?>
                     <?php
                     if ($i % 6 == 5 || $i == count($menuItems) - 1) {
@@ -59,7 +77,9 @@ class MenuIndex extends MenuIndexView
             }
             ?>
         </div>
-        <div align="center">
+        
+        <!-- Pagination controls at bottom of menu page -->
+        <div id="pagination-control" align="center">
             <ul class="pagination">
                 <li><a href="?page=1">First</a></li>
                 <li class="<?php if ($page <= 1) {

@@ -4,8 +4,8 @@
  * Date: 3/31/2022*
  * File: database.class.php*
  * Description: */
-class Database
-{
+
+class Database{
     // private parameters
     private $param = array(
         'host' => 'localhost',
@@ -22,8 +22,7 @@ class Database
     static private $_instance = NULL;
 
     // constructor
-    public function __construct()
-    {
+    public function __construct(){
         $this->objDBConnection = @new mysqli(
             $this->param['host'],
             $this->param['login'],
@@ -38,8 +37,7 @@ class Database
     }
 
     //static method to ensure there is just one Database instance
-    static public function getDatabase()
-    {
+    static public function getDatabase(){
         if (self::$_instance == NULL) {
             self::$_instance = new Database();
         }
@@ -47,24 +45,20 @@ class Database
     }
 
     //this function returns the database connection object
-    public function getConnection()
-    {
+    public function getConnection(){
         return $this->objDBConnection;
     }
 
     //returns the name of the table menu item books
-    public function getMenuTable()
-    {
+    public function getMenuTable(){
         return $this->param['tblMenu'];
     }
 
-    public function getCategoryTable()
-    {
+    public function getCategoryTable(){
         return $this->param['tblCategory'];
     }
 
-    public function getUsersTable()
-    {
+    public function getUsersTable(){
         return $this->param['tblUsers'];
     }
 }
