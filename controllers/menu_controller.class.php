@@ -148,10 +148,13 @@ class MenuController
     public function update($id)
     {
         //update the menu item
-        $update = $this->menu_model->update_menu($id);
+        $update = $this->menu_model->update_menuItem($id);
+
+        var_dump($update);
         if (!$update) {
             //handle errors
-            //echo $update;
+            echo $update;
+            var_dump($update);
             $message = "There was a problem updating menu item id='" . $id . "'.";
             $this->error($message);
             return;
@@ -159,8 +162,6 @@ class MenuController
 
         //display the updated menu item's details
         $confirm = "The menu item  was successfully updated.";
-        //$menuItem = $this->menu_model->view_menu($id);
-
         $view = new MenuUpdate();
         $view->display($confirm, $id);
     }

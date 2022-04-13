@@ -95,7 +95,7 @@ class UserController
     {
         //update the user
         $update = $this->user_model->update_user($id);
-        var_dump($update);
+
         if (!$update) {
             //handle errors
             echo $update;

@@ -46,8 +46,24 @@ class MenuIndexView extends IndexView{
                         <label>Price</label>
     
                     <input type="checkbox" name="bool3" value="3"<?= (isset($_GET['bool3']) ? ' checked ' : '') ?>>
-                        <label>Description</label>
-    
+                <label>Description</label>
+
+                <br><br>
+
+                <!--- Limiting search by cat-->
+                <input checked type="checkbox" name="cat1" value="1"<?= (isset($_GET['cat1']) ? ' checked ' : '') ?>>
+                <label>Appetizers</label>
+
+                <input type="checkbox" name="cat2" value="2"<?= (isset($_GET['cat2']) ? ' checked ' : '') ?>>
+                <label>Entrees</label>
+
+                <input type="checkbox" name="cat3" value="3"<?= (isset($_GET['cat3']) ? ' checked ' : '') ?>>
+                <label>Soups</label>
+
+
+
+
+
                 <form id="per-page-form" action="" method="post">
                     <h3>Items Per Page</h3>
                     <input type="radio" name="items" value="3" onchange="this.form.submit()">

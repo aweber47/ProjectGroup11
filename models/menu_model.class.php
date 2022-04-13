@@ -158,6 +158,31 @@ class MenuModel
         return false;
     }
 
+    public function update_menuItem($id)
+    {
+        if (!filter_has_var(INPUT_POST, 'product') ||
+            !filter_has_var(INPUT_POST, 'image') ||
+            !filter_has_var(INPUT_POST, 'category') ||
+            !filter_has_var(INPUT_POST, 'price') ||
+            !filter_has_var(INPUT_POST, 'description')) {
+            return false;
+        }
+        $product = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'product', FILTER_SANITIZE_STRING)));
+        $image = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'image', FILTER_SANITIZE_STRING)));
+        $category = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'category', FILTER_SANITIZE_NUMBER_INT)));
+        $price = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'price', FILTER_SANITIZE_STRING)));
+        $description = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING)));
+
+        //UPDATE QUERY
+        $sql = "UPDATE " . $this->tblMenu .
+            " SET product='$product', image='$image', category='$category', "
+            . "price='$price' , description='$description' WHERE id='$id'";
+
+        // perform query
+        return $this->dbConnection->query($sql);
+
+    }
+
     public function search_menu($terms)
     {
 
@@ -221,7 +246,6 @@ class MenuModel
                 // add the menu item into the array
                 $searchItems[] = $searchItem;
             }
-            var_dump($searchItems);
             return $searchItems;
         } else {
             $terms = explode(" ", $terms); //explode multiple terms into an array
@@ -269,36 +293,11 @@ class MenuModel
                 // add the menu item into the array
                 $searchItems[] = $searchItem;
             }
-            var_dump($searchItems);
             return $searchItems;
         }
     }
 
-    public function update_menu($id)
-    {
-        if (!filter_has_var(INPUT_POST, 'product') ||
-            !filter_has_var(INPUT_POST, 'image') ||
-            !filter_has_var(INPUT_POST, 'category') ||
-            !filter_has_var(INPUT_POST, 'price') ||
-            !filter_has_var(INPUT_POST, 'description')) {
-            return false;
-        }
-        $product = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'product', FILTER_SANITIZE_STRING)));
-        $image = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'image', FILTER_SANITIZE_STRING)));
-        $category = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'category', FILTER_SANITIZE_STRING)));
-        $price = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'price', FILTER_SANITIZE_STRING)));
-        $description = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING)));
-
-        //update query
-        $sql = "UPDATE " . $this->tblMenu .
-            " SET product='$product', image='$image', category='$category', "
-            . "price='$price' , description='$description' WHERE id='$id'";
-        //execute
-        return $this->dbConnection->query($sql);
-    }
-
-    public
-    function add_menuItem()
+    public function add_menuItem()
     {
 
         $product = filter_input(INPUT_POST, "product", FILTER_SANITIZE_STRING);
@@ -317,11 +316,9 @@ class MenuModel
         } else {
             return false;
         }
-        return false;
     }
 
-    public
-    function delete_menuItem($id)
+    public function delete_menuItem($id)
     {
         $sql = "DELETE FROM " . $this->tblMenu . " WHERE id='$id'";
         return $this->dbConnection->query($sql);

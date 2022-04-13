@@ -70,6 +70,12 @@ class MenuDetail extends MenuIndexView
 
             <input class="detail-buttons" type="button" id="delete-button" value="Delete Item"
                    onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">
+
+            <!-- Put add menu item back into the webpage. You have to be logged in as Test/test in order to access it-->
+            <!-- THIS FEATURE WORKS-->
+            <!-- You can switch the id of the button to an 'add-button' if you want-->
+            <input class="detail-buttons" type="button" id="edit-button" value="Add Item"
+                   onclick="window.location.href = '<?= BASE_URL ?>/menu/addDisplay/'">
         <?php } ?>
         <input class="detail-buttons" type="button" id="return-button" value="Return to Menu"
                onclick="window.location.href='<?= BASE_URL ?>/menu/index/<?= $id ?>'">
