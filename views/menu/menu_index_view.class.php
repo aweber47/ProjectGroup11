@@ -12,7 +12,7 @@ class MenuIndexView extends IndexView
         ?>
 
         <!-- Script and media type, forms, suggestions and search box would go here. -->
-        <script>
+        <script xmlns="http://www.w3.org/1999/html">
             var media = 'menuItem';
         </script>
 
@@ -26,25 +26,33 @@ class MenuIndexView extends IndexView
 
                 <input id="search-button" type="submit" value="Search">>
 
-                <?php
-                /*************************************************************************************
-                 *         Below are honor project Implementations for search features               *
-                 ************************************************************************************/
-                ?>
-
-                <div id="pagination">
-                    <!-- AND SEARCH -->
+        </div>
+        <?php
+        /*************************************************************************************
+         *         Below are honor project Implementations for search features               *
+         ************************************************************************************/
+        ?>
+        <div id="searchbar" onclick="toggleText()"><strong><p style="color: white; background-color: black">Advanced Search Features</p></strong></div>
+        <!-- This div determines if the other elements are shown.-->
+        <!-- revert to searchbar styles -->
+        <div id="Myid">
+            <div id="pagination">
+                <!-- AND SEARCH -->
+                <div id="searchbar">
                     <input checked type="radio" name="w" value="true">
                     <label>Find all of my search terms (AND) </label>
 
                     <!-- OR SEARCH -->
                     <input type="radio" name="w" value="false">
                     <label>Find all of my search terms (OR) </label>
-
-
-                    <br><br>
-
-                    <!---Limiting the search more!-->
+                </div>
+                <?php
+                /*************************************************************************************
+                 *         Limiting Search by Attribute [product, price or description]               *
+                 ************************************************************************************/
+                ?>
+                <!---Limiting the search more!-->
+                <div id="searchbar">
                     <input checked type="checkbox" name="bool1"
                            value="1"<?= (isset($_GET['bool1']) ? ' checked ' : '') ?>>
                     <label>Product Name </label>
@@ -54,39 +62,64 @@ class MenuIndexView extends IndexView
 
                     <input type="checkbox" name="bool3" value="3"<?= (isset($_GET['bool3']) ? ' checked ' : '') ?>>
                     <label>Description</label>
+                </div>
+                </form>
+                <?php
+                /*************************************************************************************
+                 *         Limiting results by category [All, Appetizers, Entrees or Soups]              *
+                 ************************************************************************************/
+                ?>
+                <form action="<?= BASE_URL ?>/menu/index/" method="post">
+                    <!--- Limiting search by cat-->
+                    <div id="searchbar">
+                        <input type="radio" name="cat" value="0" onchange="this.form.submit()">
+                        <label>All Items</label>
 
-                    <br><br>
+                        <input type="radio" name="cat" value="1" onchange="this.form.submit()">
+                        <label>Appetizers</label>
 
-            </form>
+                        <input type="radio" name="cat" value="2" onchange="this.form.submit()">
+                        <label>Entrees</label>
 
-            <form action="<?= BASE_URL ?>/menu/index/" method="post">
-                <!--- Limiting search by cat-->
-                <input type="radio" name="cat" value="0" onchange="this.form.submit()">
-                <label>All Items</label>
+                        <input type="radio" name="cat" value="3" onchange="this.form.submit()">
+                        <label>Soups</label>
+                    </div>
+                </form>
 
-                <input type="radio" name="cat" value="1" onchange="this.form.submit()">
-                <label>Appetizers</label>
+                <?php
+                /*************************************************************************************
+                 *         The Paginator  - -  -  -  -  -  -  -  -  - Yay :) -   -  -  -             *
+                 ************************************************************************************/
+                ?>
 
-                <input type="radio" name="cat" value="2" onchange="this.form.submit()">
-                <label>Entrees</label>
+                <form id="per-page-form" action="<?= BASE_URL ?>/menu/index/" method="post">
+                    <div id="searchbar">
+                        <h3 id="searchbar">Items Per Page</h3>
+                        <input type="radio" name="items" value="3" onchange="this.form.submit()">
+                        <label>3 Products</label>
 
-                <input type="radio" name="cat" value="3" onchange="this.form.submit()">
-                <label>Soups</label>
+                        <input type="radio" name="items" value="5" onchange="this.form.submit()">
+                        <label>5 Products</label>
 
+                        <input type="radio" name="items" value="25" onchange="this.form.submit()">
+                        <label>All Products</label>
+                    </div>
+                </form>
 
-            </form>
-
-            <form id="per-page-form" action="<?= BASE_URL ?>/menu/index/" method="post">
-                <h3>Items Per Page</h3>
-                <input type="radio" name="items" value="3" onchange="this.form.submit()">
-                <label>3 Products</label>
-
-                <input type="radio" name="items" value="5" onchange="this.form.submit()">
-                <label>5 Products</label>
-
-                <input type="radio" name="items" value="25" onchange="this.form.submit()">
-                <label>All Products</label>
-            </form>
+                <!-- This div determines if the other elements are shown.-->
+            </div>
+        </div>
+        <!-- Javascript goes here -->
+        <script type="text/javascript">
+            function toggleText() {
+                var x = document.getElementById("Myid");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+        </script>
         </div>
         </div>
         <div id="suggestionDiv"></div>
