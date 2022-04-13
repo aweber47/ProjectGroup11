@@ -14,6 +14,11 @@ class MenuSearch extends MenuIndexView
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+        //get categories from a session variable
+        if (isset($_SESSION['categories'])) {
+            $categories = $_SESSION['categories'];
+        }
+
            ?>
         <div id="search-results"><h3>Search Results for "<?= $terms ?>"</h3>
             <span>

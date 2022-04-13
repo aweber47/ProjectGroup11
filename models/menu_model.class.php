@@ -70,10 +70,12 @@ class MenuModel
     // list the menu items
     public function list_menu()
     {
+        // it will always state that cat_id is not defined.
+        error_reporting(0);
         $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
         $_SESSION['page'] = $page;
         /*************************************************************************************
-         *         Paginator Honor Feature                        *
+         *         Paginator Honor Feature    and search by category feature                    *
          ************************************************************************************/
         // session
         if (session_status() == PHP_SESSION_NONE) {
@@ -88,53 +90,205 @@ class MenuModel
                 $_SESSION['$records_per_page'] = $_POST['items'];
             }
         }
-        // keeping track of the number of products the user wants
-        $no_of_records_per_page = $_SESSION['$records_per_page'];
-
-        // pagination formula starts here:
-        $offset = ($page - 1) * $no_of_records_per_page;
-        // Getting total number of pages
-        $total_pages_sql = "SELECT COUNT(*) FROM " . $this->tblMenu;
-        $result = mysqli_query($this->dbConnection, $total_pages_sql);
-        $total_rows = mysqli_fetch_array($result)[0];
-        $total_pages = ceil($total_rows / $no_of_records_per_page);
-        // store as a session var
-        $_SESSION['total_page'] = $total_pages;
-        $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " LIMIT " . " $offset, $no_of_records_per_page";
-        $res_data = mysqli_query($this->dbConnection, $sql);
-        $cnt = 1;
-        $_SESSION['count'] = $cnt;
-        // execute the thing above
-        $query = $this->dbConnection->query($sql);
-
-        // if the statement above this comment fails run this
-        if (!$query) {
-            return false;
-        }
-        // if the statements between 45-48 don't execute run this
-        if ($query->num_rows == 0) {
-            return 0;
+        // determine the category filter
+        if (isset($_POST['cat'])) {
+            $cat_id = $_POST['cat'];
         }
 
-        //handle the result
-        // create an array to store all returned menu items
-        $menuItems = array();
+        // all menu items
+        if ($cat_id == 0) {
+            $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
+            $_SESSION['page'] = $page;
 
-        // loopy through the stuff
-        while ($obj = mysqli_fetch_object($res_data)) {
-            $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+            // keeping track of the number of products the user wants
+            $no_of_records_per_page = $_SESSION['$records_per_page'];
 
-            // set the id for the menu item
-            $menuItem->setId($obj->id);
+            // pagination formula starts here:
+            $offset = ($page - 1) * $no_of_records_per_page;
+            // Getting total number of pages
+            $total_pages_sql = "SELECT COUNT(*) FROM " . $this->tblMenu;
+            $result = mysqli_query($this->dbConnection, $total_pages_sql);
+            $total_rows = mysqli_fetch_array($result)[0];
+            $total_pages = ceil($total_rows / $no_of_records_per_page);
 
-            // add the menu item into the array
-            $menuItems[] = $menuItem;
+            $_SESSION['total_page'] = $total_pages;
 
-            // count
-            $cnt++;
+
+            $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " LIMIT " . " $offset, $no_of_records_per_page";
+            $res_data = mysqli_query($this->dbConnection, $sql);
+            // execute the thing above
+            $query = $this->dbConnection->query($sql);
+
+            // if the statement above this comment fails run this
+            if (!$query) {
+                return false;
+            }
+            // if the statements between 45-48 don't execute run this
+            if ($query->num_rows == 0) {
+                return 0;
+            }
+
+            //handle the result
+            // create an array to store all returned menu items
+            $menuItems = array();
+
+            // loopy through the stuff
+            while ($obj = mysqli_fetch_object($res_data)) {
+                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+
+                // set the id for the menu item
+                $menuItem->setId($obj->id);
+
+                // add the menu item into the array
+                $menuItems[] = $menuItem;
+
+                // count
+                $cnt++;
+            }
+            return $menuItems;
+
+
         }
-        return $menuItems;
+        // appetizers
+        if ($cat_id == 1) {
+            $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
+            $_SESSION['page'] = $page;
+
+
+            // keeping track of the number of products the user wants
+            $no_of_records_per_page2 = $_SESSION['$records_per_page'];
+
+            // pagination formula starts here:
+            $offset2 = ($page - 1) * $no_of_records_per_page2;
+            // Getting total number of pages
+            $total_pages_sql2 = "SELECT COUNT(*) FROM " . $this->tblMenu . " WHERE category=1";
+            $result2 = mysqli_query($this->dbConnection, $total_pages_sql2);
+            $total_rows2 = mysqli_fetch_array($result2)[0];
+            $total_pages2 = ceil($total_rows2 / $no_of_records_per_page2);
+            // store as a session var
+            $_SESSION['total_page'] = $total_pages2;
+
+            $cnt = 1;
+            $_SESSION['count'] = $cnt;
+
+
+            $sql2 = "SELECT * FROM " . $this->tblMenu . " WHERE category=1" . " LIMIT " . " $offset2, $no_of_records_per_page2";;
+            $res_data2 = mysqli_query($this->dbConnection, $sql2);
+            // execute the thing above
+            $query2 = $this->dbConnection->query($sql2);
+
+            if (!$query2) {
+                return false;
+            }
+            if ($query2->num_rows == 0) {
+                return 0;
+            }
+            $appItems = array();
+
+            while ($obj = mysqli_fetch_object($res_data2)) {
+                $appItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+
+                // set the id for the menu item
+                $appItem->setId($obj->id);
+
+                // add the menu item into the array
+                $appItems[] = $appItem;
+            }
+            return $appItems;
+        }
+        // entrees
+        if ($cat_id == 2) {
+            $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
+            $_SESSION['page'] = $page;
+
+            // keeping track of the number of products the user wants
+            $no_of_records_per_page3 = $_SESSION['$records_per_page'];
+
+            // pagination formula starts here:
+            $offset3 = ($page - 1) * $no_of_records_per_page3;
+            // Getting total number of pages
+            $total_pages_sql3 = "SELECT COUNT(*) FROM " . $this->tblMenu . " WHERE category=2";
+            $result3 = mysqli_query($this->dbConnection, $total_pages_sql3);
+            $total_rows3 = mysqli_fetch_array($result3)[0];
+            $total_pages3 = ceil($total_rows3 / $no_of_records_per_page3);
+            // store as a session var
+            $_SESSION['total_page'] = $total_pages3;
+
+            $cnt = 1;
+            $_SESSION['count'] = $cnt;
+
+
+            $sql3 = "SELECT * FROM " . $this->tblMenu . " WHERE category=2" . " LIMIT " . " $offset3, $no_of_records_per_page3";
+            $res_data3 = mysqli_query($this->dbConnection, $sql3);
+            // execute the thing above
+            $query3 = $this->dbConnection->query($sql3);
+            if (!$query3) {
+                return false;
+            }
+            if ($query3->num_rows == 0) {
+                return 0;
+            }
+            $entItems = array();
+
+            while ($obj = mysqli_fetch_object($res_data3)) {
+                $entItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+
+                // set the id for the menu item
+                $entItem->setId($obj->id);
+
+                // add the menu item into the array
+                $entItems[] = $entItem;
+            }
+            return $entItems;
+        }
+        // only display soups
+        if ($cat_id == 3) {
+            $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
+            $_SESSION['page'] = $page;
+
+            // keeping track of the number of products the user wants
+            $no_of_records_per_page4 = $_SESSION['$records_per_page'];
+
+            // pagination formula starts here:
+            $offset4 = ($page - 1) * $no_of_records_per_page4;
+            // Getting total number of pages
+            $total_pages_sql4 = "SELECT COUNT(*) FROM " . $this->tblMenu . " WHERE category=3";
+            $result4 = mysqli_query($this->dbConnection, $total_pages_sql4);
+            $total_rows4 = mysqli_fetch_array($result4)[0];
+            $total_pages4 = ceil($total_rows4 / $no_of_records_per_page4);
+            // store as a session var
+            $_SESSION['total_page'] = $total_pages4;
+
+            $cnt = 1;
+            $_SESSION['count'] = $cnt;
+
+
+            $sql4 = "SELECT * FROM " . $this->tblMenu . " WHERE category=3" . " LIMIT " . " $offset4, $no_of_records_per_page4";;
+            $res_data4 = mysqli_query($this->dbConnection, $sql4);
+            // execute the thing above
+            $query4 = $this->dbConnection->query($sql4);
+            if (!$query4) {
+                return false;
+            }
+            if ($query4->num_rows == 0) {
+                return 0;
+            }
+            $soupItems = array();
+
+            while ($obj = mysqli_fetch_object($res_data4)) {
+                $soupItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+
+                // set the id for the menu item
+                $soupItem->setId($obj->id);
+
+                // add the menu item into the array
+                $soupItems[] = $soupItem;
+            }
+            return $soupItems;
+        }
+        return false;
     }
+
 
     public function view_menu($id)
     {

@@ -22,6 +22,14 @@ class MenuIndex extends MenuIndexView
         $page = $_SESSION['page'];
         $total_pages = $_SESSION['total_page'];
 
+        //get categories from a session variable
+        if (isset($_SESSION['categories'])) {
+            $categories = $_SESSION['categories'];
+        }
+
+        var_dump($categories);
+
+
         //display page header
         parent::displayHeader("Our Menu");
 
