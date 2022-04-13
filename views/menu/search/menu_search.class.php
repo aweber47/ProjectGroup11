@@ -42,6 +42,18 @@ class MenuSearch extends MenuIndexView
                 }
 
                 $category = $menuItem->getCategory();
+                // shift attribute from category number to category name
+                if($category == 1){
+                    $category = $categories[1];
+                }
+                if($category == 2){
+                    $category = $categories[2];
+                }
+                if($category == 3){
+                    $category = $categories[3];
+                }
+
+
                 $price = $menuItem->getPrice();
                 $description = $menuItem->getDescription();
 

@@ -97,6 +97,7 @@ class MenuModel
 
         // all menu items
         if ($cat_id == 0) {
+
             $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
             $_SESSION['page'] = $page;
 
