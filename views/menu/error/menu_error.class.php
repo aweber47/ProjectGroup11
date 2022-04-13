@@ -13,13 +13,17 @@ class MenuError extends MenuIndexView
         ?>
         <!--<div id="main-header">Error</div>-->
         <hr>
+        
         <div class="menu-error-msg">
             <h1>Sorry, but an error has occurred.</h1>
             <h3><?= urldecode($message) ?></h3>
         </div>
+        
         <hr>
+        
         <input class="return-button" type="button" value="Return to List" onclick="window.location.href='<?= BASE_URL ?>/menu/index'">
         <br><br>
+        
         <?php
         //display page footer
         parent::displayFooter();

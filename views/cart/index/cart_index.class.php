@@ -4,21 +4,16 @@
  * Date: 4/8/2022*
  * File: cart_index.class.php*
  * Description: */
-class CartIndex extends CartIndexView
-{
-
-    public function display($cart)
-    {
-
+class CartIndex extends CartIndexView{
+    public function display($cart){
         parent::displayHeader("Cart");
 
         ?>
 
-        <div>Shopping Cart</div><br><br>
-
-
+        <div>Shopping Cart</div>
+        <br><br>
+        
         <?php
-
         // preset vars
         $order = $_SESSION['cart'];
         $total = 0;
@@ -31,7 +26,15 @@ class CartIndex extends CartIndexView
                 $Product = $menuItem->getProduct();
                 $category = $menuItem->getCategory();
                 $price = $menuItem->getPrice();
-                echo "<div class='menu-detail'><span><p class='product'>$Product</p><br><p class='category'>Category: $category</p><br> Price: $price . "."</span></p></div>";
+                echo "
+                    <div id='menu-detail'>
+                        <p class='product'>$Product</p>
+                        <br>
+                        <p class='category'>Category: $category</p>
+                        <br>
+                        <p>Price: $$price . "."</p>
+                    </div>
+                ";
              //   echo $price . "<br>";
                 // setting a price var that holds the amount of the order.
             }

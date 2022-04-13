@@ -1,14 +1,11 @@
 <?php
-
 /*** Author: your name*
  * Date: 4/5/2022*
  * File: menu_delete.class.php*
  * Description: */
-class MenuDelete extends MenuIndexView
-{
 
-    public function display($menuItem, $confirm = "")
-    {
+class MenuDelete extends MenuIndexView{
+    public function display($menuItem, $confirm = ""){
         // display page header
         parent::displayHeader("Product Details");
 
@@ -21,9 +18,9 @@ class MenuDelete extends MenuIndexView
         ?>
         <!-- Display menu details-->
 
-        <div id="main-header">Menu Details</div>
+        <!--<div id="main-header">Menu Details</div>-->
         <hr>
-        <!-- display movie details in a table -->
+        <!-- display item details in a table -->
         <table id="detail">
             <tr>
                 <td style="width: 130px;">

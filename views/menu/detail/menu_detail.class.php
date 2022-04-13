@@ -4,19 +4,19 @@
  * Date: 4/11/2022*
  * File: menu_detail.class.php*
  * Description: The menu detail page displays the buttons and menu detail of an item. The buttons are controlled by a session variable 'role' defined in the user controller.*/
-class MenuDetail extends MenuIndexView
-{
-    public function display($menuItem, $confirm = "")
-    {
+class MenuDetail extends MenuIndexView{
+    public function display($menuItem, $confirm = ""){
         // display page header
         parent::displayHeader("Product Details");
         //session
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+        
         if (isset($_SESSION['role'])) {
             $role = $_SESSION['role'];
         }
+        
         $role;
         // echo is here (and commented out to fool the variable).
         //echo $role;
@@ -65,28 +65,25 @@ class MenuDetail extends MenuIndexView
 
             ?>
             <div id="button-group">
-            <input class="detail-buttons" type="button" id="edit-button" value="Edit"
-                   onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">
-
-            <input class="detail-buttons" type="button" id="delete-button" value="Delete Item"
-                   onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">
-
-            <!-- Put add menu item back into the webpage. You have to be logged in as Test/test in order to access it-->
-            <!-- THIS FEATURE WORKS-->
-            <!-- You can switch the id of the button to an 'add-button' if you want-->
-            <input class="detail-buttons" type="button" id="edit-button" value="Add Item"
-                   onclick="window.location.href = '<?= BASE_URL ?>/menu/addDisplay/'">
+                <input class="detail-buttons" type="button" id="edit-button" value="Edit"
+                       onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">
+    
+                <input class="detail-buttons" type="button" id="delete-button" value="Delete Item"
+                       onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">
+    
+                <!-- Put add menu item back into the webpage. You have to be logged in as Test/test in order to access it-->
+                <!-- THIS FEATURE WORKS-->
+                <!-- You can switch the id of the button to an 'add-button' if you want-->
+                <input class="detail-buttons" type="button" id="edit-button" value="Add Item"
+                       onclick="window.location.href = '<?= BASE_URL ?>/menu/addDisplay/'">
         <?php } ?>
-        <input class="detail-buttons" type="button" id="return-button" value="Return to Menu"
-               onclick="window.location.href='<?= BASE_URL ?>/menu/index/<?= $id ?>'">
-
-        <input class="detail-buttons" type="button" id="add-to-button" value="Add to Cart"
-               onclick="window.location.href='<?= BASE_URL ?>/menu/addToCart/<?= $id ?>'">
-        </div>
+                <input class="detail-buttons" type="button" id="return-button" value="Return to Menu" onclick="window.location.href='<?= BASE_URL ?>/menu/index/<?= $id ?>'">
+    
+                <input class="detail-buttons" type="button" id="add-to-button" value="Add to Cart" onclick="window.location.href='<?= BASE_URL ?>/menu/addToCart/<?= $id ?>'">
+            </div>
         <div id="confirm-message"><?= $confirm ?></div>
-
-
-        <div id="button-group">
+        
+        <!--<div id="button-group">-->
 
         <?php
         // display page footer

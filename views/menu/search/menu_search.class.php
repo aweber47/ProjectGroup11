@@ -1,32 +1,34 @@
 <?php
-
 /*** Author: your name*
  * Date: 4/5/2022*
  * File: menu_search.class.php*
  * Description: */
-class MenuSearch extends MenuIndexView
-{
-    public function display($terms, $menuItems)
-    {
+
+class MenuSearch extends MenuIndexView{
+    public function display($terms, $menuItems){
         //display page header
         parent::displayHeader("Search Results");
+        
         // attempt to implement paginator
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+        
         //get categories from a session variable
         if (isset($_SESSION['categories'])) {
             $categories = $_SESSION['categories'];
         }
 
            ?>
-        <div id="search-results"><h3>Search Results for "<?= $terms ?>"</h3>
+        <div id="search-results">
+            <h3>Search Results for "<?= $terms ?>"</h3>
             <span>
                 <?php
                 echo((!is_array($menuItems)) ? "( 0 - 0 )" : "( 1 - " . count($menuItems) . " )");
                 ?>
             </span>
         </div>
+        
         <?php
         if ($menuItems === 0) {
             echo "No menu items were found.<br><br><br><br><br>";
@@ -61,26 +63,30 @@ class MenuSearch extends MenuIndexView
                     echo "<div class='row'>";
                 }
     
-                echo "<div id='menu-index'>
-<br>
-                              <table id='menu-detail-all'>
-                                  <tr class='detail-image-all'>
-                                      <td><a href='", BASE_URL, "/menu/detail/$id'><img class='menu-pic' alt='Food Item' src='" . $image . "'></a></td>
-                                  </tr>
-                                  <tr class='detail-labels-all'>
-                                      <th>$product</th>
-                                      <th>Category:</th>
-                                      <th>Price:</th>
-                                      <th>Description:</th>
-                                  </tr>
-                                  <tr class='detail-info-all'>
-                                      <td><!--EMPTY--><br></td>
-                                      <td>$category</td>
-                                      <td>$$price</td>
-                                      <td>$description</td>
-                                  </tr>
-                              </table>
-                          </div>";
+                echo "
+                    <div id='menu-index'>
+                        <br>
+                        <table id='menu-detail-all'>
+                            <tr class='detail-image-all'>
+                                <td>
+                                    <a href='", BASE_URL, "/menu/detail/$id'><img class='menu-pic' alt='Food Item' src='" . $image . "'></a>
+                                </td>
+                            </tr>
+                            <tr class='detail-labels-all'>
+                                <th>$product</th>
+                                <th>Category:</th>
+                                <th>Price:</th>
+                                <th>Description:</th>
+                            </tr>
+                            <tr class='detail-info-all'>
+                                <td><!--EMPTY--><br></td>
+                                <td>$category</td>
+                                <td>$$price</td>
+                                <td>$description</td>
+                            </tr>
+                        </table>
+                    </div>
+                ";
                 ?>
 
                 <?php
@@ -93,6 +99,5 @@ class MenuSearch extends MenuIndexView
         <?php
         //display page footer
         parent::displayFooter();
-
     } //end of display method
 }

@@ -269,12 +269,24 @@ nav a:active{
 
 #pagination{
     background-color: rgba(255, 215, 0, 0.85);
-    width: 600px;
+    width: 80%;
     margin: auto;
     padding: 10px 0;
     color: black;
     font-weight: bold;
     border: 2px dashed black;
+    text-align: center;
+}
+
+#advanced-features{
+    text-align: center;
+    background-color: rgba(255, 215, 0, 0.85);
+    width: 80%;
+    margin: 50px auto 0 auto;
+    font-weight: bold;
+    font-size: 1.25em;
+    padding: 10px 0;
+    border: 1px solid black;
 }
 
 /*  ** menu_error.class.php **  */
