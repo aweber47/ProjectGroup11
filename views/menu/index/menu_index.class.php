@@ -62,6 +62,8 @@ class MenuIndex extends MenuIndexView{
                     }
     
                     echo "
+
+
                         <div id='menu-index'>
                             <br>
                             <table id='menu-detail-all'>
@@ -83,7 +85,7 @@ class MenuIndex extends MenuIndexView{
                                     <td>$description</td>
                                 </tr>
                             </table>
-                        </div>
+                            </div>
                       ";
                     ?>
                     
