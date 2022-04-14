@@ -1,16 +1,15 @@
 <?php
-
 /*** Author: your name*
  * Date: 4/5/2022*
  * File: menu_index.class.php*
  * Description: */
+
 class MenuIndex extends MenuIndexView{
     public static function displayHeader($title){
 
     }
 
-    public function display($menuItems)
-    {
+    public function display($menuItems){
 
         // attempt to implement paginator
         if (session_status() == PHP_SESSION_NONE) {
@@ -24,8 +23,7 @@ class MenuIndex extends MenuIndexView{
         if (isset($_SESSION['categories'])) {
             $categories = $_SESSION['categories'];
         }
-
-
+        
         //display page header
         parent::displayHeader("Our Menu");
 

@@ -31,13 +31,15 @@ class UserLogin extends UserIndexView{
         // if login status is set display the user to log out.
         if ($login_status == 1) {
             // session['name'] is the username of the account that is logged in.
-            echo "<p><strong>You are logged in as  " . $_SESSION['name'] . "</strong></p>";
+            echo "<br><br><br><br><h2 style='text-align: center; background-color: rgba(255, 215, 0, 0.90); padding: 40px 0'><strong>You are logged in as  \"" . $_SESSION['name'] . "\"</strong></h2>";
             ?>
-            <input type="hidden" name="id" value="<?= $id ?>">
-            <!-- allow the user to view their details and edit/delete account -->
-            <input class="edit-buttons" type="button" value="View Account"
-                   onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'"> |
-            <input class="edit-buttons" type='button' value='Logout' onclick='window.location.href = "<?= BASE_URL . "/user/logout/" ?>"'>
+            <div id="button-group">
+                <input type="hidden" name="id" value="<?= $id ?>">
+                <!-- allow the user to view their details and edit/delete account -->
+                <input class="edit-buttons" type="button" value="View Account"
+                       onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'">
+                <input class="edit-buttons" type='button' value='Logout' onclick='window.location.href = "<?= BASE_URL . "/user/logout/" ?>"'>
+            </div>
         <?php } ?>
 
         <?php
@@ -45,22 +47,29 @@ class UserLogin extends UserIndexView{
         if ($login_status == 2) {
             ?>
             <!-- display user details in a form -->
+            <br><br><br><br><br>
             <form class="login-form" action='<?= BASE_URL . "/user/verify/" ?>' method="post">
-                <input type="hidden" name="id" value="<?= $id ?>">
-
-                <label for="username">Username</label>
-                    <input id="username" name="username" type="text" size="40" placeholder="username" onfocus="this.placeholder = ' '" required>
-
+                <table id="menu-detail-all">
+                    <input type="hidden" name="id" value="<?= $id ?>">
+                    <tr class="detail-labels">
+                        <th><label for="username">Username</label></th>
+                        <th><label for="password">Password</label></th>
+                    </tr>
+                    <tr class="detail-info">
+                        <td><input id="username" name="username" type="text" size="50" placeholder="username" onfocus="this.placeholder = ' '" required></td>
+                        <td><input id="password" name="password" type="password" size="50" placeholder="password" onfocus="this.placeholder = ' '" required></td>
+                    </tr>
+                </table>
+                
                 <br>
                 
-                <label for="password">Password</label>
-                    <input id="password" name="password" type="password" size="100" placeholder="password" onfocus="this.placeholder = ' '" required>
-                
-                <input class="edit-buttons" type="submit" name="action" value="Login">
-                
-                <input class="edit-buttons" type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL . "/welcome/index/" ?>"'>
-                
-                <input class="edit-buttons" type="button" value="Signup" onclick='window.location.href = "<?= BASE_URL . "/user/register/" ?>"'>
+                <div id="button-group">
+                    <input class="edit-buttons" type="submit" name="action" value="Login">
+                    
+                    <input class="edit-buttons" type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL ?>"'>
+                    
+                    <input class="edit-buttons" type="button" value="Signup" onclick='window.location.href = "<?= BASE_URL . "/user/register/" ?>"'>
+                </div>
             </form>
         <?php } ?>
         <?php

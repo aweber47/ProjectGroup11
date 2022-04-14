@@ -1,9 +1,9 @@
 <?php
-
 /*** Author: your name*
  * Date: 4/8/2022*
  * File: cart_index.class.php*
  * Description: */
+
 class CartIndex extends CartIndexView{
     public function display($cart){
         parent::displayHeader("Cart");
@@ -19,7 +19,7 @@ class CartIndex extends CartIndexView{
         $total = 0;
 
         if (!isset($_SESSION['cart']) || !$_SESSION['cart']) {
-            echo "You currently have no items within your cart<br><br>";
+            echo "<h1 style='text-align: center; background-color: rgba(255, 215, 0, 0.85); padding: 40px 40px; width: 50%; margin: auto; font-size: 2.75em'>You currently have no items within your cart!</h1>";
             exit();
         } else {
             foreach ($cart as $menuItem) {
@@ -70,7 +70,5 @@ class CartIndex extends CartIndexView{
         <?php
 
         parent::displayFooter();
-
     }
-
 }

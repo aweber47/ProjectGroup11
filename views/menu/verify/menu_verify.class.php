@@ -14,7 +14,7 @@ class MenuVerify extends MenuIndexView{
         
         <br>
         
-        <table style="width: 100%; border: none">
+        <table>
             <tr>
                 <td style="text-align: left; vertical-align: top;">
                     <div>

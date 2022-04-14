@@ -68,8 +68,7 @@ class MenuModel
     }
 
     // list the menu items
-    public function list_menu()
-    {
+    public function list_menu(){
         // it will always state that cat_id is not defined.
         error_reporting(0);
         $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
@@ -197,6 +196,7 @@ class MenuModel
             }
             return $appItems;
         }
+        
         // entrees
         if ($cat_id == 2) {
             $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
@@ -291,8 +291,7 @@ class MenuModel
     }
 
 
-    public function view_menu($id)
-    {
+    public function view_menu($id){
         // select sql
         $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " AND " . $this->tblMenu . ".id='$id'";
 
@@ -313,8 +312,7 @@ class MenuModel
         return false;
     }
 
-    public function update_menuItem($id)
-    {
+    public function update_menuItem($id){
         if (!filter_has_var(INPUT_POST, 'product') ||
             !filter_has_var(INPUT_POST, 'image') ||
             !filter_has_var(INPUT_POST, 'category') ||
@@ -338,8 +336,7 @@ class MenuModel
 
     }
 
-    public function search_menu($terms)
-    {
+    public function search_menu($terms){
 
         // uwu the session back to life
         if (session_status() == PHP_SESSION_NONE) {
@@ -452,8 +449,7 @@ class MenuModel
         }
     }
 
-    public function add_menuItem()
-    {
+    public function add_menuItem(){
 
         $product = filter_input(INPUT_POST, "product", FILTER_SANITIZE_STRING);
         $image = filter_input(INPUT_POST, 'image', FILTER_SANITIZE_STRING);
@@ -473,8 +469,7 @@ class MenuModel
         }
     }
 
-    public function delete_menuItem($id)
-    {
+    public function delete_menuItem($id){
         $sql = "DELETE FROM " . $this->tblMenu . " WHERE id='$id'";
         return $this->dbConnection->query($sql);
     }

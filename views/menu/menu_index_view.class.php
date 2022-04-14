@@ -1,9 +1,9 @@
 <?php
-
 /*** Author: Alex Weber*
  * Date: 4/11/2022*
  * File: menu_index_view.class.php*
  * Description: displays the menu, includes honor features such as paginator, advanced search and more to come!*/
+
 class MenuIndexView extends IndexView{
     public static function displayHeader($title){
         parent::displayHeader($title)
@@ -30,7 +30,7 @@ class MenuIndexView extends IndexView{
         ?>
         
         <div id="advanced-features">
-            <a onclick="toggleText()">[ Advanced Search Features ]</a>
+            <a onclick="toggleText()">[ Advanced Search Features ]<br>WIP</a>
         </div>
         
         <!-- This div determines if the other elements are shown.-->

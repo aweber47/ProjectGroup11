@@ -112,10 +112,6 @@ nav a:active{
 }
 
 /*  ** menu_index.class.php **  */
-#menu-index{
-
-}
-
 #menu-detail-all{
     background-color: rgba(255, 215, 0, 0.90);
     margin: auto;
@@ -335,6 +331,7 @@ nav a:active{
 /*  ** user_login.class.php **  */
 .login-form{
     background-color: rgba(255, 215, 0, 0.85);
+    padding: 30px 0;
 }
 
 /* logout page style*/

@@ -4,12 +4,10 @@
  * Date: 4/8/2022*
  * File: user_edit.class.php*
  * Description: */
-class UserEdit extends UserIndexView
-{
+class UserEdit extends UserIndexView{
     //put your code here
 
-    public function display($user)
-    {
+    public function display($user){
         //display page header
         parent::displayHeader("Edit User Details");
 
@@ -25,12 +23,28 @@ class UserEdit extends UserIndexView
 
         ?>
 
-        <div id="main-header">Edit User Details</div>
+        <!--<div id="main-header">Edit User Details</div>-->
+        <br><br><br><br><br>
 
         <!-- display the user details in a form -->
-        <form class="new-media" id="edit-form" action='<?= BASE_URL . "/user/update/" . $id ?>' method="post"
-              style="border: 1px solid #bbb; margin-top: 10px; padding: 10px;">
-            <input type="hidden" name="id" value="<?= $id ?>">
+        <form id="edit-form" action='<?= BASE_URL . "/user/update/" . $id ?>' method="post" style="padding: 20px 0; text-align: center">
+            <table id="menu-detail">
+                <tr class="detail-labels">
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                </tr>
+                <tr class="detail-info">
+                    <td><input name="username" type="text" size="50" value="<?= $username ?>"></td>
+                    <td><input name="password" type="password" size="50" value="<?= $password ?>"></td>
+                    <td><input name="firstname" type="text" size="50" value="<?= $firstname ?>"></td>
+                    <td><input name="lastname" type="text" size="50" value="<?= $lastname ?>"></td>
+                    <td><input name="email" type="email" size="50" value="<?= $email ?>" required=""></td>
+                </tr>
+            </table>
+            <!--<input type="hidden" name="id" value="<?= $id ?>">
             <p><strong>Username</strong>: <input name="username" type="text" size="100" value="<?= $username ?>"
                                                  required autofocus></p><br>
             <p><strong>Password</strong>:<input name="password" type="password" size="100" value="<?= $password ?>"
@@ -40,7 +54,7 @@ class UserEdit extends UserIndexView
             <p><strong>Last Name</strong>: <input name="lastname" type="text" size="50" value="<?= $lastname ?>"
                                                   required=""></p><br>
             <p><strong>Email</strong>: <input name="email" type="email" size="50" value="<?= $email ?>" required="">
-            </p><br>
+            </p><br>-->
 
             <div id="button-group">
                 <input class="edit-buttons" type="submit" name="action" value="Update User">
@@ -92,19 +106,7 @@ class UserEdit extends UserIndexView
             <input class="edit-buttons" type="button" value=" Cancel " onclick='window.location.href = "<?/*= BASE_URL . "/menu/detail/$id" */?>"'>
         </form>
         -->
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
         <?php
         //display page footer
         parent::displayFooter();
