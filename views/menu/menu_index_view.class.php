@@ -49,7 +49,6 @@ class MenuIndexView extends IndexView{
                  *         Limiting Search by Attribute [product, price or description]               *
                  ************************************************************************************/
                 ?>
-
                     <br><br>
                     <!---Limiting the search more!-->
                     <input checked type="checkbox" name="bool1" value="1"<?= (isset($_GET['bool1']) ? ' checked ' : '') ?>>

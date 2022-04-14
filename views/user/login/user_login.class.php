@@ -1,20 +1,18 @@
 <?php
-
 /*** Author: Alex Weber *
  * Date: 4/11/2022*
  * File: user_login.class.php*
  * Description: This is the login screen for the user. Holds a login status variable (session) that determines what to display for the user.  */
-class UserLogin extends UserIndexView
-{
-    //put your code here
-    public function display()
-    {
+
+class UserLogin extends UserIndexView{
+    public function display(){
         //display page header
         parent::displayHeader("Login");
 
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
+        
         // set the login status (default is to show the login form)
         $login_status = 2;
 
@@ -26,6 +24,7 @@ class UserLogin extends UserIndexView
         if (isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
         }
+        
         /*************************************************************************************
          *                       settings for login_status                        *
          ************************************************************************************/
@@ -46,21 +45,22 @@ class UserLogin extends UserIndexView
         if ($login_status == 2) {
             ?>
             <!-- display user details in a form -->
-            <form class="new-media" action='<?= BASE_URL . "/user/verify/" ?>' method="post"
-                  style="border: 1px solid #bbb; margin-top: 10px; padding: 10px;">
+            <form class="login-form" action='<?= BASE_URL . "/user/verify/" ?>' method="post">
                 <input type="hidden" name="id" value="<?= $id ?>">
 
-                <p><strong>Username</strong><br>
-                    <input name="username" type="text" size="40" placeholder="username" onfocus="this.placeholder = ' '"
-                           required=""></p>
-                <p><strong>Password</strong><br>
-                    <input name="password" type="password" size="100" placeholder="password"
-                           onfocus="this.placeholder = ' '" required></p>
+                <label for="username">Username</label>
+                    <input id="username" name="username" type="text" size="40" placeholder="username" onfocus="this.placeholder = ' '" required>
+
+                <br>
+                
+                <label for="password">Password</label>
+                    <input id="password" name="password" type="password" size="100" placeholder="password" onfocus="this.placeholder = ' '" required>
+                
                 <input class="edit-buttons" type="submit" name="action" value="Login">
-                <input class="edit-buttons" type="button" value="Cancel"
-                       onclick='window.location.href = "<?= BASE_URL . "/welcome/index/" ?>"'>
-                <input class="edit-buttons" type="button" value="Signup"
-                       onclick='window.location.href = "<?= BASE_URL . "/user/register/" ?>"'>
+                
+                <input class="edit-buttons" type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL . "/welcome/index/" ?>"'>
+                
+                <input class="edit-buttons" type="button" value="Signup" onclick='window.location.href = "<?= BASE_URL . "/user/register/" ?>"'>
             </form>
         <?php } ?>
         <?php

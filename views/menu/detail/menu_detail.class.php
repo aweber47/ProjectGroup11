@@ -51,7 +51,7 @@ class MenuDetail extends MenuIndexView{
                 <th>Description:</th>
             </tr>
             <tr class="detail-info">
-                <td><!--EMPTY--><br></td>
+                <td><br></td>
                 <td><?= $category ?></td>
                 <td>$<?= $price ?></td>
                 <td><?= $description ?></td>
@@ -65,18 +65,18 @@ class MenuDetail extends MenuIndexView{
 
             ?>
             <div id="button-group">
-                <input class="detail-buttons" type="button" id="edit-button" value="Edit"
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">
+                <input class="detail-buttons" type="button" id="edit-button" value="Edit" onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">
     
-                <input class="detail-buttons" type="button" id="delete-button" value="Delete Item"
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">
+                <input class="detail-buttons" type="button" id="delete-button" value="Delete Item" onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">
     
                 <!-- Put add menu item back into the webpage. You have to be logged in as Test/test in order to access it-->
                 <!-- THIS FEATURE WORKS-->
                 <!-- You can switch the id of the button to an 'add-button' if you want-->
                 <input class="detail-buttons" type="button" id="edit-button" value="Add Item"
                        onclick="window.location.href = '<?= BASE_URL ?>/menu/addDisplay/'">
+            </div>
         <?php } ?>
+            <div id="button-group">
                 <input class="detail-buttons" type="button" id="return-button" value="Return to Menu" onclick="window.location.href='<?= BASE_URL ?>/menu/index/<?= $id ?>'">
     
                 <input class="detail-buttons" type="button" id="add-to-button" value="Add to Cart" onclick="window.location.href='<?= BASE_URL ?>/menu/addToCart/<?= $id ?>'">

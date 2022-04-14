@@ -315,6 +315,28 @@ nav a:active{
     font-weight: bold;
 }
 
+/*  ** cart_index.class.php **  */
+#total{
+    background-color: rgb(255, 215, 0);
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+/*  ** cart_checkout.class.php **  */
+#checkout-screen{
+    background-color: rgb(255, 215, 0);
+    text-align: center;
+    width: 50%;
+    margin: auto;
+    padding: 10px 0;
+}
+
+/*  ** user_login.class.php **  */
+.login-form{
+    background-color: rgba(255, 215, 0, 0.85);
+}
+
 /* logout page style*/
 .logout{
     text-align: center;
