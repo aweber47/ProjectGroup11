@@ -7,7 +7,15 @@
 class CartIndex extends CartIndexView{
     public function display($cart){
         parent::displayHeader("Cart");
-
+    
+        if (session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        //get categories from a session variable
+        if (isset($_SESSION['categories'])) {
+            $categories = $_SESSION['categories'];
+        }
+        
         ?>
 
         <!--<div>Shopping Cart</div>-->
@@ -25,22 +33,29 @@ class CartIndex extends CartIndexView{
             foreach ($cart as $menuItem) {
                 $Product = $menuItem->getProduct();
                 $category = $menuItem->getCategory();
+                if($category == 1){
+                    $category = $categories[1];
+                }
+                if($category == 2){
+                    $category = $categories[2];
+                }
+                if($category == 3){
+                    $category = $categories[3];
+                }
                 $price = $menuItem->getPrice();
                 echo "
-                    <div id='menu-detail' style='width: 50%'>
-                        <table>
-                            <tr class='detail-labels'>
-                                <th>$Product</th>
-                                <th>Category:</th>
-                                <th>Price:</th>
-                            </tr>
-                            <tr class='detail-info'>
-                                <td><br></td>
-                                <td>$category</td>
-                                <td>$$price</td>
-                            </tr>
-                        </table>
-                    </div>
+                    <table id='menu-detail'>
+                        <tr class='detail-labels'>
+                            <th>$Product</th>
+                            <th>Category:</th>
+                            <th>Price:</th>
+                        </tr>
+                        <tr class='detail-info'>
+                            <td><br></td>
+                            <td>$category</td>
+                            <td>$$price</td>
+                        </tr>
+                    </table>
                 ";
              //   echo $price . "<br>";
                 // setting a price var that holds the amount of the order.
@@ -51,10 +66,11 @@ class CartIndex extends CartIndexView{
         $total = $total + $tax;
         ?>
 
-        <div id="total">
+            <!--Total of cart-->
+        <!--<div id="total">
             <h3 class="menu-detail">Taxes (7%) = <?php printf("$%.2f", $tax); ?></h3>
             <h3 class="menu-detail">Total = <?php printf("$%.2f", $total); ?></h3>
-        </div>
+        </div>-->
         
         <div id="button-group">
             <input class="detail-buttons" type="button" id="return-button" value="Return to Menu" onclick="window.location.href='<?= BASE_URL ?>/menu/index'">

@@ -1,11 +1,10 @@
 <?php
-
 /*** Author: your name*
  * Date: 4/5/2022*
  * File: menu_add.class.php*
  * Description: */
+
 class MenuAdd extends MenuIndexView{
-    //put your code here
 
     public function display() {
         //display page header
@@ -68,7 +67,5 @@ class MenuAdd extends MenuIndexView{
         <?php
         //display page footer
         parent::displayFooter();
-    }
-
-//end of display method
+    }//end of display method
 }

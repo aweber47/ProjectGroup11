@@ -18,6 +18,12 @@ class MenuDetail extends MenuIndexView{
         }
         
         $role;
+    
+        //get categories from a session variable
+        if (isset($_SESSION['categories'])) {
+            $categories = $_SESSION['categories'];
+        }
+        
         // echo is here (and commented out to fool the variable).
         //echo $role;
         
@@ -26,6 +32,15 @@ class MenuDetail extends MenuIndexView{
         $product = $menuItem->getProduct();
         $image = $menuItem->getImage();
         $category = $menuItem->getCategory();
+        if($category == 1){
+            $category = $categories[1];
+        }
+        if($category == 2){
+            $category = $categories[2];
+        }
+        if($category == 3){
+            $category = $categories[3];
+        }
         $price = $menuItem->getPrice();
         $description = $menuItem->getDescription();
         if (strpos($image, "http://") === false and strpos($image, "https://") === false) {

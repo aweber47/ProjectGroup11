@@ -20,7 +20,7 @@ class MenuIndexView extends IndexView{
                 <label id="searchtextbox" for="searchtextbox"></label>
                     <input type="search" name="query-terms" id="searchtextbox" placeholder="Search Menu" autocomplete="off" onkeyup="handleKeyUp(event)">
 
-                <input id="search-button" type="submit" value="Search">>
+                <input id="search-button" type="submit" value="Search">
 
         </div>
         <?php
@@ -35,7 +35,7 @@ class MenuIndexView extends IndexView{
         
         <!-- This div determines if the other elements are shown.-->
         <!-- revert to searchbar styles -->
-        <div id="Myid">
+        <div id="Myid" hidden>
             <div id="pagination">
                 <!-- AND SEARCH -->
                     <input checked type="radio" name="w" value="true">
