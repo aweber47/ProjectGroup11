@@ -1,13 +1,10 @@
 <?php
-
 /*** Author: your name*
  * Date: 4/5/2022*
  * File: menu_model.class.php*
  * Description: */
-class MenuModel
-{
 
-
+class MenuModel{
     // private data members
     private $db;
     private $dbConnection;
@@ -15,10 +12,8 @@ class MenuModel
     private $tblMenu;
     private $tblCategory;
     private $tblUsers;
-
-
-    public function __construct()
-    {
+    
+    public function __construct(){
         $this->db = Database::getDatabase();
         $this->dbConnection = $this->db->getConnection();
         $this->tblMenu = $this->db->getMenuTable();
@@ -43,8 +38,7 @@ class MenuModel
     }
 
     // get categories
-    public function get_categories()
-    {
+    public function get_categories(){
         $sql = "SELECT * FROM " . $this->tblCategory;
         $query = $this->dbConnection->query($sql);
 
@@ -59,8 +53,7 @@ class MenuModel
         return $categories;
     }
 
-    public static function getMenuModel()
-    {
+    public static function getMenuModel(){
         if (self::$_instance == NULL) {
             self::$_instance = new MenuModel();
         }
@@ -149,6 +142,7 @@ class MenuModel
 
 
         }
+        
         // appetizers
         if ($cat_id == 1) {
             $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
@@ -242,6 +236,7 @@ class MenuModel
             }
             return $entItems;
         }
+        
         // only display soups
         if ($cat_id == 3) {
             $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
@@ -289,8 +284,7 @@ class MenuModel
         }
         return false;
     }
-
-
+    
     public function view_menu($id){
         // select sql
         $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " AND " . $this->tblMenu . ".id='$id'";
@@ -344,8 +338,7 @@ class MenuModel
         }
 
         $booly = $_SESSION['boolValue'];
-
-
+        
         if ($booly == 'true') {
             $terms = explode(" ", $terms); //explode multiple terms into an array
             //select statement for AND search
@@ -419,8 +412,7 @@ class MenuModel
             }
 
             $sql .= ")";
-
-
+            
             //execute the query
             $query = $this->dbConnection->query($sql);
 
@@ -450,14 +442,12 @@ class MenuModel
     }
 
     public function add_menuItem(){
-
         $product = filter_input(INPUT_POST, "product", FILTER_SANITIZE_STRING);
         $image = filter_input(INPUT_POST, 'image', FILTER_SANITIZE_STRING);
         $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
         $price = filter_input(INPUT_POST, "price", FILTER_SANITIZE_STRING);
         $description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
-
-
+        
         // insert query
         $sql = "INSERT INTO " . $this->db->getMenuTable() . " VALUES(NULL,'" . $product . "','" . $image . "','" . $category . "','" . $price . "','" . $description . "')";
 
