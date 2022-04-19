@@ -32,22 +32,22 @@ class Index extends IndexView
             <div id="featured">
                 <div id="first-featured">
                     <img src="www/images/General_Tso.jpg" alt="General Tso"
-                         onclick='window.location.href = "<?= BASE_URL . "/menu/detail/$id" ?>'>
+                         onclick="window.location.href='<?=BASE_URL?>/menu/detail/45'">
                     <p>General Tso Chicken</p>
                 </div>
                 <div id="second-featured">
                     <img src="www/images/chow_mein.jpg" alt="Chow Mein"
-                         onclick='window.location.href = "<?= BASE_URL . "/menu/detail/5" ?>'>
+                         onclick="window.location.href='<?=BASE_URL?>/menu/detail/6'">
                     <p>Chow Mein</p>
                 </div>
                 <div id="third-featured">
                     <img src="www/images/wonton_soup.jpg" alt="Wonton Soup"
-                         onclick='window.location.href = "<?= BASE_URL . "/menu/detail/" ?>'>
+                         onclick="window.location.href='<?=BASE_URL?>/menu/detail/3'">
                     <p>Wonton Soup</p>
                 </div>
                 <div id="fourth-featured">
                     <img src="www/images/crab_rangoon.jpg" alt="Crab Rangoon"
-                         onclick='window.location.href = "<?= BASE_URL . "/menu/detail/12" ?>'>
+                         onclick="window.location.href='<?=BASE_URL?>/menu/detail/12'">
                     <p>Crab Rangoon</p>
                 </div>
             </div>
