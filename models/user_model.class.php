@@ -180,9 +180,11 @@ class UserModel
         $lastname = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING)));
         $email = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL)));
 
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
         //update query
         $sql = "UPDATE " . $this->tblUsers .
-            " SET username='$username', password='$password', firstname='$firstname', "
+            " SET username='$username', password='$hashed_password', firstname='$firstname', "
             . "lastname='$lastname' , email='$email' WHERE id='$id'";
         //execute
         return $this->dbConnection->query($sql);
