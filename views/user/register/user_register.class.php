@@ -29,11 +29,11 @@ class UserRegister extends UserIndexView{
                         <th>Email</th>
                     </tr>
                     <tr class="detail-info">
-                        <td><input name="username" type="text" size="50" placeholder="username" onfocus="this.placeholder = ' '" required></td>
-                        <td><input name="password" type="text" size="50" placeholder="password" onfocus="this.placeholder = ' '" required></td>
-                        <td><input name="firstname" type="text" size="50" placeholder="first name" onfocus="this.placeholder = ' '" required></td>
-                        <td><input name="lastname" type="text" size="50" placeholder="last name" onfocus="this.placeholder = ' '" required></td>
-                        <td><input name="email" type="email" size="50" placeholder="exampleaddress@iu.edu" onfocus="this.placeholder = ' '" required></td>
+                        <td><input name="username" type="text" size="50" placeholder="username" onfocus="this.placeholder = ' '" ></td>
+                        <td><input name="password" type="text" size="50" placeholder="password" onfocus="this.placeholder = ' '" ></td>
+                        <td><input name="firstname" type="text" size="50" placeholder="first name" onfocus="this.placeholder = ' '" ></td>
+                        <td><input name="lastname" type="text" size="50" placeholder="last name" onfocus="this.placeholder = ' '" ></td>
+                        <td><input name="email" type="email" size="50" placeholder="exampleaddress@iu.edu" onfocus="this.placeholder = ' '" ></td>
                     </tr>
                 </table>
             </div>

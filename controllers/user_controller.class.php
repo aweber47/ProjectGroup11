@@ -45,8 +45,8 @@ class UserController
         $users = $this->user_model->add_user();
         if (!$users) {
             //display an error
-            $message = "There was a problem displaying users.";
-            $this->error($message);
+          //  $message = "There was a problem displaying users.";
+            //$this->error($message);
             return;
         }
         $detail = new UserVerify();
@@ -150,7 +150,6 @@ class UserController
     {
         //create an object of the Error class
         $error = new UserError();
-
         //display the error page
         $error->display($message);
     }

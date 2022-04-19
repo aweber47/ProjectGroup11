@@ -72,22 +72,74 @@ class UserModel
         $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
         $lastname = filter_input(INPUT_POST, "lastname", FILTER_SANITIZE_STRING);
         $firstname = filter_input(INPUT_POST, 'firstname', FILTER_SANITIZE_STRING);
-        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-        //hash the password
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        echo "$username, $password, $firstname, $lastname, $email";
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
 
-        // set the users role to 2 (2 will be default user)
-        $role = 2;
-        // INSERT query
-        $sql = "INSERT INTO " . $this->db->getUsersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email', '$role')";
-
-        //execute the query and return true if successful or false if failed
-        if ($this->dbConnection->query($sql) === TRUE) {
-            return "Congratulations! You have added an account.";
-        } else {
+        // handles missing data before even reaching the sql statement
+        try {
+            if ($username == "" || $password == "" || $lastname == "" || $firstname == "" || $email == "") {
+                throw new DataMissingException("There is missing data. Please match sure to fill out all fields.");
+            }
+            // verify email format
+            if (!Utilities::checkemail($email)) {
+                throw new EmailFormatException("Email entered does not follow format. Please follow the email format.");
+            }
+            // verify password length
+            if (strlen($password) < 10) {
+                throw new PasswordLengthException("Password must be at least 10 characters.");
+            }
+        } catch (DataMissingException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+            return false;
+        } catch (EmailFormatException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+            return false;
+        } catch (PasswordLengthException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
             return false;
         }
+
+        //hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // determine if a username is already taken
+        $stmt = $this->dbConnection->prepare('SELECT COUNT(1) FROM ' . $this->db->getUsersTable() . ' WHERE username = ?');
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+
+        // username results
+        $result = $stmt->get_result()->fetch_all();
+
+        try {
+            if ($result) {
+                throw new UserTakenException("Username is taken. Please use a different username.");
+            } else {
+                // set the users role to 2 (2 will be default user)
+                $role = 2;
+                // INSERT query
+                try {
+                    $sql = "INSERT INTO " . $this->db->getUsersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email', '$role')";
+
+                    //execute the query and return true if successful or false if failed
+                    if ($this->dbConnection->query($sql) === TRUE) {
+                        return "Congratulations! You have added an account.";
+                    } else {
+                        throw new RegisterErrorException("There was an error registering the account.");
+                    }
+                } catch (RegisterErrorException $e) {
+                    $view = new UserController();
+                    $view->error($e->getMessage());
+                    return false;
+                }
+            }
+        } catch (UserTakenException $e) {
+            $userTaken = new UserController();
+            $userTaken->error($e->getMessage());
+            return false;
+        }
+        //  return true;
     }
 
     public function verify_user()

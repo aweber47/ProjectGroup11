@@ -11,12 +11,12 @@ class UserError extends UserIndexView
         // header
         //parent::displayHeader("Error");
         ?>
-        <div id="main-header">Error</div>
+        <div id="main-header">ERROR</div>
         <hr>
         <table style="width: 100%; border: none">
             <tr>
                 <td style="text-align: left; vertical-align: top;">
-                    <h3> Sorry, but an error has occurred.</h3>
+                    <h3> An error has occurred: </h3>
                     <div style="color: red">
                         <?= urldecode($message) ?>
                     </div>
@@ -25,7 +25,7 @@ class UserError extends UserIndexView
             </tr>
         </table>
         <br><br><br><br><hr>
-        <a href="<?= BASE_URL ?>/user/index">Back to user list</a>
+        <a href="<?= BASE_URL ?>/user/register">Back to Register Account</a>
         <?php
         //display page footer
         //parent::displayFooter();

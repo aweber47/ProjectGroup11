@@ -41,7 +41,7 @@ class UserEdit extends UserIndexView{
                     <td><input name="password" type="password" size="50" value="<?= $password ?>"></td>
                     <td><input name="firstname" type="text" size="50" value="<?= $firstname ?>"></td>
                     <td><input name="lastname" type="text" size="50" value="<?= $lastname ?>"></td>
-                    <td><input name="email" type="email" size="50" value="<?= $email ?>" required=""></td>
+                    <td><input name="email" type="text" size="50" value="<?= $email ?>" required=""></td>
                 </tr>
             </table>
             <!--<input type="hidden" name="id" value="<?= $id ?>">
