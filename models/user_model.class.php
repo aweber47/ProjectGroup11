@@ -77,7 +77,7 @@ class UserModel
         // handles missing data before even reaching the sql statement
         try {
             if ($username == "" || $password == "" || $lastname == "" || $firstname == "" || $email == "") {
-                throw new DataMissingException("There is missing data. Please match sure to fill out all fields.");
+                throw new DataMissingException("There is missing data. Please make sure to fill out all fields.");
             }
             // verify email format
             if (!Utilities::checkemail($email)) {
