@@ -96,6 +96,7 @@ class MenuModel{
             // keeping track of the number of products the user wants
             $no_of_records_per_page = $_SESSION['$records_per_page'];
 
+
             // pagination formula starts here:
             $offset = ($page - 1) * $no_of_records_per_page;
             // Getting total number of pages
@@ -150,7 +151,7 @@ class MenuModel{
 
 
             // keeping track of the number of products the user wants
-            $no_of_records_per_page2 = $_SESSION['$records_per_page'];
+            $no_of_records_per_page2 = 25;
 
             // pagination formula starts here:
             $offset2 = ($page - 1) * $no_of_records_per_page2;
@@ -197,7 +198,7 @@ class MenuModel{
             $_SESSION['page'] = $page;
 
             // keeping track of the number of products the user wants
-            $no_of_records_per_page3 = $_SESSION['$records_per_page'];
+            $no_of_records_per_page3 = 25;
 
             // pagination formula starts here:
             $offset3 = ($page - 1) * $no_of_records_per_page3;
@@ -243,7 +244,7 @@ class MenuModel{
             $_SESSION['page'] = $page;
 
             // keeping track of the number of products the user wants
-            $no_of_records_per_page4 = $_SESSION['$records_per_page'];
+            $no_of_records_per_page4 = 25;
 
             // pagination formula starts here:
             $offset4 = ($page - 1) * $no_of_records_per_page4;

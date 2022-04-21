@@ -83,9 +83,15 @@ class UserModel
             if (!Utilities::checkemail($email)) {
                 throw new EmailFormatException("Email entered does not follow format. Please follow the email format.");
             }
-            // verify password length
-            if (strlen($password) < 10) {
-                throw new PasswordLengthException("Password must be at least 10 characters.");
+            // verify password exceptions
+            if (strlen($password) < 8) {
+                throw new PasswordLengthException("Password must be at least 8 characters long.");
+            }
+            if(!preg_match("@[A-Z]@", $password)){
+                throw new PasswordLengthException("Password must have at least one Uppercase Letter");
+            }
+            if(!preg_match("@[0-9]@", $password)){
+                throw new PasswordLengthException("Password must have at least one number.");
             }
         } catch (DataMissingException $e) {
             $view = new UserController();
@@ -95,48 +101,29 @@ class UserModel
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
-        } catch (PasswordLengthException $e) {
+        }catch (PasswordLengthException $e){
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
         }
-
         //hash the password
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // determine if a username is already taken
-        $stmt = $this->dbConnection->prepare('SELECT COUNT(1) FROM ' . $this->db->getUsersTable() . ' WHERE username = ?');
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-
-        // username results
-        $result = $stmt->get_result()->fetch_all();
-
         try {
-            if ($result) {
-                throw new UserTakenException("Username is taken. Please use a different username.");
-            } else {
-                // set the users role to 2 (2 will be default user)
-                $role = 2;
-                // INSERT query
-                try {
-                    $sql = "INSERT INTO " . $this->db->getUsersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email', '$role')";
+            // set the users role to 2 (2 will be default user)
+            $role = 2;
 
-                    //execute the query and return true if successful or false if failed
-                    if ($this->dbConnection->query($sql) === TRUE) {
-                        return "Congratulations! You have added an account.";
-                    } else {
-                        throw new RegisterErrorException("There was an error registering the account.");
-                    }
-                } catch (RegisterErrorException $e) {
-                    $view = new UserController();
-                    $view->error($e->getMessage());
-                    return false;
-                }
+            $sql = "INSERT INTO " . $this->db->getUsersTable() . " VALUES(NULL, '$username', '$hashed_password', '$firstname', '$lastname', '$email', '$role')";
+
+            //execute the query and return true if successful or false if failed
+            if ($this->dbConnection->query($sql) === TRUE) {
+                return "Congratulations! You have added an account.";
+            } else {
+                throw new RegisterErrorException("There was an error registering the account.");
             }
-        } catch (UserTakenException $e) {
-            $userTaken = new UserController();
-            $userTaken->error($e->getMessage());
+        } catch (RegisterErrorException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
             return false;
         }
         //  return true;

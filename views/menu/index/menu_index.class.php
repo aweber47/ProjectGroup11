@@ -4,12 +4,15 @@
  * File: menu_index.class.php*
  * Description: */
 
-class MenuIndex extends MenuIndexView{
-    public static function displayHeader($title){
+class MenuIndex extends MenuIndexView
+{
+    public static function displayHeader($title)
+    {
 
     }
 
-    public function display($menuItems){
+    public function display($menuItems)
+    {
 
         // attempt to implement paginator
         if (session_status() == PHP_SESSION_NONE) {
@@ -23,7 +26,7 @@ class MenuIndex extends MenuIndexView{
         if (isset($_SESSION['categories'])) {
             $categories = $_SESSION['categories'];
         }
-        
+
         //display page header
         parent::displayHeader("Our Menu");
 
@@ -45,13 +48,13 @@ class MenuIndex extends MenuIndexView{
                     $category = $menuItem->getCategory();
 
                     // shift attribute from category number to category name
-                    if($category == 1){
+                    if ($category == 1) {
                         $category = $categories[1];
                     }
-                    if($category == 2){
+                    if ($category == 2) {
                         $category = $categories[2];
                     }
-                    if($category == 3){
+                    if ($category == 3) {
                         $category = $categories[3];
                     }
 
@@ -60,7 +63,7 @@ class MenuIndex extends MenuIndexView{
                     if ($i % 6 == 0) {
                         echo "<div class='row'>";
                     }
-    
+
                     echo "
 
 
@@ -88,7 +91,7 @@ class MenuIndex extends MenuIndexView{
                             </div>
                       ";
                     ?>
-                    
+
                     <?php
                     if ($i % 6 == 5 || $i == count($menuItems) - 1) {
                         echo "</div>";
@@ -98,33 +101,33 @@ class MenuIndex extends MenuIndexView{
             }
             ?>
         </div>
-        
-        <!-- Pagination controls at bottom of menu page -->
-        <div id="pagination-control" align="center">
-            <ul class="pagination">
-                <li><a href="?page=1">First</a></li>
-                <li class="<?php if ($page <= 1) {
-                    echo 'disabled';
-                } ?>">
-                    <a href="<?php if ($page <= 1) {
-                        echo '#';
-                    } else {
-                        echo "?page=" . ($page - 1);
-                    } ?>">Prev</a>
-                </li>
-                <li class="<?php if ($page >= $total_pages) {
-                    echo 'disabled';
-                } ?>">
-                    <a href="<?php if ($page >= $total_pages) {
-                        echo '#';
-                    } else {
-                        echo "?page=" . ($page + 1);
-                    } ?>">Next</a>
-                </li>
-                <li><a href="?page=<?php echo $total_pages; ?>">Last</a></li>
-            </ul>
-        </div>
 
+        <!---Determine the hidden paginator -->
+            <!-- Pagination controls at bottom of menu page -->
+            <div id="pagination-control" align="center">
+                <ul class="pagination">
+                    <li><a href="?page=1">First</a></li>
+                    <li class="<?php if ($page <= 1) {
+                        echo 'disabled';
+                    } ?>">
+                        <a href="<?php if ($page <= 1) {
+                            echo '#';
+                        } else {
+                            echo "?page=" . ($page - 1);
+                        } ?>">Prev</a>
+                    </li>
+                    <li class="<?php if ($page >= $total_pages) {
+                        echo 'disabled';
+                    } ?>">
+                        <a href="<?php if ($page >= $total_pages) {
+                            echo '#';
+                        } else {
+                            echo "?page=" . ($page + 1);
+                        } ?>">Next</a>
+                    </li>
+                    <li><a href="?page=<?php echo $total_pages; ?>">Last</a></li>
+                </ul>
+            </div>
         <?php
         //display page footer
         parent::displayFooter();
