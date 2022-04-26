@@ -2,8 +2,8 @@
  * This script contains AJAX methods
  */
 var xmlHttp;
-var numProducts = 0;  //total number of suggested movies titles
-var activeProduct = -1;  //movie title currently being selected
+var numTitles = 0;  //total number of suggested movies titles
+var activeTitle = -1;  //movie title currently being selected
 var searchBoxObj, suggestionBoxObj;
 
 //this function creates a XMLHttpRequest object. It should work with most types of browsers.
@@ -50,10 +50,11 @@ function suggest(query) {
         // proceed only if the transaction has completed and the transaction completed successfully
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
             // extract the JSON received from the server
-            var products = JSON.parse(xmlHttp.responseText);
+            var titles = JSON.parse(xmlHttp.responseText);
+
             //console.log(titlesJSON);
             // display suggested titles in a div block
-            displayTitles(products);
+            displayTitles(titles);
         }
     };
 
@@ -65,11 +66,11 @@ function suggest(query) {
 /* This function populates the suggestion box with spans containing all the titles
  * The parameter of the function is a JSON object
  * */
-function displayTitles(products) {
-    numProducts = products.length;
+function displayTitles(titles) {
+    numTitles = titles.length;
     //console.log(numTitles);
-    activeProduct = -1;
-    if (numProducts === 0) {
+    activeTitle = -1;
+    if (numTitles === 0) {
         //hide all suggestions
         suggestionBoxObj.style.display = 'none';
         return false;
@@ -77,8 +78,8 @@ function displayTitles(products) {
 
     var divContent = "";
     //retrive the titles from the JSON doc and create a new span for each title
-    for (i = 0; i < products.length; i++) {
-        divContent += "<span id=s_" + i + " onclick='clickProduct(this)'>" + products[i] + "</span>";
+    for (i = 0; i < titles.length; i++) {
+        divContent += "<span id=s_" + i + " onclick='clickTitle(this)'>" + titles[i] + "</span>";
     }
     //display the spans in the div block
     suggestionBoxObj.innerHTML = divContent;
@@ -99,35 +100,35 @@ function handleKeyUp(e) {
     }
 
     //if the up arrow key is pressed
-    if (e.keyCode === 38 && activeProduct > 0) {
+    if (e.keyCode === 38 && activeTitle > 0) {
         //add code here to handle up arrow key. e.g. select the previous item
-        activeProductObj.style.backgroundColor = "#FFF";
-        activeProduct--;
-        activeProductObj = document.getElementById("s_" + activeProduct);
-        activeProductObj.style.backgroundColor = "#F5DEB3";
-        searchBoxObj.value = activeProductObj.innerHTML;
+        activeTitleObj.style.backgroundColor = "#FFF";
+        activeTitle--;
+        activeTitleObj = document.getElementById("s_" + activeTitle);
+        activeTitleObj.style.backgroundColor = "#F5DEB3";
+        searchBoxObj.value = activeTitleObj.innerHTML;
         return;
     }
 
     //if the down arrow key is pressed
-    if (e.keyCode === 40 && activeProduct < numProducts - 1) {
+    if (e.keyCode === 40 && activeTitle < numTitles - 1) {
         //add code here to handle down arrow key, e.g. select the next item
 
-        if (typeof (activeProductObj) != "undefined") {
-            activeProductObj.style.backgroundColor = "#FFF";
+        if (typeof (activeTitleObj) != "undefined") {
+            activeTitleObj.style.backgroundColor = "#FFF";
         }
-        activeProduct++;
-        activeProductObj = document.getElementById("s_" + activeProduct);
-        activeProductObj.style.backgroundColor = "#F5DEB3";
-        searchBoxObj.value = activeProductObj.innerHTML;
+        activeTitle++;
+        activeTitleObj = document.getElementById("s_" + activeTitle);
+        activeTitleObj.style.backgroundColor = "#F5DEB3";
+        searchBoxObj.value = activeTitleObj.innerHTML;
     }
 }
 
 
 //when a title is clicked, fill the search box with the title and then hide the suggestion list
-function clickProduct(product) {
+function clickTitle(title) {
     //display the title in the search box
-    searchBoxObj.value = product.innerHTML;
+    searchBoxObj.value = title.innerHTML;
 
     //hide all suggestions
     suggestionBoxObj.style.display = 'none';

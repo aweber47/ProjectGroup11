@@ -13,7 +13,11 @@ class MenuIndexView extends IndexView
 
         <!-- Script and media type, forms, suggestions and search box would go here. -->
         <script xmlns="http://www.w3.org/1999/html">
-            var media = 'menuItem';
+            var media = 'Menu';
+        </script>
+        <script>
+            //create the JavaScript variable for the base url
+            var base_url = "<?= BASE_URL ?>";
         </script>
 
         <!--create the search bar -->
@@ -24,7 +28,9 @@ class MenuIndexView extends IndexView
                        onkeyup="handleKeyUp(event)">
 
                 <input id="search-button" type="submit" value="Search">
+                <script type="text/javascript" src="<?= BASE_URL ?>../www/js/ajax_autosuggestion.js"></script>
 
+                <div id="suggestionDiv"></div>
         </div>
         <?php
         /*************************************************************************************
@@ -41,11 +47,11 @@ class MenuIndexView extends IndexView
         <div id="Myid" hidden>
             <div id="pagination">
                 <!-- AND SEARCH -->
-                <input checked type="radio" name="w" value="true">
+                <input type="radio" name="w" value="true">
                 <label>Find all of my search terms (AND)</label>
 
-                <!-- OR SEARCH -->
-                <input type="radio" name="w" value="false">
+                <!-- OR SEARCH, default search for users -->
+                <input checked type="radio" name="w" value="false">
                 <label>Find all of my search terms (OR)</label>
                 <?php
                 /*************************************************************************************
@@ -63,6 +69,7 @@ class MenuIndexView extends IndexView
                 <input type="checkbox" name="bool3" value="3"<?= (isset($_GET['bool3']) ? ' checked ' : '') ?>>
                 <label>Description</label>
                 </form>
+
                 <?php
                 /*************************************************************************************
                  *         Limiting results by category [All, Appetizers, Entrees or Soups]              *
@@ -113,8 +120,6 @@ class MenuIndexView extends IndexView
                 }
             }
         </script>
-
-        <div id="suggestionDiv"></div>
         <?php
     }
 

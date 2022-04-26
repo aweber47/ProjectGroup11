@@ -174,14 +174,14 @@ class MenuController
         $menuItems = $this->menu_model->search_menu($query_terms);
 
         //retrieve all menu products (items) and store them in an array
-        $products = array();
+        $titles = array();
         if ($menuItems) {
             foreach ($menuItems as $menuItem) {
-                $products[] = $menuItem->getProduct();
+                $titles[] = $menuItem->getProduct($query_terms);
             }
         }
 
-        //echo json_encode($products);
+        echo json_encode($titles);
     }
 
     public function addDisplay()
@@ -252,6 +252,18 @@ class MenuController
 
         $view = new MenuIndex();
         $view->display($menuItems);
+    }
+    public function deleteFromCart($id){
+        // removes item from the array
+        $cartID = $id;
+        $cartItems = $_SESSION['cart'];
+        unset($cartItems[$cartID]);
+        $_SESSION['cart'] = $cartItems;
+
+        //show the view
+        $view = new MenuController();
+        $view->showCart();
+
     }
 
     public function clearCart()

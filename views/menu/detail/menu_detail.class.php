@@ -95,6 +95,8 @@ class MenuDetail extends MenuIndexView{
                 <input class="detail-buttons" type="button" id="return-button" value="Return to Menu" onclick="window.location.href='<?= BASE_URL ?>/menu/index/<?= $id ?>'">
     
                 <input class="detail-buttons" type="button" id="add-to-button" value="Add to Cart" onclick="window.location.href='<?= BASE_URL ?>/menu/addToCart/<?= $id ?>'">
+
+                <input class="detail-buttons" type="button" id="delete-from-button" value=""
             </div>
         <div id="confirm-message"><?= $confirm ?></div>
         

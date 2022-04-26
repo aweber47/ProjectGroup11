@@ -344,29 +344,29 @@ class MenuModel{
             $terms = explode(" ", $terms); //explode multiple terms into an array
             //select statement for AND search
             $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory .
-                " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id AND (1";
+                " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id AND (";
+
+            $parts = array();
 
             foreach ($terms as $term) {
                 // prevent random array key errors for unset session vars
                 error_reporting(0);
                 // this is meant so a user can search a key word for the product name and description (for allegries and such)
                 if (isset($_GET['bool1']) && ($_GET['bool3']) == 'true') {
-                    $sql .= ' AND product && description LIKE "%' . $term . '%"';
+                    $parts[] = 'product && description LIKE "%' . $term . '%"';
                 }
                 // individually classify the variables
                 if (isset($_GET["bool1"])) {
-                    $sql .= ' AND product LIKE "%' . $term . '%"';
+                    $parts[] = 'product LIKE "%' . $term . '%"';
                 }
                 if (isset($_GET["bool2"])) {
-                    $sql .= ' AND price LIKE "%' . $term . '%"';
+                    $parts[] = 'price LIKE "%' . $term . '%"';
                 }
                 if (isset($_GET["bool3"])) {
-                    $sql .= ' AND description LIKE "%' . $term . '%"';
+                    $parts[] = 'description LIKE "%' . $term . '%"';
                 }
-                // $sql .= ' AND product LIKE "%' . $term . '%"';
             }
-
-            $sql .= ")";
+            $sql .= implode(' AND ', $parts). ")";
 
             //execute the query
             $query = $this->dbConnection->query($sql);
@@ -396,24 +396,25 @@ class MenuModel{
         } else {
             $terms = explode(" ", $terms); //explode multiple terms into an array
             //select statement for OR Search
-            $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id OR (";
+            $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id AND (";
+
+            $parts = array();
 
             foreach ($terms as $term) {
                 // individually classify the variables
                 if (isset($_GET["bool1"])) {
-                    $sql .= ' product LIKE "%' . $term . '%"';
+                    $parts[] = 'product LIKE "%' . $term . '%"';
                 }
                 if (isset($_GET["bool2"])) {
-                    $sql .= ' OR price LIKE "%' . $term . '%"';
+                    $parts[] = 'price LIKE "%' . $term . '%"';
                 }
                 if (isset($_GET["bool3"])) {
-                    $sql .= ' OR description LIKE "%' . $term . '%"';
+                    $parts[] = 'description LIKE "%' . $term . '%"';
                 }
-                //$sql .= ' OR product LIKE "%' . $term . '%"';
             }
+            // implodes the sql statement
+            $sql .= implode(' OR ', $parts) . ")";
 
-            $sql .= ")";
-            
             //execute the query
             $query = $this->dbConnection->query($sql);
 

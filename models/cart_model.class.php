@@ -21,6 +21,11 @@ class CartModel
 
     }
 
+    public function deleteFromCart($id){
+        $this->session['cart'] = [$id];
+
+    }
+
     public function getCart() {
         //if isset else
         $this->session['cart'] = [];
