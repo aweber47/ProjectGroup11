@@ -117,7 +117,15 @@ function suggest(query) {
         // proceed only if the transaction has completed and the transaction completed successfully
         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
             // extract the JSON received from the server
-          // console.log(xmlHttp.responseText);
+            document.getElementById('suggestionDiv').innerHTML="";
+
+
+            console.log('readyState')
+            var Data = JSON.parse(xmlHttp.responseText);
+            console.log(Data);
+            console.log(Data.suggestionDiv);
+
+            // console.log(xmlHttp.responseText);
 
             let daddyLouie = xmlHttp.responseText;
             console.log(daddyLouie);
@@ -144,3 +152,8 @@ function clickTitle(title) {
     //hide all suggestions
     suggestionBoxObj.style.display = 'none';
 }
+
+
+xmlHttp.open("GET", base_url + "/" + media + "/suggest/" + query, true);
+
+xmlHttp.send(null);

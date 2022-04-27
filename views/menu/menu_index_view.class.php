@@ -13,13 +13,11 @@ class MenuIndexView extends IndexView
 
         <!-- Script and media type, forms, suggestions and search box would go here. -->
         <script xmlns="http://www.w3.org/1999/html">
-            var media = 'Menu';
+            var media = 'menu';
+            var base_url = '<?= BASE_URL ?>';
+            console.log(base_url);
         </script>
-        <script>
-            //create the JavaScript variable for the base url
-            var base_url = "<?= BASE_URL ?>";
-        </script>
-
+        <script src="<?= BASE_URL ?>/www/js/ajax_autosuggestion.js" type="text/javascript"></script>
         <!--create the search bar -->
         <div id="searchbar">
             <form id="searchbar-form" method="get" action="<?= BASE_URL ?>/menu/search/">
@@ -27,9 +25,7 @@ class MenuIndexView extends IndexView
                 <input type="search" name="query-terms" id="searchtextbox" placeholder="Search Menu" autocomplete="off"
                        onkeyup="handleKeyUp(event)">
 
-                <input id="search-button" type="submit" value="Search">
-                <script type="text/javascript" src="<?= BASE_URL ?>../www/js/ajax_autosuggestion.js"></script>
-
+                <input id="search-button" type="submit" value="Go">
                 <div id="suggestionDiv"></div>
         </div>
         <?php
@@ -39,14 +35,14 @@ class MenuIndexView extends IndexView
         ?>
 
         <div id="advanced-features">
-            <a onclick="toggleText()">[ Advanced Search Features ]<br>WIP</a>
+            <a onclick="toggleText()">[ Advanced Search Features ]<br></a>
         </div>
 
         <!-- This div determines if the other elements are shown.-->
         <!-- revert to searchbar styles -->
         <div id="Myid" hidden>
             <div id="pagination">
-                <!-- AND SEARCH -->
+                <!-- AND SEARCH --->
                 <input type="radio" name="w" value="true">
                 <label>Find all of my search terms (AND)</label>
 
@@ -59,7 +55,7 @@ class MenuIndexView extends IndexView
                  ************************************************************************************/
                 ?>
                 <br><br>
-                <!---Limiting the search more!-->
+                <!--Limiting the search more! -->
                 <input checked type="checkbox" name="bool1" value="1"<?= (isset($_GET['bool1']) ? ' checked ' : '') ?>>
                 <label>Product Name </label>
 
@@ -68,7 +64,9 @@ class MenuIndexView extends IndexView
 
                 <input type="checkbox" name="bool3" value="3"<?= (isset($_GET['bool3']) ? ' checked ' : '') ?>>
                 <label>Description</label>
+
                 </form>
+
 
                 <?php
                 /*************************************************************************************

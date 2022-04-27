@@ -4,7 +4,8 @@
  * File: menu_model.class.php*
  * Description: */
 
-class MenuModel{
+class MenuModel
+{
     // private data members
     private $db;
     private $dbConnection;
@@ -12,8 +13,9 @@ class MenuModel{
     private $tblMenu;
     private $tblCategory;
     private $tblUsers;
-    
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->db = Database::getDatabase();
         $this->dbConnection = $this->db->getConnection();
         $this->tblMenu = $this->db->getMenuTable();
@@ -38,12 +40,19 @@ class MenuModel{
     }
 
     // get categories
-    public function get_categories(){
+    public function get_categories()
+    {
         $sql = "SELECT * FROM " . $this->tblCategory;
         $query = $this->dbConnection->query($sql);
 
-        if (!$query) {
-            return false;
+        // error handler that passing to the ViewingErrorexception if the 'get_categories' public function fails.
+        try {
+            if (!$query) {
+                throw new ViewingErrorException("Unable to retrieve the get_categories Function");
+            }
+        } catch (ViewingErrorException $e) {
+            $view = new MenuController();
+            $view->error($e->getMessage());
         }
         // loop through all rows
         $categories = array();
@@ -53,7 +62,8 @@ class MenuModel{
         return $categories;
     }
 
-    public static function getMenuModel(){
+    public static function getMenuModel()
+    {
         if (self::$_instance == NULL) {
             self::$_instance = new MenuModel();
         }
@@ -61,7 +71,9 @@ class MenuModel{
     }
 
     // list the menu items
-    public function list_menu(){
+    public function list_menu()
+    {
+
         // it will always state that cat_id is not defined.
         error_reporting(0);
         $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
@@ -95,8 +107,6 @@ class MenuModel{
 
             // keeping track of the number of products the user wants
             $no_of_records_per_page = $_SESSION['$records_per_page'];
-
-
             // pagination formula starts here:
             $offset = ($page - 1) * $no_of_records_per_page;
             // Getting total number of pages
@@ -113,8 +123,14 @@ class MenuModel{
             // execute the thing above
             $query = $this->dbConnection->query($sql);
 
-            // if the statement above this comment fails run this
-            if (!$query) {
+            try {
+                // if the statement above this comment fails run this
+                if (!$query) {
+                    throw new ViewingErrorException("Query was unable to execute for 'list_menu' please check the database connection and XAMPP connection.");
+                }
+            } catch (ViewingErrorException $e) {
+                $view = new MenuController();
+                $view->error($e->getMessage());
                 return false;
             }
             // if the statements between 45-48 don't execute run this
@@ -140,10 +156,9 @@ class MenuModel{
                 $cnt++;
             }
             return $menuItems;
-
-
         }
-        
+
+
         // appetizers
         if ($cat_id == 1) {
             $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
@@ -172,8 +187,14 @@ class MenuModel{
             // execute the thing above
             $query2 = $this->dbConnection->query($sql2);
 
-            if (!$query2) {
-                return false;
+            try {
+                // if the statement above this comment fails run this
+                if (!$query2) {
+                    throw new ViewingErrorException("Query was unable to execute for 'list_menu' please check the database connection and XAMPP connection.");
+                }
+            } catch (ViewingErrorException $e) {
+                $view = new MenuController();
+                $view->error($e->getMessage());
             }
             if ($query2->num_rows == 0) {
                 return 0;
@@ -191,7 +212,7 @@ class MenuModel{
             }
             return $appItems;
         }
-        
+
         // entrees
         if ($cat_id == 2) {
             $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
@@ -218,8 +239,14 @@ class MenuModel{
             $res_data3 = mysqli_query($this->dbConnection, $sql3);
             // execute the thing above
             $query3 = $this->dbConnection->query($sql3);
-            if (!$query3) {
-                return false;
+            try {
+                // if the statement above this comment fails run this
+                if (!$query3) {
+                    throw new ViewingErrorException("Query was unable to execute for 'list_menu' please check the database connection and XAMPP connection.");
+                }
+            } catch (ViewingErrorException $e) {
+                $view = new MenuController();
+                $view->error($e->getMessage());
             }
             if ($query3->num_rows == 0) {
                 return 0;
@@ -237,7 +264,7 @@ class MenuModel{
             }
             return $entItems;
         }
-        
+
         // only display soups
         if ($cat_id == 3) {
             $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
@@ -264,8 +291,14 @@ class MenuModel{
             $res_data4 = mysqli_query($this->dbConnection, $sql4);
             // execute the thing above
             $query4 = $this->dbConnection->query($sql4);
-            if (!$query4) {
-                return false;
+            try {
+                // if the statement above this comment fails run this
+                if (!$query4) {
+                    throw new ViewingErrorException("Query was unable to execute for 'list_menu' please check the database connection and XAMPP connection.");
+                }
+            } catch (ViewingErrorException $e) {
+                $view = new MenuController();
+                $view->error($e->getMessage());
             }
             if ($query4->num_rows == 0) {
                 return 0;
@@ -285,61 +318,146 @@ class MenuModel{
         }
         return false;
     }
-    
-    public function view_menu($id){
-        // select sql
-        $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " AND " . $this->tblMenu . ".id='$id'";
 
-        // execute the thing above
-        $query = $this->dbConnection->query($sql);
+    public function view_menu($id)
+    {
+        try {
+            // select sql
+            $sql = "SELECT * FROM " . $this->tblMenu . "," . $this->tblCategory . " WHERE " . $this->tblMenu . ".category=" . $this->tblCategory . ".category_id" . " AND " . $this->tblMenu . ".id='$id'";
 
-        if ($query && $query->num_rows > 0) {
-            $obj = $query->fetch_object();
+            // execute the thing above
+            $query = $this->dbConnection->query($sql);
 
-            // create the menu object
-            $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
-
-            // set the id for the menu object
-            $menuItem->setId($obj->id);
-
-            return $menuItem;
-        }
-        return false;
-    }
-
-    public function update_menuItem($id){
-        if (!filter_has_var(INPUT_POST, 'product') ||
-            !filter_has_var(INPUT_POST, 'image') ||
-            !filter_has_var(INPUT_POST, 'category') ||
-            !filter_has_var(INPUT_POST, 'price') ||
-            !filter_has_var(INPUT_POST, 'description')) {
+            if (!$query) {
+                throw new ViewingErrorException("Problem viewing the menu detail. Please check settings.");
+            }
+        } catch (ViewingErrorException $e) {
+            $view = new MenuController();
+            $view->error($e->getMessage());
             return false;
         }
+        try {
+            if ($query && $query->num_rows > 0) {
+                $obj = $query->fetch_object();
+
+                // create the menu object
+                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+
+                // set the id for the menu object
+                $menuItem->setId($obj->id);
+
+                return $menuItem;
+            } else {
+                throw new ViewingErrorException("Unable to retrieve the menu id. Please make sure the id isn't zero.");
+            }
+        } catch (ViewingErrorException $e) {
+            $view = new MenuController();
+            $view->error($e->getMessage());
+            return false;
+        }
+    }
+
+    public function update_menuItem($id)
+    {
+        try {
+            if (!filter_has_var(INPUT_POST, 'product') ||
+                !filter_has_var(INPUT_POST, 'image') ||
+                !filter_has_var(INPUT_POST, 'category') ||
+                !filter_has_var(INPUT_POST, 'price') ||
+                !filter_has_var(INPUT_POST, 'description')) {
+                throw new DataMissingException("Failed obtaining post values");
+            }
+        } catch (DataMissingException $e) {
+            $view = new MenuController();
+            $view->error($e->getMessage());
+            return false;
+        }
+
+
         $product = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'product', FILTER_SANITIZE_STRING)));
         $image = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'image', FILTER_SANITIZE_STRING)));
         $category = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'category', FILTER_SANITIZE_NUMBER_INT)));
         $price = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'price', FILTER_SANITIZE_STRING)));
         $description = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING)));
 
+        // if there is missing data don't run
+        try {
+            if ($product == "" || $image == "" || $category == "" || $price == "" || $description == "") {
+                throw new DataMissingException("You must fill out all fields of data or not leave any NULL to process the change.");
+            }
+        } catch (DataMissingException $e) {
+            $view = new MenuController();
+            $view->error($e->getMessage());
+            return false;
+        }
+
         //UPDATE QUERY
         $sql = "UPDATE " . $this->tblMenu .
             " SET product='$product', image='$image', category='$category', "
             . "price='$price' , description='$description' WHERE id='$id'";
 
-        // perform query
-        return $this->dbConnection->query($sql);
+        try {
+            $query = $this->dbConnection->query($sql);
 
+            if (!$query) {
+                throw new DatabaseException("SQL or Query failed. Please check the Menu_Model Class lines 395-410 to fix the code, or check your XAMPP connection");
+            }
+        } catch (DatabaseException $e) {
+            $view = new MenuController();
+            $view->error($e->getMessage());
+            return false;
+        }
+        // return query if successful
+        return $query;
     }
 
-    public function search_menu($terms){
+    // autosuggestion
+    public function menu_search($terms)
+    {
+        $sql = "SELECT * FROM " . $this->tblMenu . " WHERE (";
+
+        $parts = array();
+
+        foreach ($terms as $term) {
+            $parts[] = 'product LIKE "%' . $term . '%"';
+        }
+        $sql .= implode(' OR ', $parts) . ")";
+
+        //execute the query
+        $query = $this->dbConnection->query($sql);
+
+        // the search failed, return false.
+        if (!$query)
+            return false;
+
+        //search succeeded, but no menu item found.
+        if ($query->num_rows == 0)
+            return 0;
+
+        // create an array to store all returned items
+        $results = array();
+
+        // loopy through the stuff
+        while ($obj = $query->fetch_object()) {
+            $searchItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+
+            $searchItem->setId($obj->id);
+            // add the menu item into the array
+            $results[] = $searchItem;
+        }
+        return $results;
+    }
+
+    public function search_menu($terms)
+    {
 
         // uwu the session back to life
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
-        $booly = $_SESSION['boolValue'];
-        
+        //$booly = $_SESSION['boolValue'];
+        $booly = 'false';
         if ($booly == 'true') {
             $terms = explode(" ", $terms); //explode multiple terms into an array
             //select statement for AND search
@@ -366,7 +484,7 @@ class MenuModel{
                     $parts[] = 'description LIKE "%' . $term . '%"';
                 }
             }
-            $sql .= implode(' AND ', $parts). ")";
+            $sql .= implode(' AND ', $parts) . ")";
 
             //execute the query
             $query = $this->dbConnection->query($sql);
@@ -443,26 +561,59 @@ class MenuModel{
         }
     }
 
-    public function add_menuItem(){
+    public function add_menuItem()
+    {
         $product = filter_input(INPUT_POST, "product", FILTER_SANITIZE_STRING);
         $image = filter_input(INPUT_POST, 'image', FILTER_SANITIZE_STRING);
         $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_NUMBER_INT);
         $price = filter_input(INPUT_POST, "price", FILTER_SANITIZE_STRING);
         $description = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
-        
-        // insert query
-        $sql = "INSERT INTO " . $this->db->getMenuTable() . " VALUES(NULL,'" . $product . "','" . $image . "','" . $category . "','" . $price . "','" . $description . "')";
 
-        //execute the query and return true if successful or false if failed
-        if ($this->dbConnection->query($sql) === TRUE) {
-            return "Congratulations! You have added a(n) new menu item!";
-        } else {
+        // first see if there are any missing values
+        try {
+            if ($product == "" || $image == "" || $category == "" || $price == "" || $description == "") {
+                throw new DataMissingException("Please fill out all field when entering a new menu item");
+            }
+        } catch (DataMissingException $e) {
+            $view = new MenuController();
+            $view->error($e->getMessage());
             return false;
         }
+
+        // second is testing the sql
+        try {
+            // insert query
+            $sql = "INSERT INT " . $this->db->getMenuTable() . " VALUES(NULL,'" . $product . "','" . $image . "','" . $category . "','" . $price . "','" . $description . "')";
+            $query = $this->dbConnection->query($sql);
+
+            if (!$query || !$sql) {
+                throw new DatabaseException("Unable to execute query.");
+            }
+        } catch (DatabaseException $e) {
+            $view = new MenuController();
+            $view->error($e->getMessage());
+            return false;
+        }
+        return "Congratulations! You have added a(n) new menu Item!";
     }
 
-    public function delete_menuItem($id){
-        $sql = "DELETE FROM " . $this->tblMenu . " WHERE id='$id'";
-        return $this->dbConnection->query($sql);
+    public function delete_menuItem($id)
+    {
+        try {
+            $sql = "DELETE FROM " . $this->tblMenu . " WHERE id='$id'";
+
+            $query = $this->dbConnection->query($sql);
+
+            // attempt query
+            if (!$query) {
+                throw new DatabaseException("Failed to delete menu item");
+            }
+        } catch (DatabaseException $e) {
+            $view = new MenuController();
+            $view->error($e->getMessage());
+            return false;
+        }
+        // if successful
+        return $query;
     }
 }

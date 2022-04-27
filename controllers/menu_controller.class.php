@@ -62,17 +62,18 @@ class MenuController
     public function detail($id)
     {
         // retrieve the menu item
+
         $menuItem = $this->menu_model->view_menu($id);
-        if (!$menuItem) {
-            //display an error
-            $message = "There was a problem displaying the menu Item id='" . $id . "'.";
-            $this->error($message);
-            return;
+
+        // if menuItem is null don't try to retrieve the ID and follow through with the request.
+        // This prevents a php fatal error search, attempting to run through the detail page.
+        if ($menuItem == NULL) {
+            return false;
         }
         //Display menu details
         $view = new MenuDetail();
         $view->display($menuItem);
-
+        return true;
     }
 
     //handle an error
@@ -150,38 +151,38 @@ class MenuController
         //update the menu item
         $update = $this->menu_model->update_menuItem($id);
 
-        var_dump($update);
+        // prevents php from displaying two errors that are unnecessary
         if (!$update) {
-            //handle errors
-            echo $update;
-            var_dump($update);
-            $message = "There was a problem updating menu item id='" . $id . "'.";
-            $this->error($message);
-            return;
+            return false;
         }
 
         //display the updated menu item's details
         $confirm = "The menu item  was successfully updated.";
         $view = new MenuUpdate();
         $view->display($confirm, $id);
+        return true;
     }
 
     //autosuggestion
     public function suggest($terms)
     {
         //retrieve query terms
+        // decode the url query terms
         $query_terms = urldecode(trim($terms));
-        $menuItems = $this->menu_model->search_menu($query_terms);
+
+        // use the search menu feature to search menu
+        $menuItems = $this->menu_model->menu_search(explode(' ', $query_terms));
 
         //retrieve all menu products (items) and store them in an array
         $titles = array();
         if ($menuItems) {
             foreach ($menuItems as $menuItem) {
-                $titles[] = $menuItem->getProduct($query_terms);
+                $titles[] = $menuItem->getProduct();
+                var_dump($titles);
             }
         }
-
-        echo json_encode($titles);
+        // returns the shit into an array again
+        return json_encode($titles, JSON_FORCE_OBJECT);
     }
 
     public function addDisplay()
@@ -197,14 +198,11 @@ class MenuController
     {
         $menuItem = $this->menu_model->add_menuItem();
         if (!$menuItem) {
-            //handle errors
-            //echo $update;
-            $message = "There was a problem adding the menu item id='" . $id . "'.";
-            $this->error($message);
-            return;
+            return false;
         }
         $detail = new MenuVerify();
         $detail->display("Menu Item has been added");
+        return true;
     }
 
     public function deleteDisplay($id)
@@ -228,13 +226,11 @@ class MenuController
     {
         $menuItem = $this->menu_model->delete_menuItem($id);
         if (!$menuItem) {
-            //handle errors
-            $message = "There was a problem deleting the menu Item id='" . $id . "'.";
-            $this->error($message);
-            return;
+            return false;
         }
         $detail = new MenuVerify();
         $detail->display("Menu Item has been deleted");
+        return true;
     }
 
     // methods for the cart view
@@ -253,7 +249,9 @@ class MenuController
         $view = new MenuIndex();
         $view->display($menuItems);
     }
-    public function deleteFromCart($id){
+
+    public function deleteFromCart($id)
+    {
         // removes item from the array
         $cartID = $id;
         $cartItems = $_SESSION['cart'];
