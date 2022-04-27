@@ -7,6 +7,7 @@
 class MenuModel
 {
     // private data members
+    private $session;
     private $db;
     private $dbConnection;
     static private $_instance = NULL;

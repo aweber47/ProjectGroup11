@@ -1,9 +1,5 @@
 <?php
 
-/*** Author: your name*
- * Date: 4/8/2022*
- * File: cart_model.class.php*
- * Description: */
 class CartModel
 {
     private $session;
@@ -26,12 +22,11 @@ class CartModel
     public function deleteFromCart($id)
     {
         $this->session['cart'] = [$id];
-
     }
 
     public function getCart()
     {
-        //if isset else
+//if isset else
         $this->session['cart'] = [];
     }
 }

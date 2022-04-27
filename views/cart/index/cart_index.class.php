@@ -20,11 +20,11 @@ class CartIndex extends CartIndexView{
 
         <!--<div>Shopping Cart</div>-->
         <br><br><br><br><br>
-        
         <?php
         // preset vars
-        $order = $_SESSION['cart'];
+        $cart = $_SESSION['cart'];
         $total = 0;
+
 
         if (!isset($_SESSION['cart']) || !$_SESSION['cart']) {
             echo "<h1 style='text-align: center; background-color: rgba(255, 215, 0, 0.85); padding: 40px 40px; width: 50%; margin: auto; font-size: 2.75em'>You currently have no items within your cart!</h1>";
@@ -36,53 +36,41 @@ class CartIndex extends CartIndexView{
                 $Product = $menuItem->getProduct();
                 $category = $menuItem->getCategory();
 
-                if($category == 1){
+                if ($category == 1) {
                     $category = $categories[1];
                 }
-                if($category == 2){
+                if ($category == 2) {
                     $category = $categories[2];
                 }
-                if($category == 3){
+                if ($category == 3) {
                     $category = $categories[3];
                 }
                 $price = $menuItem->getPrice();
                 echo "
                     <table id='menu-detail'>
                         <tr class='detail-labels'>
-                            <th>$Product</th>
+                            <th>Item:</th>
                             <th>Category:</th>
                             <th>Price:</th>
-                            <th>Action:</th>
-                
+                            <th>Quantity:</th>
                         </tr>
                         <tr class='detail-info'>
-                            <td><br></td>
+                            <td>$Product</td>
                             <td>$category</td>
                             <td>$$price</td>
+                            <td></td>
                         </tr>    
                         <tr>
-                        <td><input value='Remove' onclick='window.location.href='<?= BASE_URL ?> '></td>
-</tr>
+                        </tr>
                     </table>
                 ";
              //   echo $price . "<br>";
                 // setting a price var that holds the amount of the order.
             }
-            $cartID = filter_input(INPUT_GET,'id');
-            echo $cartID;
-
-
-            // sub proto script for array of sum
-            // sub proto script for array of sum
-
-            // return cart
-           // var_dump($order);
-
-           $total = $price++;
         }
-        var_dump($cartID);
         $tax = 0.07 * $total;
         $total = $total + $tax;
+
         ?>
 
             <!--Total of cart-->

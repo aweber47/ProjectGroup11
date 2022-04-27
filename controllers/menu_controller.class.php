@@ -244,23 +244,25 @@ class MenuController
 
         array_push($_SESSION["cart"], $menuItem);
 
+
         $menuItems = $this->menu_model->list_menu();
 
         $view = new MenuIndex();
+
         $view->display($menuItems);
     }
 
-    public function deleteFromCart($id)
+    public function deleteFromCart()
     {
-        // removes item from the array
-        $cartID = $id;
-        $cartItems = $_SESSION['cart'];
-        unset($cartItems[$cartID]);
-        $_SESSION['cart'] = $cartItems;
 
+        // removes the last element from the array.
+        array_pop($_SESSION['cart']);
+
+        // removes item from the array
+        $cart = $_SESSION['cart'];
         //show the view
-        $view = new MenuController();
-        $view->showCart();
+        $view = new CartIndex();
+        $view->display($cart);
 
     }
 
