@@ -1,9 +1,11 @@
 <?php
 
+/*
 /*** Author: Alex Weber*
  * Date: 4/11/2022*
  * File: user_model.class.php*
  * Description: Models for the User Controller. Holds, update, details, view, delete, add, and more!  */
+
 class UserModel
 {
     // private data
@@ -32,15 +34,20 @@ class UserModel
     // list users
     public function list_user()
     {
-        $sql = "SELECT * FROM $this->tblUsers";
+        try {
+            $sql = "SELECT * FROM $this->tblUsers";
 
-        $query = $this->dbConnection->query($sql);
+            $query = $this->dbConnection->query($sql);
 
-        // if the query failed, return false.
-        if (!$query)
-            //echo 'no query';
-            return 'false';
-
+            // if the query failed, return false.
+            if (!$query) {
+                throw new DatabaseException("Error listing all users, check the sql or query statments.");
+            }
+        } catch (DatabaseException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+            return false;
+        }
         //if the query succeeded, but no user was found.
         if ($query->num_rows == 0)
             //echo 'no rows';
@@ -137,9 +144,21 @@ class UserModel
         // setting login status
         $_SESSION['login_status'] = 2;
 
+
         // retrieve the username and password
         $username = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
         $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
+
+        try {
+            if ($username == "" || $password == "") {
+                throw new DataMissingException("Please enter a username or password");
+            }
+        } catch (DataMissingException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+            return false;
+        }
+
 
         //sql statement to filter the users table data with a username
         $sql = "SELECT password FROM " . $this->db->getUsersTable() . " WHERE username='$username'";
@@ -154,8 +173,17 @@ class UserModel
                 $hash = $result_row['password'];
                 if (password_verify($password, $hash)) {
                     setcookie("username", $username, time() + 60, "/");
-                    $sql = "SELECT * FROM " . $this->db->getUsersTable() . " WHERE username='$username'";
-                    $query = $this->dbConnection->query($sql);
+                    try {
+                        $sql = "SELECT * FROM " . $this->db->getUsersTable() . " WHERE username='$username'";
+                        $query = $this->dbConnection->query($sql);
+                        if (!$query) {
+                            throw new UserIssueException("The Sql or Query failed.");
+                        }
+                    } catch (UserIssueException $e) {
+                        $view = new UserController();
+                        $view->error($e->getMessage());
+                        return false;
+                    }
                     $result_row = $query->fetch_assoc();
                     $user_id = $result_row['id'];
                     $user_detail = $result_row['username'];
@@ -173,19 +201,40 @@ class UserModel
                     // obtain the user role, store it in a session variable
                     $_SESSION['role'] = $user_role;
 
-                    //echo the role number to verify it is reading correctly
-                    echo $_SESSION['role'];
                     return "Congratulations! You are a verified user.";
                 } else {
                     throw new UserIssueException("There was issue verifying the account. Please check your username and password");
                 }
             }
-        }catch(UserIssueException $e){
+            // no return statement. Just return the first catch.
+        } catch (UserIssueException $e) {
             $view = new UserController();
             $view->error($e->getMessage());
         }
-        //return true;
+        // retrieve the username and password
+        $username = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
+        $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING));
+
+        try {
+            if ($username == "" || $password == "") {
+                throw new DataMissingException("Please enter a username or password");
+            }
+        } catch (DataMissingException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+            return false;
+        }
+
+        // put the user input into an session variable
+        $_SESSION['attempted_username'] = $username;
+        $_SESSION['attempted_password'] = $password;
+
+        $verify = "There was an issue verifying your account. Please make sure your username and password are valid." . "<br><br>";
+        $view = new UserNonVerify();
+        $view->display($verify);
+        return false;
     }
+
 
     public function view_user($id)
     {
@@ -195,10 +244,10 @@ class UserModel
             //execute the query
             $query = $this->dbConnection->query($sql);
 
-            if(!$query){
+            if (!$query) {
                 throw new DatabaseException("There was an error running the SQL");
             }
-        }catch (DatabaseException $e){
+        } catch (DatabaseException $e) {
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
@@ -212,10 +261,10 @@ class UserModel
                 //set the id for the user
                 $user->setId($obj->id);
                 return $user;
-            }else{
+            } else {
                 throw new UserIssueException("There was an issue viewing the user");
             }
-        }catch (UserIssueException $e){
+        } catch (UserIssueException $e) {
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
@@ -226,11 +275,17 @@ class UserModel
     //the update_user method updates an existing user in the database. Details of the user are posted in a form. Return true if succeed; false otherwise.
     public function update_user($id)
     {
-        if (!filter_has_var(INPUT_POST, 'username') ||
-            !filter_has_var(INPUT_POST, 'password') ||
-            !filter_has_var(INPUT_POST, 'firstname') ||
-            !filter_has_var(INPUT_POST, 'lastname') ||
-            !filter_has_var(INPUT_POST, 'email')) {
+        try {
+            if (!filter_has_var(INPUT_POST, 'username') ||
+                !filter_has_var(INPUT_POST, 'password') ||
+                !filter_has_var(INPUT_POST, 'firstname') ||
+                !filter_has_var(INPUT_POST, 'lastname') ||
+                !filter_has_var(INPUT_POST, 'email')) {
+                throw new DataMissingException("Please fill out all information when updating. NO NULL VALUES.");
+            }
+        } catch (DataMissingException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
             return false;
         }
         $username = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING)));
@@ -245,14 +300,26 @@ class UserModel
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        //update query
-        $sql = "UPDATE " . $this->tblUsers .
-            " SET username='$username', password='$hashed_password', firstname='$firstname', "
-            . "lastname='$lastname' , email='$email' , role='$role'  WHERE id='$id'";
-        //execute
-        return $this->dbConnection->query($sql);
+        try {
+            //update query
+            $sql = "UPDATE " . $this->tblUsers .
+                " SET username='$username', password='$hashed_password', firstname='$firstname', "
+                . "lastname='$lastname' , email='$email' , role='$role'  WHERE id='$id'";
+            //execute
+            $query = $this->dbConnection->query($sql);
+            if (!$query) {
+                throw new DatabaseException("Failed to update user.");
+            } else {
+                return $query;
+            }
+        } catch (DatabaseException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+        }
+        return true;
     }
 
+    // this is basically useless
     public function get_user_id()
     {
 
@@ -260,10 +327,20 @@ class UserModel
 
     public function delete_user($id)
     {
-        $sql = " DELETE FROM " . $this->tblUsers . " WHERE id='$id'";
-        return $this->dbConnection->query($sql);
+        try {
+            $sql = " DELETE FROM " . $this->tblUsers . " WHERE id='$id'";
 
+            $query = $this->dbConnection->query($sql);
+
+            if (!$query) {
+                throw new DatabaseException("Failed to Execute the SQL");
+            } else {
+                return $query;
+            }
+        } catch (DatabaseException $e) {
+            $view = new UserController();
+            $view->error($e->getMessage());
+            return false;
+        }
     }
-
-
 }

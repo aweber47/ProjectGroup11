@@ -9,6 +9,8 @@
  * a practical purpose would be to create an ADMIN HOST for the webpage which displays the list
  * of consumers for the owner of the business. We did not implement this future as this webpage is more
  * focused on the client or user application features.
+ *
+ * As of 4/28/2022, This feature works (disregard the comment above)
  */
 class UserIndex extends UserIndexView
 {
@@ -18,7 +20,6 @@ class UserIndex extends UserIndexView
      */
     public static function displayHeader($title)
     {
-        // parent::displayHeader("Search User");
     }
 
     public function display($users)
@@ -31,26 +32,57 @@ class UserIndex extends UserIndexView
         }
         $id = $Adminid;
         $CurrentAdmin = $id;
-        ?>
-        <div id="main-header"> Known Registered Users</div>
 
+        //display page header
+        parent::displayHeader("ADMIN: USER ACCOUNTS");
+
+        ?>
+
+        <!--Need main header div to 'show' in order to get the fetch in a nice ordered block. just used opacity-->
+        <div id="main-header" style="opacity: 0">Known Registered Users</div>
         <div class="grid-container">
             <?php
             if ($users === 0) {
                 echo "No user was found.<br><br><br><br><br>";
             } else {
-                //display the users in a grid; six users per row
+                echo '<br><br>';
                 foreach ($users as $i => $user) {
                     $id = $user->getId();
                     $username = $user->getUsername();
-                    //$password = $user->getPassword();
+                    // $password = $user->getPassword();
                     $firstname = $user->getFirstname();
                     $lastname = $user->getLastname();
                     $email = $user->getEmail();
+                    $role = $user->getRole();
+
                     if ($i % 6 == 0) {
                         echo "<div class='row'>";
                     }
-                    echo "<div class='col'><p><a href='", BASE_URL, "/user/detail/$id'><span>$username</a><br>First Name: $firstname<br>" . "<br>Last Name: $lastname<br>" . "<br> Email: $email<br>" . "</span></p></div>";
+
+                    echo " 
+               
+              <div id='menu-index'>
+                    <br>
+                    <table id='menu-detail-all'>
+                        <tr class='detail-labels-all'>
+                            <th>Username:</th>
+                            <th>First Name:</th>
+                            <th>Last Name:</th>
+                            <th>Email:</th>
+                            <th>User Role:</th>
+                            <th>Edit Account?</th>
+                        </tr>
+                        <tr class='detail-info-all'>
+                            <td>$username</td>
+                            <td>$firstname</td>
+                            <td>$lastname</td>
+                            <td>$email</td>
+                            <td>$role</td>
+                            <td><strong><a href='", BASE_URL, "/user/detail/$id'>YES</a></strong></td>
+                        </tr>           
+                    </table>
+                </div>
+                ";
                     ?>
                     <?php
                     if ($i % 6 == 5 || $i == count($users) - 1) {

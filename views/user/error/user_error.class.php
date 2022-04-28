@@ -18,9 +18,12 @@ class UserError extends UserIndexView
         </div>
 
         <br><br>
-
-        <input class="return-button" type="button" value="Return to Register Form"
-               onclick="window.location.href='<?= BASE_URL ?>/user/register'">
+        <div id="button-group">
+            <input class="edit-buttons" type="button" value=" Retry Login  "
+                   onclick="window.location.href='<?= BASE_URL ?>/user/login'">
+            <input class="edit-buttons" type="button" value="  Register  "
+                   onclick="window.location.href='<?= BASE_URL ?>/user/register'">
+        </div>
         <br><br>
 
         <?php

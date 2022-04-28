@@ -24,6 +24,13 @@ class UserDetail extends UserIndexView
         if (isset($_SESSION['role'])) {
             $role = $_SESSION['role'];
         }
+        if (isset($_SESSION['user_id'])) {
+            $Adminid = $_SESSION['user_id'];
+        }
+        $id = $Adminid;
+        echo $id;
+        $CurrentAdmin = $id;
+        echo $CurrentAdmin;
         ?>
 
         <!--<div id="main-header">User Details</div>-->
@@ -46,13 +53,26 @@ class UserDetail extends UserIndexView
         <div id="confirm-message"><?= $confirm ?></div>
         <div id="button-group">
             <input class="edit-buttons" type="button" id="edit-button" value="   Edit   "
-                   onclick="window.location.href = '<?= BASE_URL ?>/user/edit/<?= $id ?>'">&nbsp;|
+                   onclick="window.location.href = '<?= BASE_URL ?>/user/edit/<?= $id ?>'">&nbsp;
 
             <input class="edit-buttons" type="button" id="delete-button" value="   Delete Account   "
-                   onclick="window.location.href = '<?= BASE_URL ?>/user/deleteDisplay/<?= $id ?>'">&nbsp;|
+                   onclick="window.location.href = '<?= BASE_URL ?>/user/deleteDisplay/<?= $id ?>'">
 
-            <input class="edit-buttons" type="button" id="cancel-button" value="  Logout  "
-                   onclick="window.location.href = '<?= BASE_URL ?>/user/logout/'">
+            <!--The point of the if condition here is to prevent php interpreting an Admin user
+            logging out another user, that isn't logged in.. So if I was on TestUser4 and hit 'logout' it doesn't
+            log out 'testUser4', rather it logs out the admin:
+
+            ADMIN logout === ADMIN LOGOUT
+            Logout === standard logout feature
+            -->
+            <?php if ($role == 1) { ?>
+                <input class="edit-buttons" type="button" id="cancel-button" value="  ADMIN Logout  "
+                       onclick="window.location.href = '<?= BASE_URL ?>/user/logout/<?= $CurrentAdmin ?>'">
+            <?php } else { ?>
+                <input class="edit-buttons" type="button" id="cancel-button" value="  Logout  "
+                       onclick="window.location.href = '<?= BASE_URL ?>/user/logout/<?= $id ?>'">
+
+            <?php } ?>
 
             <?php
             // admin users have a role or security access of 1

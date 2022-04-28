@@ -134,12 +134,11 @@ class UserController
         //echo "called";
         $verify = $this->user_model->verify_user();
         if (!$verify) {
-            $verificationPage = new UserNonVerify();
-            $verificationPage->display($verify);
-        } else {
-            $verificationPage = new UserVerify();
-            $verificationPage->display($verify);
+            return false;
         }
+        $view = new UserVerify($verify);
+        $view->display($verify);
+        return true;
     }
 
     //handle an error

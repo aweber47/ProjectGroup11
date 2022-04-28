@@ -1,5 +1,5 @@
 <?php
-/*** Author: Alex Weber *
+/*** Author: Alex Weber and James Ritter*
  * Date: 4/11/2022*
  * File: user_login.class.php*
  * Description: This is the login screen for the user. Holds a login status variable (session) that determines what to display for the user.  */
@@ -27,6 +27,13 @@ class UserLogin extends UserIndexView
             $id = $_SESSION['user_id'];
         }
 
+        if (isset($_SESSION['attempted_username'])) {
+            $_SESSION['attempted_username'] = ' ';
+        }
+        if (isset($_SESSION['attempted_password'])) {
+            $_SESSION['attempted_password'] = ' ';
+        }
+
         /*************************************************************************************
          *                       settings for login_status                        *
          ************************************************************************************/
@@ -48,6 +55,7 @@ class UserLogin extends UserIndexView
         <?php
         // only display form if login_status is not set
         if ($login_status == 2) {
+
             ?>
             <!-- display user details in a form -->
             <br><br><br><br><br>
@@ -60,9 +68,9 @@ class UserLogin extends UserIndexView
                     </tr>
                     <tr class="detail-info">
                         <td><input id="username" name="username" type="text" size="50" placeholder="username"
-                                   onfocus="this.placeholder = ' '" required></td>
+                                   onfocus="this.placeholder = ' '"></td>
                         <td><input id="password" name="password" type="password" size="50" placeholder="password"
-                                   onfocus="this.placeholder = ' '" required></td>
+                                   onfocus="this.placeholder = ' '"></td>
                     </tr>
                 </table>
 
