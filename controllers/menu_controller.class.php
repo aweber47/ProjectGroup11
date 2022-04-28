@@ -1,14 +1,13 @@
 <?php
 
-/*** Author: your name*
- * Date: 4/5/2022*
+/*** Author: Alex Weber*
+ * Date: 4/5/2022 - 4/28/2022*
  * File: menu_controller.class.php*
- * Description: */
+ * Description: Built the entire menu controller which hosts the actions of the menu model and cart model.*/
 class MenuController
 {
     private $menu_model;
     private $cart_model;
-
     private $cart;
 
     //construct
@@ -255,15 +254,19 @@ class MenuController
     public function deleteFromCart()
     {
 
-        // removes the last element from the array.
+        $_SESSION['cart'] = array();
+        $cart = $_SESSION['cart'];
+
+        $view = new CartIndex();
+        $view->display($cart);
+        /*// removes the last element from the array.
         array_pop($_SESSION['cart']);
 
         // removes item from the array
         $cart = $_SESSION['cart'];
         //show the view
         $view = new CartIndex();
-        $view->display($cart);
-
+        $view->display($cart);*/
     }
 
     public function clearCart()

@@ -4,18 +4,20 @@
  * File: cart_index.class.php*
  * Description: */
 
-class CartIndex extends CartIndexView{
-    public function display($cart){
+class CartIndex extends CartIndexView
+{
+    public function display($cart)
+    {
         parent::displayHeader("Cart");
-    
-        if (session_status() == PHP_SESSION_NONE){
+
+        if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         //get categories from a session variable
         if (isset($_SESSION['categories'])) {
             $categories = $_SESSION['categories'];
         }
-        
+
         ?>
 
         <!--<div>Shopping Cart</div>-->
@@ -52,19 +54,19 @@ class CartIndex extends CartIndexView{
                             <th>Item:</th>
                             <th>Category:</th>
                             <th>Price:</th>
-                            <th>Quantity:</th>
+                       
                         </tr>
                         <tr class='detail-info'>
                             <td>$Product</td>
                             <td>$category</td>
                             <td>$$price</td>
-                            <td></td>
+                       
                         </tr>    
                         <tr>
                         </tr>
                     </table>
                 ";
-             //   echo $price . "<br>";
+                //   echo $price . "<br>";
                 // setting a price var that holds the amount of the order.
             }
         }
@@ -73,25 +75,22 @@ class CartIndex extends CartIndexView{
 
         ?>
 
-            <!--Total of cart-->
+        <!--Total of cart-->
         <!--<div id="total">
             <h3 class="menu-detail">Taxes (7%) = <?php printf("$%.2f", $tax); ?></h3>
             <h3 class="menu-detail">Total = <?php printf("$%.2f", $total); ?></h3>
         </div>-->
-        
+
         <div id="button-group">
-            <input class="detail-buttons" type="button" id="return-button" value="Return to Menu" onclick="window.location.href='<?= BASE_URL ?>/menu/index'">
+            <input class="detail-buttons" type="button" id="return-button" value="Return to Menu"
+                   onclick="window.location.href='<?= BASE_URL ?>/menu/index'">
 
-            <input class="detail-buttons" type="button" id="delete-from-button" value="Delete From Cart" onclick="window.location.href='<?= BASE_URL ?>/menu/deleteFromCart/<?= $id ?>'">
+            <input class="detail-buttons" type="button" id="delete-from-button" value="Empty Cart"
+                   onclick="window.location.href='<?= BASE_URL ?>/menu/deleteFromCart/<?= $id ?>'">
 
-            <input class="detail-buttons" type="button" id="checkout-button" value="Checkout" onclick="window.location.href='<?= BASE_URL ?>/menu/clearCart'">
+            <input class="detail-buttons" type="button" id="checkout-button" value="Checkout"
+                   onclick="window.location.href='<?= BASE_URL ?>/menu/clearCart'">
         </div>
-        <!--<button>
-            <a id="menu-list-button" href="<?= BASE_URL ?>/menu/index">Back to Menu</a>
-        </button>
-        <button>
-            <a id="menu-list-button" href="<?= BASE_URL ?>/menu/clearCart">Checkout</a>
-        </button>-->
         <?php
 
         parent::displayFooter();

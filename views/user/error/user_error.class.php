@@ -1,9 +1,9 @@
 <?php
 
-/*** Author: your name*
+/*** Author: Alex Weber and James Ritter*
  * Date: 4/5/2022*
  * File: user_error.class.php*
- * Description: */
+ * Description: Displays an error for the user. The error handling and exception handling utilizes this view.*/
 class UserError extends UserIndexView
 {
     public function display($message)
@@ -11,7 +11,6 @@ class UserError extends UserIndexView
         // header
         parent::displayHeader("Error");
         ?>
-        <!--<div id="main-header">Error</div>-->
         <br><br><br><br>
         <div class="menu-error-msg">
             <h1>An Error has Occurred.</h1>

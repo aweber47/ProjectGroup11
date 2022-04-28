@@ -4,15 +4,17 @@
  * File: user_login.class.php*
  * Description: This is the login screen for the user. Holds a login status variable (session) that determines what to display for the user.  */
 
-class UserLogin extends UserIndexView{
-    public function display(){
+class UserLogin extends UserIndexView
+{
+    public function display()
+    {
         //display page header
         parent::displayHeader("Login");
 
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        
+
         // set the login status (default is to show the login form)
         $login_status = 2;
 
@@ -24,7 +26,7 @@ class UserLogin extends UserIndexView{
         if (isset($_SESSION['user_id'])) {
             $id = $_SESSION['user_id'];
         }
-        
+
         /*************************************************************************************
          *                       settings for login_status                        *
          ************************************************************************************/
@@ -38,7 +40,8 @@ class UserLogin extends UserIndexView{
                 <!-- allow the user to view their details and edit/delete account -->
                 <input class="edit-buttons" type="button" value="View Account"
                        onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'">
-                <input class="edit-buttons" type='button' value='Logout' onclick='window.location.href = "<?= BASE_URL . "/user/logout/" ?>"'>
+                <input class="edit-buttons" type='button' value='Logout'
+                       onclick='window.location.href = "<?= BASE_URL . "/user/logout/" ?>"'>
             </div>
         <?php } ?>
 
@@ -56,19 +59,23 @@ class UserLogin extends UserIndexView{
                         <th><label for="password">Password</label></th>
                     </tr>
                     <tr class="detail-info">
-                        <td><input id="username" name="username" type="text" size="50" placeholder="username" onfocus="this.placeholder = ' '" required></td>
-                        <td><input id="password" name="password" type="password" size="50" placeholder="password" onfocus="this.placeholder = ' '" required></td>
+                        <td><input id="username" name="username" type="text" size="50" placeholder="username"
+                                   onfocus="this.placeholder = ' '" required></td>
+                        <td><input id="password" name="password" type="password" size="50" placeholder="password"
+                                   onfocus="this.placeholder = ' '" required></td>
                     </tr>
                 </table>
-                
+
                 <br>
-                
+
                 <div id="button-group">
                     <input class="edit-buttons" type="submit" name="action" value="Login">
-                    
-                    <input class="edit-buttons" type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL ?>"'>
-                    
-                    <input class="edit-buttons" type="button" value="Signup" onclick='window.location.href = "<?= BASE_URL . "/user/register/" ?>"'>
+
+                    <input class="edit-buttons" type="button" value="Cancel"
+                           onclick='window.location.href = "<?= BASE_URL ?>"'>
+
+                    <input class="edit-buttons" type="button" value="Signup"
+                           onclick='window.location.href = "<?= BASE_URL . "/user/register/" ?>"'>
                 </div>
             </form>
         <?php } ?>

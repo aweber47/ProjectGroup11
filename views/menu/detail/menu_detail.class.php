@@ -19,8 +19,6 @@ class MenuDetail extends MenuIndexView
             $role = $_SESSION['role'];
         }
 
-        $role;
-
         //get categories from a session variable
         if (isset($_SESSION['categories'])) {
             $categories = $_SESSION['categories'];

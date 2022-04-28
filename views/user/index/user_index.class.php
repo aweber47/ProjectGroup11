@@ -1,9 +1,15 @@
 <?php
 
-/*** Author: your name*
+/*** Author: Alex Weber and James Ritter*
  * Date: 4/8/2022*
  * File: user_index.class.php*
- * Description: */
+ *
+ * Description:
+ * Method was created but isn't used. In the future
+ * a practical purpose would be to create an ADMIN HOST for the webpage which displays the list
+ * of consumers for the owner of the business. We did not implement this future as this webpage is more
+ * focused on the client or user application features.
+ */
 class UserIndex extends UserIndexView
 {
     /*
@@ -12,7 +18,7 @@ class UserIndex extends UserIndexView
      */
     public static function displayHeader($title)
     {
-       // parent::displayHeader("Search User");
+        // parent::displayHeader("Search User");
     }
 
     public function display($users)

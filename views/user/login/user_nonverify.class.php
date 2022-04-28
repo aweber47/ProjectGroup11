@@ -1,23 +1,22 @@
 <?php
-/*** Author: your name*
+/*** Author: Alex Weber and James Ritter*
  * Date: 4/11/2022*
  * File: user_nonverify.class.php*
- * Description: */
+ * Description: If a user enters an incorrect login this confirm message will display. */
 
-class UserNonVerify extends UserIndexView{
-    
+class UserNonVerify extends UserIndexView
+{
+
     //put your code here
-    public function display($message){
+    public function display($message)
+    {
         //display page header
         parent::displayHeader("Verify");
 
         ?>
-
-        <!--<div id="main-header">Login</div>-->
-
-        <!-- display user  details in a form -->
         <br><br><br><br>
-        <div class="login-issue" style="border: 1px solid #bbb; margin: auto; padding: 10px; text-align: center; background-color: rgba(255, 215, 0, 0.85)">
+        <div class="login-issue"
+             style="border: 1px solid #bbb; margin: auto; padding: 10px; text-align: center; background-color: rgba(255, 215, 0, 0.85)">
             <input type="hidden" name="id" value="<?= $id ?>">
             <?php
             echo '<p><strong>' . $message . '</strong><br>';

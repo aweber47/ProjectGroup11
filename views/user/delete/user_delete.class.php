@@ -1,9 +1,9 @@
 <?php
 
-/*** Author: your name*
+/*** Author: Alex Weber and James Ritter*
  * Date: 4/8/2022*
  * File: user_delete.class.php*
- * Description: */
+ * Description: Holds the view for the user delete feature. */
 class UserDelete extends UserIndexView
 {
     public function display($user, $confirm = "")

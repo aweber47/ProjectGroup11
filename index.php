@@ -1,6 +1,6 @@
 <?php
 /*
- * Author: Enter a Name
+ * Author: ProjectGroup11
  * Date: 3/31/2022
  * File: index.php
  * Description: Home page for the website
