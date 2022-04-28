@@ -87,10 +87,10 @@ class UserModel
             if (strlen($password) < 8) {
                 throw new PasswordLengthException("Password must be at least 8 characters long.");
             }
-            if(!preg_match("@[A-Z]@", $password)){
+            if (!preg_match("@[A-Z]@", $password)) {
                 throw new PasswordLengthException("Password must have at least one Uppercase Letter");
             }
-            if(!preg_match("@[0-9]@", $password)){
+            if (!preg_match("@[0-9]@", $password)) {
                 throw new PasswordLengthException("Password must have at least one number.");
             }
         } catch (DataMissingException $e) {
@@ -101,7 +101,7 @@ class UserModel
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
-        }catch (PasswordLengthException $e){
+        } catch (PasswordLengthException $e) {
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
@@ -146,61 +146,81 @@ class UserModel
 
         //execute the query
         $query = $this->dbConnection->query($sql);
-        //verify password; if password is valid, set a temporary cookie
-        if ($query and $query->num_rows > 0) {
-            $result_row = $query->fetch_assoc();
-
-            $hash = $result_row['password'];
-            if (password_verify($password, $hash)) {
-                setcookie("username", $username, time() + 60, "/");
-                $sql = "SELECT * FROM " . $this->db->getUsersTable() . " WHERE username='$username'";
-                $query = $this->dbConnection->query($sql);
+        try {
+            //verify password; if password is valid, set a temporary cookie
+            if ($query and $query->num_rows > 0) {
                 $result_row = $query->fetch_assoc();
-                $user_id = $result_row['id'];
-                $user_detail = $result_row['username'];
-                $user_role = $result_row['role'];
 
-                //Session variable that holds the user id
-                $_SESSION['user_id'] = $user_id;
+                $hash = $result_row['password'];
+                if (password_verify($password, $hash)) {
+                    setcookie("username", $username, time() + 60, "/");
+                    $sql = "SELECT * FROM " . $this->db->getUsersTable() . " WHERE username='$username'";
+                    $query = $this->dbConnection->query($sql);
+                    $result_row = $query->fetch_assoc();
+                    $user_id = $result_row['id'];
+                    $user_detail = $result_row['username'];
+                    $user_role = $result_row['role'];
 
-                // display the users first and last name as their login information.
-                $_SESSION['login_status'] = 1;
+                    //Session variable that holds the user id
+                    $_SESSION['user_id'] = $user_id;
 
-                // session var to store logged in username
-                $_SESSION['name'] = $user_detail;
+                    // display the users first and last name as their login information.
+                    $_SESSION['login_status'] = 1;
 
-                // obtain the user role, store it in a session variable
-                $_SESSION['role'] = $user_role;
+                    // session var to store logged in username
+                    $_SESSION['name'] = $user_detail;
 
-                //echo the role number to verify it is reading correctly
-                echo $_SESSION['role'];
+                    // obtain the user role, store it in a session variable
+                    $_SESSION['role'] = $user_role;
 
-                return "Congratulations! You are a verified user.";
-            } else {
-                $verify = "Invalid Password, Try again.";
+                    //echo the role number to verify it is reading correctly
+                    echo $_SESSION['role'];
+                    return "Congratulations! You are a verified user.";
+                } else {
+                    throw new UserIssueException("There was issue verifying the account. Please check your username and password");
+                }
             }
-        } else {
-            $verify = "Invalid account, please register or check your username and password";
+        }catch(UserIssueException $e){
+            $view = new UserController();
+            $view->error($e->getMessage());
         }
+        //return true;
     }
 
     public function view_user($id)
     {
-        //the select sql statement
-        $sql = "SELECT * FROM " . $this->tblUsers . " WHERE id='$id'";
-        //execute the query
-        $query = $this->dbConnection->query($sql);
+        try {
+            //the select sql statement
+            $sql = "SELECT * FROM " . $this->tblUsers . " WHERE id='$id'";
+            //execute the query
+            $query = $this->dbConnection->query($sql);
 
-        if ($query && $query->num_rows > 0) {
-            $obj = $query->fetch_object();
-
-            //create an user object
-            $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email), stripcslashes($obj->role));
-            //set the id for the user
-            $user->setId($obj->id);
-            return $user;
+            if(!$query){
+                throw new DatabaseException("There was an error running the SQL");
+            }
+        }catch (DatabaseException $e){
+            $view = new UserController();
+            $view->error($e->getMessage());
+            return false;
         }
-        return false;
+        try {
+            if ($query && $query->num_rows > 0) {
+                $obj = $query->fetch_object();
+
+                //create an user object
+                $user = new User (stripslashes($obj->id), stripslashes($obj->username), stripslashes($obj->password), stripslashes($obj->firstname), stripslashes($obj->lastname), stripslashes($obj->email), stripcslashes($obj->role));
+                //set the id for the user
+                $user->setId($obj->id);
+                return $user;
+            }else{
+                throw new UserIssueException("There was an issue viewing the user");
+            }
+        }catch (UserIssueException $e){
+            $view = new UserController();
+            $view->error($e->getMessage());
+            return false;
+        }
+        //return true;
     }
 
     //the update_user method updates an existing user in the database. Details of the user are posted in a form. Return true if succeed; false otherwise.
@@ -219,12 +239,16 @@ class UserModel
         $lastname = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'lastname', FILTER_SANITIZE_STRING)));
         $email = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL)));
 
+
+        $role = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'role', FILTER_SANITIZE_NUMBER_INT)));
+
+
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
         //update query
         $sql = "UPDATE " . $this->tblUsers .
             " SET username='$username', password='$hashed_password', firstname='$firstname', "
-            . "lastname='$lastname' , email='$email' WHERE id='$id'";
+            . "lastname='$lastname' , email='$email' , role='$role'  WHERE id='$id'";
         //execute
         return $this->dbConnection->query($sql);
     }

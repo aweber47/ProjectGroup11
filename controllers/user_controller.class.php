@@ -44,13 +44,10 @@ class UserController
         //retrieve all users and store them in an array
         $users = $this->user_model->add_user();
         if (!$users) {
-            //display an error
-          //  $message = "There was a problem displaying users.";
-            //$this->error($message);
-            return;
+            return false;
         }
-        $detail = new UserVerify();
-        $detail->display("Login Successful");
+        $detail = new UserLogin();
+        $detail->display();
     }
 
     //show details of a user
@@ -125,7 +122,8 @@ class UserController
     }
 
     // logout
-    public function logout(){
+    public function logout()
+    {
         $logout = new UserLogout();
         $logout->display();
     }
@@ -135,11 +133,10 @@ class UserController
     {
         //echo "called";
         $verify = $this->user_model->verify_user();
-
-        if(!$verify){
+        if (!$verify) {
             $verificationPage = new UserNonVerify();
             $verificationPage->display($verify);
-        }else{
+        } else {
             $verificationPage = new UserVerify();
             $verificationPage->display($verify);
         }

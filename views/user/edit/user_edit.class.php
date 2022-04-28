@@ -13,8 +13,14 @@ class UserEdit extends UserIndexView
         //display page header
         parent::displayHeader("Edit User Details");
 
-        //get order cart (shopping cart info) session var
-
+        // php session created and retrieve the users role
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['role'])) {
+            // if an admin is logged in allow the ability to change a users role
+            $admin = $_SESSION['role'];
+        }
         // retrieve user details
         $id = $user->getId();
         $username = $user->getUsername();
@@ -22,6 +28,8 @@ class UserEdit extends UserIndexView
         $firstname = $user->getFirstname();
         $lastname = $user->getLastname();
         $email = $user->getEmail();
+        $role = $user->getRole();
+
 
         ?>
 
@@ -38,13 +46,20 @@ class UserEdit extends UserIndexView
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
+                    <?php if ($admin == 1) { ?>
+                        <th>Role</th>
+                    <?php } ?>
+
                 </tr>
                 <tr class="detail-info">
                     <td><input name="username" type="text" size="50" value="<?= $username ?>"></td>
                     <td><input name="password" type="password" size="50" value="<?= $password ?>"></td>
                     <td><input name="firstname" type="text" size="50" value="<?= $firstname ?>"></td>
                     <td><input name="lastname" type="text" size="50" value="<?= $lastname ?>"></td>
-                    <td><input name="email" type="text" size="50" value="<?= $email ?>" required=""></td>
+                    <td><input name="email" type="text" size="50" value="<?= $email ?>"></td>
+                    <?php if ($admin == 1) { ?>
+                        <td><input name="role" type="text" size="50" value="<?= $role ?>"</td>
+                    <?php } ?>
                 </tr>
             </table>
             <div id="button-group">

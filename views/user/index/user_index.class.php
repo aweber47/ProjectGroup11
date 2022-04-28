@@ -23,6 +23,13 @@ class UserIndex extends UserIndexView
 
     public function display($users)
     {
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        if (isset($_SESSION['user_id'])) {
+            $Adminid = $_SESSION['user_id'];
+        }
+
         ?>
         <div id="main-header"> Known Registered Users</div>
 
@@ -52,7 +59,9 @@ class UserIndex extends UserIndexView
             }
             ?>
         </div>
-        <a href="<?= BASE_URL ?>/user/addDisplay">Register</a>
+        <div id="button-group">
+            <input class="edit-buttons" type="button" value="Back to Account" onclick='window.location.href = "<?= BASE_URL . "/user/detail/$id" ?>"'>
+        </div>
 
 
         <?php
