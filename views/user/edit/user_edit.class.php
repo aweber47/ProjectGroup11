@@ -1,9 +1,9 @@
 <?php
 
-/*** Author: your name*
+/*** Author: Alex Weber and James Ritter*
  * Date: 4/8/2022*
  * File: user_edit.class.php*
- * Description: */
+ * Description: displays the user edit form in a view. */
 class UserEdit extends UserIndexView
 {
     //put your code here

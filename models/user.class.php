@@ -1,7 +1,7 @@
 <?php
 
 /*** Author: Alex Weber*
- * Date: 4/7/2022*
+ * Date: 4/7/2022 - 4/28/22*
  * File: user.class.php*
  * Description: User Controller */
 class User
@@ -53,14 +53,17 @@ class User
         return $this->email;
     }
 
-    function getRole(){
+    function getRole()
+    {
         return $this->role;
     }
 
     //setters
-    function setId($id){
+    function setId($id)
+    {
         $this->id = $id;
     }
+
     function setUsername($username)
     {
         $this->username = $username;
@@ -86,7 +89,8 @@ class User
         $this->email = $email;
     }
 
-    function setRole($role){
+    function setRole($role)
+    {
         $this->role = $role;
     }
 }

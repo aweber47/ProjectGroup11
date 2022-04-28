@@ -1,8 +1,8 @@
 <?php
-/*** Author: your name*
+/*** Author: Alex Weber and James Ritter*
  * Date: 4/5/2022*
  * File: menu_index.class.php*
- * Description: */
+ * Description: Displays the whole menu */
 
 class MenuIndex extends MenuIndexView
 {
@@ -27,10 +27,23 @@ class MenuIndex extends MenuIndexView
             $categories = $_SESSION['categories'];
         }
 
+        // obtain the user role
+        if (isset($_SESSION['role'])) {
+            $role = $_SESSION['role'];
+        }
+
         //display page header
         parent::displayHeader("Our Menu");
 
-        ?>
+        //If user is an admin allow the 'add menu item' button show on the list menu page
+        if ($role == 1) { ?>
+            <!---QUICK WAY TO ADD A MENU ITEM-->
+            <div id="button-group">
+                <input class="detail-buttons" type="button" id="edit-button"
+                       value="Hello Admin User, Need to Quickly Add a Menu Item?   CLICK ME!!!"
+                       onclick="window.location.href = '<?= BASE_URL ?>/menu/addDisplay/'">
+            </div>
+        <?php } ?>
         <!--<div id="main-header"> Items within the Menu</div>-->
         <div class="grid-container">
             <?php
@@ -103,31 +116,31 @@ class MenuIndex extends MenuIndexView
         </div>
 
         <!---Determine the hidden paginator -->
-            <!-- Pagination controls at bottom of menu page -->
-            <div id="pagination-control" align="center">
-                <ul class="pagination">
-                    <li><a href="?page=1">First</a></li>
-                    <li class="<?php if ($page <= 1) {
-                        echo 'disabled';
-                    } ?>">
-                        <a href="<?php if ($page <= 1) {
-                            echo '#';
-                        } else {
-                            echo "?page=" . ($page - 1);
-                        } ?>">Prev</a>
-                    </li>
-                    <li class="<?php if ($page >= $total_pages) {
-                        echo 'disabled';
-                    } ?>">
-                        <a href="<?php if ($page >= $total_pages) {
-                            echo '#';
-                        } else {
-                            echo "?page=" . ($page + 1);
-                        } ?>">Next</a>
-                    </li>
-                    <li><a href="?page=<?php echo $total_pages; ?>">Last</a></li>
-                </ul>
-            </div>
+        <!-- Pagination controls at bottom of menu page -->
+        <div id="pagination-control" align="center">
+            <ul class="pagination">
+                <li><a href="?page=1">First</a></li>
+                <li class="<?php if ($page <= 1) {
+                    echo 'disabled';
+                } ?>">
+                    <a href="<?php if ($page <= 1) {
+                        echo '#';
+                    } else {
+                        echo "?page=" . ($page - 1);
+                    } ?>">Prev</a>
+                </li>
+                <li class="<?php if ($page >= $total_pages) {
+                    echo 'disabled';
+                } ?>">
+                    <a href="<?php if ($page >= $total_pages) {
+                        echo '#';
+                    } else {
+                        echo "?page=" . ($page + 1);
+                    } ?>">Next</a>
+                </li>
+                <li><a href="?page=<?php echo $total_pages; ?>">Last</a></li>
+            </ul>
+        </div>
         <?php
         //display page footer
         parent::displayFooter();

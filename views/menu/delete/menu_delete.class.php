@@ -1,13 +1,13 @@
 <?php
-/*** Author: your name*
+/*** Author: ALEX WEBER AND JAMES RITTER*
  * Date: 4/5/2022*
  * File: menu_delete.class.php*
- * Description: */
+ * Description: Displays a warning message and double checks if the user wants to delete the item*/
 
 class MenuDelete extends MenuIndexView{
     public function display($menuItem, $confirm = ""){
         // display page header
-        parent::displayHeader("Product Details");
+        parent::displayHeader("VERIFY PRODUCT DELETION");
 
         // retrieve menu details
         $id = $menuItem->getId();
@@ -51,7 +51,7 @@ class MenuDelete extends MenuIndexView{
                        onclick="window.location.href = '<?= BASE_URL ?>/menu/delete/<?= $id ?>'">&nbsp;
                 <input type="button" id="cancel-button" class="edit-buttons"  value="   Cancel   "
                        onclick="window.location.href = '<?= BASE_URL ?>/menu/detail/<?= $id ?>'">&nbsp;
-                <input type="button" id="return-button" class="edit-buttons"   value=" Index "
+                <input type="button" id="return-button" class="edit-buttons"   value=" Home "
                        onclick="window.location.href = '<?= BASE_URL ?>/menu/index/'">
 
             </div>

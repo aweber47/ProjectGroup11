@@ -1,8 +1,8 @@
 <?php
-/*** Author: your name*
+/*** Author: James Ritter and Alex Weber*
  * Date: 4/11/2022*
  * File: cart_checkout.class.php*
- * Description: */
+ * Description: cart checkout view displayed when user checkouts. Destory session*/
 
 class CartCheckout extends CartIndexView
 {

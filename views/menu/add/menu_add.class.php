@@ -53,8 +53,8 @@ class MenuAdd extends MenuIndexView
                 </tr>
             </table>
             <div id="button-group">
-                <input type="submit" name="action" value="Add Menu Item">
-                <input type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL . "/menu/index/" ?>"'>
+                <input class="edit-buttons" type="submit" name="action" value="  Add  ">
+                <input class="edit-buttons" type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL . "/menu/index/" ?>"'>
             </div>
         </form>
         <?php

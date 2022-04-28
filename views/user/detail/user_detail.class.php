@@ -27,9 +27,8 @@ class UserDetail extends UserIndexView
         if (isset($_SESSION['user_id'])) {
             $Adminid = $_SESSION['user_id'];
         }
-        $id = $Adminid;
-        echo $id;
-        $CurrentAdmin = $id;
+
+        $CurrentAdmin = $Adminid;
         echo $CurrentAdmin;
         ?>
 

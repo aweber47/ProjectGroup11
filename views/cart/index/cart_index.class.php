@@ -1,8 +1,8 @@
 <?php
-/*** Author: your name*
+/*** Author: Alex Weber and James Ritter*
  * Date: 4/8/2022*
  * File: cart_index.class.php*
- * Description: */
+ * Description: Displays all information about the cart and holds the main cart information. */
 
 class CartIndex extends CartIndexView
 {

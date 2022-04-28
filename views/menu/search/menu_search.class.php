@@ -1,25 +1,27 @@
 <?php
-/*** Author: your name*
+/*** Author: Alex Weber*
  * Date: 4/5/2022*
  * File: menu_search.class.php*
- * Description: */
+ * Description: handles the search view of the menu controller.*/
 
-class MenuSearch extends MenuIndexView{
-    public function display($terms, $menuItems){
+class MenuSearch extends MenuIndexView
+{
+    public function display($terms, $menuItems)
+    {
         //display page header
         parent::displayHeader("Search Results");
-        
+
         // attempt to implement paginator
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        
+
         //get categories from a session variable
         if (isset($_SESSION['categories'])) {
             $categories = $_SESSION['categories'];
         }
 
-           ?>
+        ?>
         <div id="search-results">
             <h3>Search Results for "<?= $terms ?>"</h3>
             <span>
@@ -28,7 +30,7 @@ class MenuSearch extends MenuIndexView{
                 ?>
             </span>
         </div>
-        
+
         <?php
         if ($menuItems === 0) {
             echo "No menu items were found.<br><br><br><br><br>";
@@ -45,13 +47,13 @@ class MenuSearch extends MenuIndexView{
 
                 $category = $menuItem->getCategory();
                 // shift attribute from category number to category name
-                if($category == 1){
+                if ($category == 1) {
                     $category = $categories[1];
                 }
-                if($category == 2){
+                if ($category == 2) {
                     $category = $categories[2];
                 }
-                if($category == 3){
+                if ($category == 3) {
                     $category = $categories[3];
                 }
 
@@ -62,7 +64,7 @@ class MenuSearch extends MenuIndexView{
                 if ($i % 6 == 0) {
                     echo "<div class='row'>";
                 }
-    
+
                 echo "
                     <div id='menu-index'>
                         <br>

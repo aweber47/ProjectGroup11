@@ -1,8 +1,8 @@
 <?php
-/*** Author: your name*
- * Date: 4/5/2022*
+/*** Author: Alex Weber*
+ * Date: 4/5/2022 - 4/28/2022*
  * File: menu_model.class.php*
- * Description: */
+ * Description: holds all the functions for the menu controllor. Also holds the functions for the cart_model*/
 
 class MenuModel
 {

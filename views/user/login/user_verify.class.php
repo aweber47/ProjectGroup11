@@ -1,8 +1,8 @@
 <?php
-/*** Author: your name*
+/*** Author: Alex Weber*
  * Date: 4/8/2022*
  * File: user_verify.class.php*
- * Description: */
+ * Description: verify the users login, if it passes give them a verification message and links to the menu, homepage and to view there account details.*/
 
 class UserVerify extends UserIndexView
 {

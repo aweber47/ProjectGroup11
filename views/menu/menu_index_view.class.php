@@ -1,5 +1,5 @@
 <?php
-/*** Author: Alex Weber*
+/*** Author: Alex Weber and James Ritter*
  * Date: 4/11/2022*
  * File: menu_index_view.class.php*
  * Description: displays the menu, includes honor features such as paginator, advanced search and more to come!*/
@@ -9,6 +9,15 @@ class MenuIndexView extends IndexView
     public static function displayHeader($title)
     {
         parent::displayHeader($title)
+        ?>
+        <?php
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['role'])) {
+            $role = $_SESSION['role'];
+        }
+
         ?>
 
         <!-- Script and media type, forms, suggestions and search box would go here. -->
@@ -107,6 +116,7 @@ class MenuIndexView extends IndexView
                 <label>All Products</label>
             </form>
         </div>
+
         <!-- Javascript goes here -->
         <script type="text/javascript">
             function toggleText() {

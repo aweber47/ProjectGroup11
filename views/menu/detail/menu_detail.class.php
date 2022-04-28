@@ -76,32 +76,31 @@ class MenuDetail extends MenuIndexView
         <?php
         error_reporting(0);
         // display edit and delete buttons if user role is 1
-        if ($role == 1) {
-
-            ?>
-            <div id="button-group">
-                <input class="detail-buttons" type="button" id="edit-button" value="Edit"
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">
-
-                <input class="detail-buttons" type="button" id="delete-button" value="Delete Item"
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">
-
-                <!-- Put add menu item back into the webpage. You have to be logged in as Test/test in order to access it-->
-                <!-- THIS FEATURE WORKS-->
-                <!-- You can switch the id of the button to an 'add-button' if you want-->
-                <input class="detail-buttons" type="button" id="edit-button" value="Add Item"
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/addDisplay/'">
-            </div>
-        <?php } ?>
+        ?>
         <div id="button-group">
+
+
             <input class="detail-buttons" type="button" id="return-button" value="Return to Menu"
                    onclick="window.location.href='<?= BASE_URL ?>/menu/index/<?= $id ?>'">
 
             <input class="detail-buttons" type="button" id="add-to-button" value="Add to Cart"
                    onclick="window.location.href='<?= BASE_URL ?>/menu/addToCart/<?= $id ?>'">
 
-            <input class="detail-buttons" type="button" id="delete-from-button" value=""
+            <!---display edit, delete and add buttons if user role is 1 -->
+            <?php if ($role == 1) { ?>
+
+                <input class="detail-buttons" type="button" id="edit-button" value="Edit Item"
+                       onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">
+
+                <input class="detail-buttons" type="button" id="delete-button" value="Delete Item"
+                       onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">
+
+                <input class="detail-buttons" type="button" id="edit-button" value="Add Menu Item"
+                       onclick="window.location.href = '<?= BASE_URL ?>/menu/addDisplay/'">
+
+            <?php } ?>
         </div>
+
         <div id="confirm-message"><?= $confirm ?></div>
 
         <!--<div id="button-group">-->

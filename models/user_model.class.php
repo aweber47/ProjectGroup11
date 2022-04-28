@@ -2,7 +2,7 @@
 
 /*
 /*** Author: Alex Weber*
- * Date: 4/11/2022*
+ * Date: 4/11/2022 - 4/28/2022*
  * File: user_model.class.php*
  * Description: Models for the User Controller. Holds, update, details, view, delete, add, and more!  */
 

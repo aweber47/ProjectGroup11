@@ -1,16 +1,17 @@
 <?php
 
-/*** Author: your name*
- * Date: 4/5/2022*
+/*** Author: Alex Weber*
+ * Date: 4/5/2022 - 4/28/2022*
  * File: menu.class.php*
- * Description: */
+ * Description: Menu class, constructor, and get methods*/
 class Menu
 {
     // private data members
-    private $id, $product,$image, $category, $price, $description;
+    private $id, $product, $image, $category, $price, $description;
 
     //constructor
-    public function __construct($product,$image, $category, $price, $description){
+    public function __construct($product, $image, $category, $price, $description)
+    {
         $this->product = $product;
         $this->image = $image;
         $this->category = $category;
@@ -19,26 +20,39 @@ class Menu
     }
 
     // getters
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
-    public function getProduct(){
+
+    public function getProduct()
+    {
         return $this->product;
     }
-    public function getImage(){
+
+    public function getImage()
+    {
         return $this->image;
     }
-    public function getCategory(){
+
+    public function getCategory()
+    {
         return $this->category;
     }
-    public function getPrice(){
+
+    public function getPrice()
+    {
         return $this->price;
     }
-    public function getDescription(){
+
+    public function getDescription()
+    {
         return $this->description;
     }
+
     // set menu item id
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
     }
 }
