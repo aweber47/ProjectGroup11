@@ -17,19 +17,45 @@ class UserDetail extends UserIndexView
         $firstname = $user->getFirstname();
         $lastname = $user->getLastname();
         $email = $user->getEmail();
+        $role = $user->getRole();
 
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-        if (isset($_SESSION['role'])) {
-            $role = $_SESSION['role'];
-        }
+
         if (isset($_SESSION['user_id'])) {
             $Adminid = $_SESSION['user_id'];
         }
 
         $CurrentAdmin = $Adminid;
-        echo $CurrentAdmin;
+
+        //if block to determine if the user is an admin or not
+        // based on that, determine if it blocks the user from changing the base url
+        if ($role == 1) {
+        } else {
+            if ($role == 0) {
+                try {
+                    if ($Adminid != $id) {
+                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+                    }
+                } catch (UserIssueException $e) {
+                    $view = new UserController();
+                    $view->manierror($e->getMessage());
+                    return false;
+                }
+            }
+            if ($role == 2) {
+                try {
+                    if ($Adminid != $id) {
+                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+                    }
+                } catch (UserIssueException $e) {
+                    $view = new UserController();
+                    $view->manierror($e->getMessage());
+                    return false;
+                }
+            }
+        }
         ?>
 
         <!--<div id="main-header">User Details</div>-->

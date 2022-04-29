@@ -17,6 +17,44 @@ class UserDelete extends UserIndexView
         $firstname = $user->getFirstname();
         $lastname = $user->getLastname();
         $email = $user->getEmail();
+        $role = $user->getRole();
+
+        // php session created and retrieve the users role
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset($_SESSION['user_id'])) {
+            $Adminid = $_SESSION['user_id'];
+        }
+
+        //if block to determine if the user is an admin or not
+        // based on that, determine if it blocks the user from changing the base url
+        if ($role == 1) {
+        } else {
+            if ($role == 0) {
+                try {
+                    if ($Adminid != $id) {
+                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+                    }
+                } catch (UserIssueException $e) {
+                    $view = new UserController();
+                    $view->manierror($e->getMessage());
+                    return false;
+                }
+            }
+            if ($role == 2) {
+                try {
+                    if ($Adminid != $id) {
+                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+                    }
+                } catch (UserIssueException $e) {
+                    $view = new UserController();
+                    $view->manierror($e->getMessage());
+                    return false;
+                }
+            }
+        }
         ?>
 
         <div id="main-header">User Details</div>
@@ -40,9 +78,11 @@ class UserDelete extends UserIndexView
             </tr>
         </table>
         <div id="button-group">
-            <input class="edit-buttons" type="button" id="delete-button"
-                   value="   Are you sure you want to delete?   "
-                   onclick="window.location.href = '<?= BASE_URL ?>/user/delete/<?= $id ?>'">&nbsp;
+            <form action="<?= BASE_URL ?>/user/delete/" method="post">
+                <label for="confirm">Type: YES to delete account.</label>
+                <input class="edit-buttons" type="text" name="confirm" size="50">
+                <input class="edit-buttons" type="submit" value=" Submit  ">
+            </form>
             <input class="edit-buttons" type="button" id="cancel-button" value="   Cancel   "
                    onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'">&nbsp;
         </div>

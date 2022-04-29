@@ -22,14 +22,12 @@ class UserController
         $users = $this->user_model->list_user();
 
         if (!$users) {
-            //error
-            $message = "There was a problem with displaying the users";
-            $this->error($message);
-            return;
+            return false;
         }
         // display all users
         $view = new UserIndex();
         $view->display($users);
+        return true;
     }
 
     public function addDisplay()
@@ -58,10 +56,7 @@ class UserController
         //  $reviews = $this->review_model->list_review($id);
 
         if (!$user) {
-            //display an error
-            $message = "There was a problem displaying the user id='" . $id . "'.";
-            $this->error($message);
-            return;
+            return false;
         }
 
         //display user details
@@ -77,14 +72,12 @@ class UserController
 
         // error handle
         if (!$user) {
-            // display
-            $message = "There was a problem displaying the users information id='" . $id . "'.";
-            $this->error($message);
-            return;
+            return false;
         }
 
         $view = new UserEdit();
         $view->display($user);
+        return true;
     }
 
     //update a user in the database
@@ -94,17 +87,14 @@ class UserController
         $update = $this->user_model->update_user($id);
 
         if (!$update) {
-            //handle errors
-            echo $update;
-            $message = "There was a problem updating the user id='" . $id . "'.";
-            $this->error($message);
-            return;
+            return false;
         }
 
         //display the updated user details
         $confirm = "The user was successfully updated.";
         $view = new UserUpdate();
         $view->display($confirm, $id);
+        return true;
     }
 
     //register
@@ -149,6 +139,12 @@ class UserController
         //display the error page
         $error->display($message);
     }
+    public function manierror($message){
+        //create an object of the user manipulation errors
+        $error = new UserManiError();
+        //display
+        $error->display($message);
+    }
 
     // delete display
     public function deleteDisplay($id)
@@ -157,9 +153,7 @@ class UserController
 
         // error handle
         if (!$user) {
-            $message = "There was an issue trying to obtain user id='" . $id . "'.";
-            $this->error($message);
-            return;
+            return false;
         }
         $error = new UserDelete();
         $error->display($user);
@@ -167,18 +161,17 @@ class UserController
     }
 
     //deletes the user
-    public function delete($id)
+    public function delete()
     {
-        $user = $this->user_model->delete_user($id);
+        $user = $this->user_model->delete_user();
 
         // error handle
         if (!$user) {
-            $message = "There was an issue trying to delete user id='" . $id . "'.";
-            $this->error($message);
-            return;
+            return false;
         }
         $detail = new UserVerify();
         $detail->display("The User has been removed from the database");
+        return true;
     }
 
     //handle calling inaccessible methods

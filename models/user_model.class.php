@@ -202,14 +202,13 @@ class UserModel
                     $_SESSION['role'] = $user_role;
 
                     return "Congratulations! You are a verified user.";
-                } else {
-                    throw new UserIssueException("There was issue verifying the account. Please check your username and password");
                 }
+                //no error message need
+                //return false;
             }
             // no return statement. Just return the first catch.
         } catch (UserIssueException $e) {
-            $view = new UserController();
-            $view->error($e->getMessage());
+            // in place catch block. Doesn't do anything but is a place holder. Hard code solution used instead.
         }
         // retrieve the username and password
         $username = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING));
@@ -325,22 +324,44 @@ class UserModel
 
     }
 
-    public function delete_user($id)
+    public function delete_user()
     {
+        $deleter = filter_input(INPUT_POST, 'confirm');
+
         try {
-            $sql = " DELETE FROM " . $this->tblUsers . " WHERE id='$id'";
+            if ($deleter == 'YES') {
+                echo "It is reading the confirmation message";
 
-            $query = $this->dbConnection->query($sql);
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                if (isset($_SESSION['user_id'])) {
+                    $Adminid = $_SESSION['user_id'];
+                    $id = $Adminid;
 
-            if (!$query) {
-                throw new DatabaseException("Failed to Execute the SQL");
-            } else {
-                return $query;
+                    // begin the delete process
+                    $sql = " DELETE FROM " . $this->tblUsers . " WHERE id='$id'";
+                    $query = $this->dbConnection->query($sql);
+                    try {
+                        if (!$query) {
+                            throw new DatabaseException("Failed to Execute the SQL");
+                        } else {
+                            return $query;
+                        }
+                    } catch (DatabaseException $e) {
+                        $view = new UserController();
+                        $view->error($e->getMessage());
+                        return false;
+                    }
+                }
+            }else{
+                throw new UserIssueException("You somehow mispelled the word YES.");
             }
-        } catch (DatabaseException $e) {
+        } catch (UserIssueException $e) {
             $view = new UserController();
             $view->error($e->getMessage());
             return false;
         }
+        return true;
     }
 }

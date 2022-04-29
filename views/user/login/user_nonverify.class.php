@@ -37,7 +37,10 @@ class UserNonVerify extends UserIndexView
             echo '<p><strong>' . $message . '</strong></p>';
             echo '<p><strong>' . 'Your entered username: ' . '<div style="color: red">' . $username . '</div></strong></p>';
             echo '<p><strong>' . 'Your entered password: ' . '<div style="color: red">' . $password . '</div></strong></p>';
-            echo '<p style="font-style: italic"><strong>' . 'If you have not registered, please do so by clicking the: Register an Account button.' . '</strong></p>'
+            echo '<p style="font-style: italic"><strong>' . 'If you have not registered, please do so by clicking the: Register an Account button.' . '</strong></p>';
+
+            // if information entered wrong is TRUE
+            session_destroy();
             ?>
             <div id="button-group">
                 <input class="edit-buttons" type="button" value="Register an Account"

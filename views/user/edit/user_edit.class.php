@@ -13,15 +13,6 @@ class UserEdit extends UserIndexView
         //display page header
         parent::displayHeader("Edit User Details");
 
-        // php session created and retrieve the users role
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-        if (isset($_SESSION['role'])) {
-            // if an admin is logged in allow the ability to change a users role
-            $admin = $_SESSION['role'];
-        }
-        // retrieve user details
         $id = $user->getId();
         $username = $user->getUsername();
         $password = $user->getPassword();
@@ -31,6 +22,43 @@ class UserEdit extends UserIndexView
         $role = $user->getRole();
 
 
+        // php session created and retrieve the users role
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (isset($_SESSION['user_id'])) {
+            $Adminid = $_SESSION['user_id'];
+        }
+
+
+        //if block to determine if the user is an admin or not
+        // based on that, determine if it blocks the user from changing the base url
+        if ($role == 1) {
+        } else {
+            if ($role == 0) {
+                try {
+                    if ($Adminid != $id) {
+                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+                    }
+                } catch (UserIssueException $e) {
+                    $view = new UserController();
+                    $view->manierror($e->getMessage());
+                    return false;
+                }
+            }
+            if ($role == 2) {
+                try {
+                    if ($Adminid != $id) {
+                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+                    }
+                } catch (UserIssueException $e) {
+                    $view = new UserController();
+                    $view->manierror($e->getMessage());
+                    return false;
+                }
+            }
+        }
         ?>
 
         <!--<div id="main-header">Edit User Details</div>-->
@@ -40,25 +68,32 @@ class UserEdit extends UserIndexView
         <form id="edit-form" action='<?= BASE_URL . "/user/update/" . $id ?>' method="post"
               style="padding: 20px 0; text-align: center">
             <table id="menu-detail">
-                <tr class="detail-labels">
+                <tr class="detail-labels-all">
                     <th>Username</th>
                     <th>Password</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
-                    <?php if ($admin == 1) { ?>
+                    <?php if ($role == 1) { ?>
                         <th>Role</th>
                     <?php } ?>
 
                 </tr>
-                <tr class="detail-info">
+                <tr class="detail-info-all">
                     <td><input name="username" type="text" size="50" value="<?= $username ?>"></td>
                     <td><input name="password" type="password" size="50" value="<?= $password ?>"></td>
                     <td><input name="firstname" type="text" size="50" value="<?= $firstname ?>"></td>
                     <td><input name="lastname" type="text" size="50" value="<?= $lastname ?>"></td>
                     <td><input name="email" type="text" size="50" value="<?= $email ?>"></td>
-                    <?php if ($admin == 1) { ?>
-                        <td><input name="role" type="text" size="50" value="<?= $role ?>"</td>
+                    <?php if ($role == 1) { ?>
+                        <td>
+                            <div class="edit-left" style="font-size: small; color: red"><strong>Current Role
+                                    is: <?= $role ?></strong></div>
+                            <select name="role">
+                                <option value="1">1 - Admin</option>
+                                <option value="2">2 - Default</option>
+                            </select>
+                        </td>
                     <?php } ?>
                 </tr>
             </table>
