@@ -22,41 +22,56 @@ class UserEdit extends UserIndexView
         $role = $user->getRole();
 
 
-        // php session created and retrieve the users role
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-
         if (isset($_SESSION['user_id'])) {
             $Adminid = $_SESSION['user_id'];
+        } else {
+            $Adminid = NULL;
+            unset($_SESSION['user_id']);
         }
 
-
-        //if block to determine if the user is an admin or not
-        // based on that, determine if it blocks the user from changing the base url
-        if ($role == 1) {
-        } else {
-            if ($role == 0) {
-                try {
-                    if ($Adminid != $id) {
-                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
-                    }
-                } catch (UserIssueException $e) {
-                    $view = new UserController();
-                    $view->manierror($e->getMessage());
-                    return false;
-                }
+        try {
+            if ($Adminid === NULL) {
+                throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
             }
-            if ($role == 2) {
-                try {
-                    if ($Adminid != $id) {
-                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
-                    }
-                } catch (UserIssueException $e) {
-                    $view = new UserController();
-                    $view->manierror($e->getMessage());
-                    return false;
+        } catch (UserIssueException $e) {
+            $view = new UserController();
+            $view->manierror($e->getMessage());
+            return false;
+        }
+
+        if (isset($_SESSION['role'])) {
+            $LOGGEDROLE = $_SESSION['role'];
+        }
+
+        $CurrentAdmin = $Adminid;
+
+        // logged role is the current role for the user. This prevents users from attacking other accounts
+        echo $LOGGEDROLE;
+        if ($LOGGEDROLE == 1) {
+            // The entire block here, is so that if a user somehow does get pass the restrict, it finds it
+            // and returns null and unsets the id if not true.
+            // if an admin gets on this page, it doesn't do anything.
+            $ROLEONE = $CurrentAdmin;
+            $_SESSION['ADMINLOG'] = $ROLEONE;
+
+            echo $LOGGEDROLE;
+
+            // commented out because it caused issues on pages where it reset when it shouldn't
+            /*if ($Adminid != $id) {
+                unset($_SESSION['role']);
+            }*/
+        } else {
+            try {
+                if ($Adminid != $id) {
+                    throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
                 }
+            } catch (UserIssueException $e) {
+                $view = new UserController();
+                $view->manierror($e->getMessage());
+                return false;
             }
         }
         ?>

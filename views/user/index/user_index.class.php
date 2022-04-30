@@ -24,17 +24,28 @@ class UserIndex extends UserIndexView
 
     public function display($users)
     {
+        //display page header
+        parent::displayHeader("ADMIN: USER ACCOUNTS");
+
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         if (isset($_SESSION['user_id'])) {
             $Adminid = $_SESSION['user_id'];
+        } else {
+            $Adminid = NULL;
         }
-        $id = $Adminid;
-        $CurrentAdmin = $id;
 
-        //display page header
-        parent::displayHeader("ADMIN: USER ACCOUNTS");
+        try {
+            if ($Adminid === NULL) {
+                throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+            }
+        } catch (UserIssueException $e) {
+            $view = new UserController();
+            $view->manierror($e->getMessage());
+            return false;
+        }
+
 
         ?>
 

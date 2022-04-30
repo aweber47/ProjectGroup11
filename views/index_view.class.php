@@ -12,9 +12,6 @@ class IndexView
         // start a session
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
-            echo "_";
-        } else {
-            echo "_";
         }
 
         ?>

@@ -139,7 +139,9 @@ class UserController
         //display the error page
         $error->display($message);
     }
-    public function manierror($message){
+
+    public function manierror($message)
+    {
         //create an object of the user manipulation errors
         $error = new UserManiError();
         //display

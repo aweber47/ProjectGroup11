@@ -342,7 +342,12 @@ class UserModel
                     // begin the delete process
                     $sql = " DELETE FROM " . $this->tblUsers . " WHERE id='$id'";
                     $query = $this->dbConnection->query($sql);
+                    if (isset($_SESSION['role'])) {
+                        $LOGGEDROLE = $_SESSION['role'];
+                    }
+
                     try {
+
                         if (!$query) {
                             throw new DatabaseException("Failed to Execute the SQL");
                         } else {
@@ -354,12 +359,34 @@ class UserModel
                         return false;
                     }
                 }
-            }else{
-                throw new UserIssueException("You somehow mispelled the word YES.");
+            } else {
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                if (isset($_SESSION['user_id'])) {
+                    $Adminid = $_SESSION['user_id'];
+                } else {
+                    $Adminid = NULL;
+                }
+                try {
+                    if ($Adminid === NULL) {
+                        throw new ViewingErrorException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+                    } else {
+                        throw new UserIssueException("Typo in the word YES." . "<br><br>" . "MAKE SURE IT IS IN ALL CAPS");
+                    }
+                } catch (ViewingErrorException $e) {
+                    $view = new UserController();
+                    $view->manierror($e->getMessage());
+                    return false;
+                } catch (UserIssueException $e) {
+                    $view = new UserController();
+                    $view->error($e->getMessage());
+                    return false;
+                }
             }
-        } catch (UserIssueException $e) {
+        } catch (ViewingErrorException $e) {
             $view = new UserController();
-            $view->error($e->getMessage());
+            $view->manierror($e->getMessage());
             return false;
         }
         return true;

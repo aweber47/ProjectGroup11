@@ -9,7 +9,7 @@ class UserDelete extends UserIndexView
     public function display($user, $confirm = "")
     {
         //display page header
-        parent::displayHeader("Delete User Details");
+        parent::displayHeader("DELETE ACCOUNT");
 
         //retrieve user details by calling get methods
         $id = $user->getId();
@@ -19,76 +19,99 @@ class UserDelete extends UserIndexView
         $email = $user->getEmail();
         $role = $user->getRole();
 
-        // php session created and retrieve the users role
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
-
         if (isset($_SESSION['user_id'])) {
             $Adminid = $_SESSION['user_id'];
+        } else {
+            $Adminid = NULL;
         }
 
-        //if block to determine if the user is an admin or not
-        // based on that, determine if it blocks the user from changing the base url
-        if ($role == 1) {
-        } else {
-            if ($role == 0) {
-                try {
-                    if ($Adminid != $id) {
-                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
-                    }
-                } catch (UserIssueException $e) {
-                    $view = new UserController();
-                    $view->manierror($e->getMessage());
-                    return false;
-                }
+        try {
+            if ($Adminid === NULL) {
+                throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
             }
-            if ($role == 2) {
-                try {
-                    if ($Adminid != $id) {
-                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
-                    }
-                } catch (UserIssueException $e) {
-                    $view = new UserController();
-                    $view->manierror($e->getMessage());
-                    return false;
+        } catch (UserIssueException $e) {
+            $view = new UserController();
+            $view->manierror($e->getMessage());
+            return false;
+        }
+
+        if (isset($_SESSION['role'])) {
+            $LOGGEDROLE = $_SESSION['role'];
+        }
+
+        $CurrentAdmin = $Adminid;
+
+        // logged role is the current role for the user. This prevents users from attacking other accounts
+        echo $LOGGEDROLE;
+        if ($LOGGEDROLE == 1) {
+            // The entire block here, is so that if a user somehow does get pass the restrict, it finds it
+            // and returns null and unsets the id if not true.
+            // if an admin gets on this page, it doesn't do anything.
+            $ROLEONE = $CurrentAdmin;
+            $_SESSION['ADMINLOG'] = $ROLEONE;
+
+            echo $LOGGEDROLE;
+
+            /*if ($Adminid != $id) {
+                unset($_SESSION['role']);
+            }*/
+        } else {
+            try {
+                if ($Adminid != $id) {
+                    throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
                 }
+            } catch (UserIssueException $e) {
+                $view = new UserController();
+                $view->manierror($e->getMessage());
+                return false;
             }
         }
         ?>
 
-        <div id="main-header">User Details</div>
-        <hr>
-        <!-- display user details in a table -->
-        <table id="detail">
-            <tr>
-                <td style="width: 130px;">
-                    <p><strong>Username:</strong></p>
-                    <p><strong>First Name:</strong></p>
-                    <p><strong>Last Name:</strong></p>
-                    <p><strong>Email:</strong></p>
-                </td>
-                <td>
-                    <p><?= $username ?></p>
-                    <p><?= $firstname ?></p>
-                    <p><?= $lastname ?></p>
-                    <p><?= $email ?></p>
-                    <div id="confirm-message"><?= $confirm ?></div>
-                </td>
-            </tr>
-        </table>
-        <div id="button-group">
-            <form action="<?= BASE_URL ?>/user/delete/" method="post">
-                <label for="confirm">Type: YES to delete account.</label>
-                <input class="edit-buttons" type="text" name="confirm" size="50">
-                <input class="edit-buttons" type="submit" value=" Submit  ">
+        <br><br><br><br>
+        <div id="edit-form">
+            <fieldset id="edit-fieldset">
+                <legend>Delete Account</legend>
+
+
+                <label class="edit-left">Username: </label>
+                <p id="Username" class="edit-right"><?= $username ?></p>
+
+                <br>
+
+                <label class="edit-left">First Name: </label>
+                <p id="firstName" class="edit-right"><?= $firstname ?></p>
+
+                <br>
+
+                <label class="edit-left">Last Name: </label>
+                <p id="lastName" class="edit-right"><?= $lastname ?></p>
+
+                <br>
+
+                <label class="edit-left">Email: </label>
+                <p id="email" class="edit-right"><?= $email ?></p>
+
+                <br>
+            </fieldset>
+
+            <br><br>
+
+            <form action="<?= BASE_URL ?>/user/delete" method="post">
+                <div id="button-group">
+                    <label><strong>Type YES:</strong></label>
+                    <input class="edit-buttons" type="text" name="confirm" required size="10">
+                    <input class="edit-buttons" type="submit" value=" DELETE ACCOUNT ">
+                    <input class="edit-buttons" type="button" id="cancel-button" value="   Cancel   "
+                           onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $CurrentAdmin ?>'">&nbsp;
+                </div>
             </form>
-            <input class="edit-buttons" type="button" id="cancel-button" value="   Cancel   "
-                   onclick="window.location.href = '<?= BASE_URL ?>/user/detail/<?= $id ?>'">&nbsp;
         </div>
         <?php
         ?>
-
         <?php
         //display page footer
         parent::displayFooter();

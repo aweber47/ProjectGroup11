@@ -8,8 +8,40 @@ class UserDetail extends UserIndexView
 {
     public function display($user_id, $user, $confirm = "")
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        // grabs user id for check
+        $id = $user->getId();
+
+        // retrieves the user_id (of the logged in user)
+        if (isset($_SESSION['user_id'])) {
+            $Adminid = $_SESSION['user_id'];
+        } else {
+            $Adminid = NULL;
+        }
+        if (isset($_SESSION['role'])) {
+            $LOGGEDROLE = $_SESSION['role'];
+        }
+
+        // matches the ids and if they match display the approiate page title
+        try {
+            if ($Adminid === $id) {
+                $pageTitle = 'Account Details';
+            } else {
+                $pageTitle = 'ALERT: MANIPULATION ERROR';
+            }
+            if ($Adminid === NULL) {
+                throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+            }
+        } catch (UserIssueException $e) {
+            $view = new UserController();
+            $view->manierror($e->getMessage());
+            return false;
+        }
+
         //display page header
-        parent::displayHeader("Display User Details");
+        parent::displayHeader($pageTitle);
 
         //retrieve user details by calling get methods
         $id = $user->getId();
@@ -19,43 +51,37 @@ class UserDetail extends UserIndexView
         $email = $user->getEmail();
         $role = $user->getRole();
 
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        if (isset($_SESSION['user_id'])) {
-            $Adminid = $_SESSION['user_id'];
-        }
-
         $CurrentAdmin = $Adminid;
+
+        // logged role is the current role for the user. This prevents users from attacking other accounts
+        echo $LOGGEDROLE;
+        if ($LOGGEDROLE == 1) {
+            // The entire block here, is so that if a user somehow does get pass the restrict, it finds it
+            // and returns null and unsets the id if not true.
+            // if an admin gets on this page, it doesn't do anything.
+            $ROLEONE = $CurrentAdmin;
+            $_SESSION['ADMINLOG'] = $ROLEONE;
+
+            echo $LOGGEDROLE;
+
+            // commented out because it caused issues on pages where it reset when it shouldn't
+            /*if ($Adminid != $id) {
+                unset($_SESSION['role']);
+            }*/
+        } else {
+            try {
+                if ($Adminid != $id) {
+                    throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
+                }
+            } catch (UserIssueException $e) {
+                $view = new UserController();
+                $view->manierror($e->getMessage());
+                return false;
+            }
+        }
 
         //if block to determine if the user is an admin or not
         // based on that, determine if it blocks the user from changing the base url
-        if ($role == 1) {
-        } else {
-            if ($role == 0) {
-                try {
-                    if ($Adminid != $id) {
-                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
-                    }
-                } catch (UserIssueException $e) {
-                    $view = new UserController();
-                    $view->manierror($e->getMessage());
-                    return false;
-                }
-            }
-            if ($role == 2) {
-                try {
-                    if ($Adminid != $id) {
-                        throw new UserIssueException("<p><strong>" . "WARNING WARNING WARNING" . "<br><br>" . "YOU ARE NOT THIS USER" . "<br><br>" . "PLEASE CONTACT SERVER ADMIN IF PROBLEM CONTINUES" . "</strong></p>");
-                    }
-                } catch (UserIssueException $e) {
-                    $view = new UserController();
-                    $view->manierror($e->getMessage());
-                    return false;
-                }
-            }
-        }
         ?>
 
         <!--<div id="main-header">User Details</div>-->

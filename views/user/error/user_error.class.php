@@ -11,6 +11,19 @@ class UserError extends UserIndexView
         // header
         parent::displayHeader("Error");
         ?>
+        <?php
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['user_id'])) {
+            $Adminid = $_SESSION['user_id'];
+            $result = TRUE;
+        } else {
+            $Adminid = NULL;
+            $result = FALSE;
+        }
+
+        ?>
         <br><br><br><br>
         <div class="menu-error-msg">
             <h1>An Error has Occurred.</h1>
@@ -19,6 +32,11 @@ class UserError extends UserIndexView
 
         <br><br>
         <div id="button-group">
+            <?php if ($result == TRUE) { ?>
+                <input class="edit-buttons" type="button" value=" BACK TO DELETE "
+                       onclick="window.location.href='<?= BASE_URL ?>/user/deleteDisplay/<?= $Adminid ?>'">
+
+            <?php } ?>
             <input class="edit-buttons" type="button" value=" Retry Login  "
                    onclick="window.location.href='<?= BASE_URL ?>/user/login'">
             <input class="edit-buttons" type="button" value="  Register  "
