@@ -10,6 +10,29 @@ class MenuEdit extends MenuIndexView
 
     public function display($menuItem)
     {
+        // if a user of the web page trys to alter the url it fails.
+        try {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            if (isset($_SESSION['role'])) {
+                error_reporting(0);
+                $role = $_SESSION['role'];
+                echo $role;
+            } else {
+                $unauthorized = TRUE;
+            }
+
+            if ($unauthorized === TRUE || $role != 1) {
+                throw new UnauthorizedAccessException("YOU DO NOT HAVE ACCESS TO THIS PAGE");
+            }
+        } catch (UnauthorizedAccessException $e) {
+            $view = new MenuController();
+            $view->unauthorized_error($e->getMessage());
+            return false;
+        }
+
+
         //display page header
         parent::displayHeader("Edit Menu Item");
 

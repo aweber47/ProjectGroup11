@@ -598,23 +598,41 @@ class MenuModel
         return "Congratulations! You have added a(n) new menu Item!";
     }
 
-    public function delete_menuItem($id)
+    public function delete_menuItem()
     {
+        $deleteProduct = filter_input(INPUT_POST, 'conDel');
         try {
-            $sql = "DELETE FROM " . $this->tblMenu . " WHERE id='$id'";
+            if ($deleteProduct == 'YES') {
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+                if (isset($_SESSION['sad_item'])) {
+                    $id = $_SESSION['sad_item'];
 
-            $query = $this->dbConnection->query($sql);
+                    // start the delete process
+                    $sql = "DELETE FROM " . $this->tblMenu . " WHERE id='$id'";
+                    $query = $this->dbConnection->query($sql);
 
-            // attempt query
-            if (!$query) {
-                throw new DatabaseException("Failed to delete menu item");
+                    // test query
+                    try {
+                        if (!$query) {
+                            throw new DatabaseException("Failed to execute the SQL");
+                        } else {
+                            return $query;
+                        }
+                    } catch (DatabaseException $e) {
+                        $view = new MenuController();
+                        $view->error($e->getMessage());
+                        return false;
+                    }
+                }
+            } else {
+                throw new ViewingErrorException("Typo in the word: YES");
             }
-        } catch (DatabaseException $e) {
+        } catch (ViewingErrorException $e) {
             $view = new MenuController();
             $view->error($e->getMessage());
             return false;
         }
-        // if successful
-        return $query;
     }
 }

@@ -18,6 +18,9 @@ class MenuDetail extends MenuIndexView
         if (isset($_SESSION['role'])) {
             $role = $_SESSION['role'];
         }
+        if(!isset($_SESSION['role'])){
+            $role = 0;
+        }
 
         //get categories from a session variable
         if (isset($_SESSION['categories'])) {
@@ -87,7 +90,7 @@ class MenuDetail extends MenuIndexView
                    onclick="window.location.href='<?= BASE_URL ?>/menu/addToCart/<?= $id ?>'">
 
             <!---display edit, delete and add buttons if user role is 1 -->
-            <?php if ($role == 1) { ?>
+            <?php if ($role === 1) { ?>
 
                 <input class="detail-buttons" type="button" id="edit-button" value="Edit Item"
                        onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">

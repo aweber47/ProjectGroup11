@@ -17,8 +17,6 @@ class MenuIndexView extends IndexView
         if (isset($_SESSION['role'])) {
             $role = $_SESSION['role'];
         }
-        echo $role;
-
         ?>
 
         <!-- Script and media type, forms, suggestions and search box would go here. -->

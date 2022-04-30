@@ -4,13 +4,42 @@
  * File: menu_delete.class.php*
  * Description: Displays a warning message and double checks if the user wants to delete the item*/
 
-class MenuDelete extends MenuIndexView{
-    public function display($menuItem, $confirm = ""){
+class MenuDelete extends MenuIndexView
+{
+    public function display($menuItem, $confirm = "")
+    {
+        // if a user of the web page trys to alter the url it fails.
+        try {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            if (isset($_SESSION['role'])) {
+                error_reporting(0);
+                $role = $_SESSION['role'];
+                echo $role;
+            } else {
+                $unauthorized = TRUE;
+            }
+
+            if ($unauthorized === TRUE || $role != 1) {
+                throw new UnauthorizedAccessException("YOU DO NOT HAVE ACCESS TO THIS PAGE");
+            }
+        } catch (UnauthorizedAccessException $e) {
+            $view = new MenuController();
+            $view->unauthorized_error($e->getMessage());
+            return false;
+        }
+
+
         // display page header
         parent::displayHeader("VERIFY PRODUCT DELETION");
 
         // retrieve menu details
         $id = $menuItem->getId();
+
+        // create a session variable to hold the wanted deleted menu item
+        $_SESSION['sad_item'] = $id;
+
         $product = $menuItem->getProduct();
         $category = $menuItem->getCategory();
         $price = $menuItem->getPrice();
@@ -22,40 +51,43 @@ class MenuDelete extends MenuIndexView{
         <hr>
         <!-- display item details in a table -->
         <div id="edit-form">
-        <fieldset id="edit-fieldset">
-        <legend>Delete Menu Item</legend>
-            <label class="edit-left">Product:</label>
-            <p id="Item Name" class="edit-right"><?= $product ?></p>
+            <fieldset id="edit-fieldset">
+                <legend>Delete Menu Item</legend>
+                <label class="edit-left">Product:</label>
+                <p id="Item Name" class="edit-right"><?= $product ?></p>
 
-            <br>
+                <br>
 
-            <label class="edit-left">Category:</label>
-            <p id="Category" class="edit-right"><?= $category ?></p>
+                <label class="edit-left">Category:</label>
+                <p id="Category" class="edit-right"><?= $category ?></p>
 
-            <br>
+                <br>
 
-            <label class="edit-left">Price:</label>
-            <p id="Price" class="edit-right"><?= $price ?></p>
+                <label class="edit-left">Price:</label>
+                <p id="Price" class="edit-right"><?= $price ?></p>
 
-            <br>
+                <br>
 
-            <label class="edit-left">Description:</label>
-            <p id="Description" class="edit-right"><?= $description ?></p>
+                <label class="edit-left">Description:</label>
+                <p id="Description" class="edit-right"><?= $description ?></p>
 
-            <div id="confirm-message"><?= $confirm ?></div>
+                <div id="confirm-message"><?= $confirm ?></div>
 
-        </fieldset>
+            </fieldset>
 
-            <div id="button-group">
-                <input type="button" id="delete-button" class="edit-buttons" value="   Are you sure you want to delete?   "
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/delete/<?= $id ?>'">&nbsp;
-                <input type="button" id="cancel-button" class="edit-buttons"  value="   Cancel   "
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/detail/<?= $id ?>'">&nbsp;
-                <input type="button" id="return-button" class="edit-buttons"   value=" Home "
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/index/'">
+            <br><br>
 
-            </div>
+            <form action="<?= BASE_URL ?>/menu/delete" method="post">
+                <div id="button-group">
+                    <label><strong>Type YES:</strong></label>
+                    <input class="edit-buttons" type="text" name="conDel" required size="10">
+                    <input class="edit-buttons" type="submit" value=" DELETE MENU ITEM ">
+                    <input class="edit-buttons" type="button" id="cancel-button" value="  CANCEL  "
+                           onclick="window.location.href = '<?= BASE_URL ?>/menu/detail/<?= $id ?>'">
 
+
+                </div>
+            </form>
         </div>
 
         <?php

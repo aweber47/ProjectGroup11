@@ -86,6 +86,14 @@ class MenuController
 
     }
 
+    //unauthorized access error
+    public function unauthorized_error($message)
+    {
+        $unauthorized_error = new MenuUnauthorizedError();
+
+        $unauthorized_error->display($message);
+    }
+
     //search menu item
     public function search()
     {
@@ -221,9 +229,9 @@ class MenuController
         $error->display($menuItem);
     }
 
-    public function delete($id)
+    public function delete()
     {
-        $menuItem = $this->menu_model->delete_menuItem($id);
+        $menuItem = $this->menu_model->delete_menuItem();
         if (!$menuItem) {
             return false;
         }
