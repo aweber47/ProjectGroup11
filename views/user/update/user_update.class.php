@@ -8,6 +8,12 @@ class UserUpdate extends UserIndexView
 {
     public function display($message, $id)
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['role'])) {
+            $role = $_SESSION['role'];
+        }
         parent::displayHeader("User Update Screen");
         ?>
 
@@ -18,11 +24,18 @@ class UserUpdate extends UserIndexView
             <input type="hidden" name="id" value="<?= $id ?>">
             <?php
             echo '<h2>' . $message . '</h2>';
-            ?>
-            <div id="button-group">
-                <input class="edit-buttons" type="button" value="Back to Account"
-                       onclick='window.location.href = "<?= BASE_URL . "/user/detail/$id" ?>"'>
-            </div>
+            if ($role == 1) { ?>
+                <!--- IF ADMIN IS LOGGED IN DISPLAY USER DETAILS PAGE BUTTON-->
+                <input class="edit-buttons" type="button" id="userDetails-button" value="  Back to Accounts  "
+                       onclick="window.location.href = '<?= BASE_URL ?>/user/index/'">
+
+            <?php } else { ?>
+                <div id="button-group">
+                    <input class="edit-buttons" type="button" value="Back to Account"
+                           onclick='window.location.href = "<?= BASE_URL . "/user/detail/$id" ?>"'>
+                </div>
+
+            <?php } ?>
         </div>
 
         <br><br>

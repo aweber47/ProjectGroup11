@@ -1,9 +1,9 @@
 <?php
 
-/*** Author: your name*
+/*** Author: Alex Weber and James Ritter*
  * Date: 5/2/2022*
  * File: cart_view.class.php*
- * Description: */
+ * Description: Displays the cart */
 class CartView extends CartIndexView
 {
     public function display()
@@ -147,7 +147,7 @@ class CartView extends CartIndexView
                     var qty = $el.find(".itemQty").val();
                     location.reload(true);
                     $.ajax({
-                        url: 'action.php',
+                        url: '<?= BASE_URL ?>/cart/add/',
                         method: 'post',
                         cache: false,
                         data: {

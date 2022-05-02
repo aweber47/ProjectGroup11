@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Name: Alex Weber
+ * Date: May 2, 2022
+ * Description: This file uses a mix of procedural programming and MVC design patterns to bring the cart features.
+ * It mainly works by utilizing ajax within the viewing pages, but all the 'behind the scenes' is procedural programming.
+ * */
+
 class CartModel
 {
     // private data members
@@ -7,12 +14,14 @@ class CartModel
     private $db;
     private $dbConnection;
     static private $_instance = NULL;
+    private $tblUsers;
 
     public function __construct()
     {
         $this->db = Database::getDatabase();
         $this->dbConnection = $this->db->getConnection();
         $this->tblCart = $this->db->getCartTable();
+        $this->tblUsers = $this->db->getUsersTable();
 
         //Escapes special characters in a string for use in an SQL statement. This stops SQL inject in POST vars.
         foreach ($_POST as $key => $value) {
@@ -35,17 +44,6 @@ class CartModel
     // methods go here
 
     // view cart
-    public function view_cart()
-    {
-        // redirects user to the cart page
-        header("Location: ../views/cart/index.php");
-    }
-
-    public function cart_details()
-    {
-        //redirects users to their shopping cart
-        header("Location: ../views/cart/cart.php");
-    }
 
     // add products into cart
 
@@ -182,6 +180,22 @@ class CartModel
             exit();
         }
 
+        // MVC code...
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // obtain login status
+        if (!isset($_SESSION['login_status'])) {
+            $login_status = FALSE;
+        } else {
+            $login_status = TRUE;
+        }
+
+        //obtain user id
+        if (isset($_SESSION['user_id'])) {
+            $id = $_SESSION['user_id'];
+        }
 
         // Checkout and save customer info in the orders table
         if (isset($_POST['cart']) && isset($_POST['cart']) == 'order') {
@@ -189,28 +203,50 @@ class CartModel
             $email = $_POST['email'];
             $phone = $_POST['phone'];
             $products = $_POST['products'];
+            $allItems = $_POST['products'];
             $grand_total = $_POST['grand_total'];
             $address = $_POST['address'];
             $pmode = $_POST['pmode'];
 
+
             $data = '';
 
-            $stmt = $conn->prepare('INSERT INTO orders (name,email,phone,address,pmode,products,amount_paid)VALUES(?,?,?,?,?,?,?)');
+            $stmt = $conn->prepare('INSERT INTO orders (name,email,phone,address,pmode,products,amount_paid)VALUES (?,?,?,?,?,?,?)');
             $stmt->bind_param('sssssss', $name, $email, $phone, $address, $pmode, $products, $grand_total);
             $stmt->execute();
             $stmt2 = $conn->prepare('DELETE FROM cart');
             $stmt2->execute();
-            $data .= '<div class="text-center">
-								<h1 class="display-4 mt-2 text-danger">Thank You!</h1>
-								<h2 class="text-success">Your Order Placed Successfully!</h2>
-								<h4 class="bg-danger text-light rounded p-2">Items Purchased : ' . $products . '</h4>
-								<h4>Your Name : ' . $name . '</h4>
-								<h4>Your E-mail : ' . $email . '</h4>
-								<h4>Your Phone : ' . $phone . '</h4>
-								<h4>Total Amount Paid : ' . number_format($grand_total, 2) . '</h4>
-								<h4>Payment Mode : ' . $pmode . '</h4>
-						  </div>';
+            $data .= '<table id="menu-detail">
+                        <tr class="detail-labels">
+                        <th>Items Purchased: </th>
+                        <th>Name on Order: </th>
+                        <th>E-mail on Order: </th>
+                        <th>Phone number: </th>
+                        <th>Total Amount Paid: </th>
+                        <th>Payment Method: </th>
+                        </tr>
+                        <tr class="detail-info">
+                        <td>' . $allItems . '</td>
+                        <td>' . $name . '</td>
+                        <td>' . $email . '</td>
+                        <td>' . $phone . '</td>
+                        <td>' . number_format($grand_total, 2) . '</td>
+                        <td>' . $pmode . '</td>
+                        </tr>
+                        </table>';
             echo $data;
+            ?>
+            <div id="button-group">
+                <input class="edit-buttons" type="button" value=" Homepage "
+                       onclick="window.location.href='<?= BASE_URL ?>'">
+
+                <?php if ($login_status === TRUE) { ?>
+                    <input class="edit-buttons" type="button" id="cancel-button" value="  Logout  "
+                           onclick="window.location.href = '<?= BASE_URL ?>/user/logout/<?= $id ?>'">
+                <?php } ?>
+            </div>
+
+            <?php
         }
 
     }
@@ -241,6 +277,14 @@ class CartModel
             echo $rows;
         }
 
+    }
+
+    public function past_transactions()
+    {
+        $sql = "SELECT * FROM $this->tblUsers";
+        $query = $this->dbConnection->query($sql);
+
+        var_dump($query);
     }
 
 }

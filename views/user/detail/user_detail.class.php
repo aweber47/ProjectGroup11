@@ -109,6 +109,9 @@ class UserDetail extends UserIndexView
             <input class="edit-buttons" type="button" id="delete-button" value="   Delete Account   "
                    onclick="window.location.href = '<?= BASE_URL ?>/user/deleteDisplay/<?= $id ?>'">
 
+            <input class="edit-buttons" type="button" id="trans-button" value=" Past Transactions "
+                   onclick="window.location.href = '<?= BASE_URL ?>/cart/pastTransactions/'">
+
             <!--The point of the if condition here is to prevent php interpreting an Admin user
             logging out another user, that isn't logged in.. So if I was on TestUser4 and hit 'logout' it doesn't
             log out 'testUser4', rather it logs out the admin:

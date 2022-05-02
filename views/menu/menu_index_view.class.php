@@ -25,16 +25,12 @@ class MenuIndexView extends IndexView
             var base_url = '<?= BASE_URL ?>';
             console.log(base_url);
         </script>
-        <script src="<?= BASE_URL ?>/www/js/ajax_autosuggestion.js" type="text/javascript"></script>
         <!--create the search bar -->
         <div id="searchbar">
             <form id="searchbar-form" method="get" action="<?= BASE_URL ?>/menu/search/">
                 <label id="searchtextbox" for="searchtextbox"></label>
-                <input type="search" name="query-terms" id="searchtextbox" placeholder="Search Menu" autocomplete="off"
-                       onkeyup="handleKeyUp(event)">
-
-                <input id="search-button" type="submit" value="Go">
-                <div id="suggestionDiv"></div>
+                <input type="search" name="query-terms" id="searchtextbox" placeholder="Search Menu">
+                <input id="search-button" type="submit" value=" Search ">
         </div>
         <?php
         /*************************************************************************************

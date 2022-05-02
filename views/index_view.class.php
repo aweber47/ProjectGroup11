@@ -75,7 +75,6 @@ class IndexView
         <footer>
             <p style="text-align: center">&copy; 2008-<span id="copyright">20XX</span>. Lewies Chinese Bistro</p>
             <script src="/ProjectGroup11/www/js/copyright.js"></script>
-            <script type="text/javascript" src="<?= BASE_URL ?>/ProjectGroup11/www/js/ajax_autosuggestion.js"></script>
         </footer>
         </body>
         </html>

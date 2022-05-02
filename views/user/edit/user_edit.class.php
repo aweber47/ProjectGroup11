@@ -74,6 +74,7 @@ class UserEdit extends UserIndexView
                 return false;
             }
         }
+
         ?>
 
         <!--<div id="main-header">Edit User Details</div>-->
@@ -96,11 +97,11 @@ class UserEdit extends UserIndexView
                 </tr>
                 <tr class="detail-info-all">
                     <td><input name="username" type="text" size="50" value="<?= $username ?>"></td>
-                    <td><input name="password" type="password" size="50" value="<?= $password ?>"></td>
+                    <td><input name="password" type="text" size="50"></td>
                     <td><input name="firstname" type="text" size="50" value="<?= $firstname ?>"></td>
                     <td><input name="lastname" type="text" size="50" value="<?= $lastname ?>"></td>
                     <td><input name="email" type="text" size="50" value="<?= $email ?>"></td>
-                    <?php if ($role == 1) { ?>
+                    <?php if ($LOGGEDROLE == 1) { ?>
                         <td>
                             <div class="edit-left" style="font-size: small; color: red"><strong>Current Role
                                     is: <?= $role ?></strong></div>

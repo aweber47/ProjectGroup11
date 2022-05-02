@@ -188,6 +188,7 @@ class UserModel
                     $user_id = $result_row['id'];
                     $user_detail = $result_row['username'];
                     $user_role = $result_row['role'];
+                    $user_email = $result_row['email'];
 
                     //Session variable that holds the user id
                     $_SESSION['user_id'] = $user_id;
@@ -200,6 +201,9 @@ class UserModel
 
                     // obtain the user role, store it in a session variable
                     $_SESSION['role'] = $user_role;
+
+                    // store the email for the checkout page
+                    $_SESSION['user_email'] = $user_email;
 
                     return "Congratulations! You are a verified user.";
                 }
@@ -296,6 +300,9 @@ class UserModel
 
         $role = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST, 'role', FILTER_SANITIZE_NUMBER_INT)));
 
+        if (!$role) {
+            $role = 2;
+        }
 
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 

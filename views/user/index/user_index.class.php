@@ -90,7 +90,7 @@ class UserIndex extends UserIndexView
                             <td>$email</td>
                             <td>$role</td>
                             <td><strong><a href='", BASE_URL, "/user/detail/$id'>YES</a></strong></td>
-                        </tr>           
+                        </tr>          
                     </table>
                 </div>
                 ";
@@ -103,9 +103,10 @@ class UserIndex extends UserIndexView
             }
             ?>
         </div>
+
         <div id="button-group">
             <input class="edit-buttons" type="button" value="Back to Account"
-                   onclick='window.location.href = "<?= BASE_URL . "/user/detail/$CurrentAdmin" ?>"'>
+                   onclick='window.location.href = "<?= BASE_URL . "/user/detail/$Adminid" ?>"'>
         </div>
 
 

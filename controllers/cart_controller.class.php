@@ -80,4 +80,10 @@ class CartController
         $view = $this->cart_model->numberCart();
         return $view;
     }
+
+    public function pastTransactions(){
+        $view = new PastTransactions();
+        $view->display();
+
+    }
 }
