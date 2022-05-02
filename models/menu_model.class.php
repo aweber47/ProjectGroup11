@@ -145,8 +145,7 @@ class MenuModel
 
             // loopy through the stuff
             while ($obj = mysqli_fetch_object($res_data)) {
-                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
-
+                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description), stripcslashes($obj->qty));
                 // set the id for the menu item
                 $menuItem->setId($obj->id);
 
@@ -203,8 +202,7 @@ class MenuModel
             $appItems = array();
 
             while ($obj = mysqli_fetch_object($res_data2)) {
-                $appItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
-
+                $appItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description), stripcslashes($obj->qty));
                 // set the id for the menu item
                 $appItem->setId($obj->id);
 
@@ -255,8 +253,7 @@ class MenuModel
             $entItems = array();
 
             while ($obj = mysqli_fetch_object($res_data3)) {
-                $entItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
-
+                $entItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description), stripcslashes($obj->qty));
                 // set the id for the menu item
                 $entItem->setId($obj->id);
 
@@ -307,8 +304,7 @@ class MenuModel
             $soupItems = array();
 
             while ($obj = mysqli_fetch_object($res_data4)) {
-                $soupItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
-
+                $soupItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description), stripcslashes($obj->qty));
                 // set the id for the menu item
                 $soupItem->setId($obj->id);
 
@@ -342,8 +338,7 @@ class MenuModel
                 $obj = $query->fetch_object();
 
                 // create the menu object
-                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
-
+                $menuItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description), stripcslashes($obj->qty));
                 // set the id for the menu object
                 $menuItem->setId($obj->id);
 
@@ -440,8 +435,7 @@ class MenuModel
 
         // loopy through the stuff
         while ($obj = $query->fetch_object()) {
-            $searchItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
-
+            $searchItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description), stripcslashes($obj->qty));
             $searchItem->setId($obj->id);
             // add the menu item into the array
             $results[] = $searchItem;
@@ -503,8 +497,7 @@ class MenuModel
 
             // loopy through the stuff
             while ($obj = $query->fetch_object()) {
-                $searchItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
-
+                $searchItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description), stripcslashes($obj->qty));
                 // set the id for the menu item
                 $searchItem->setId($obj->id);
 
@@ -550,7 +543,7 @@ class MenuModel
 
             // loopy through the stuff
             while ($obj = $query->fetch_object()) {
-                $searchItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description));
+                $searchItem = new Menu(stripslashes($obj->product), stripcslashes($obj->image), stripcslashes($obj->category), stripslashes($obj->price), stripcslashes($obj->description), stripcslashes($obj->qty));
 
                 // set the id for the menu item
                 $searchItem->setId($obj->id);
@@ -584,7 +577,7 @@ class MenuModel
         // second is testing the sql
         try {
             // insert query
-            $sql = "INSERT INT " . $this->db->getMenuTable() . " VALUES(NULL,'" . $product . "','" . $image . "','" . $category . "','" . $price . "','" . $description . "')";
+            $sql = "INSERT INTO " . $this->db->getMenuTable() . " VALUES(NULL,'" . $product . "','" . $image . "','" . $category . "','" . $price . "','" . $description . "')";
             $query = $this->dbConnection->query($sql);
 
             if (!$query || !$sql) {

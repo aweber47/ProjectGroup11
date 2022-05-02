@@ -8,7 +8,6 @@ class MenuController
 {
     private $menu_model;
     private $cart_model;
-    private $cart;
 
     //construct
     public function __construct()

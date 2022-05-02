@@ -44,12 +44,28 @@ class IndexView
             <a class="nav-right" href="<?= BASE_URL ?>/user/login">
                 <img src="/ProjectGroup11/www/images/login.png" alt="Login" style="width: 50px">
             </a>
-            <a class="nav-right" href="<?= BASE_URL ?>/menu/showCart">
+            <a class="nav-right" id="cart_item" href="<?= BASE_URL ?>/cart/cart">
                 <img src="/ProjectGroup11/www/images/cart.png" alt="Shopping Cart" style="width: 50px">
             </a>
         </nav>
+
+        <script type="text/javascript">
+            function load_cart_item_number() {
+                $.ajax({
+                    url: '<?= BASE_URL ?>/cart/number/',
+                    method: 'get',
+                    data: {
+                        cartItem: "cart_item"
+                    },
+                    success: function (response) {
+                        $("#cart-item").html(response);
+                    }
+                });
+            });
+        </script>
         <?php
     }//end of displayHeader function
+
 
     //this method displays the page footer
     public static function displayFooter()

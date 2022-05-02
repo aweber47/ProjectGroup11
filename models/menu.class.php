@@ -7,16 +7,17 @@
 class Menu
 {
     // private data members
-    private $id, $product, $image, $category, $price, $description;
+    private $id, $product, $image, $category, $price, $description, $qty;
 
     //constructor
-    public function __construct($product, $image, $category, $price, $description)
+    public function __construct($product, $image, $category, $price, $description, $qty)
     {
         $this->product = $product;
         $this->image = $image;
         $this->category = $category;
         $this->price = $price;
         $this->description = $description;
+        $this->qty = $qty;
     }
 
     // getters
@@ -48,6 +49,9 @@ class Menu
     public function getDescription()
     {
         return $this->description;
+    }
+    public function getQty(){
+        return $this->qty;
     }
 
     // set menu item id

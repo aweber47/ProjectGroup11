@@ -18,7 +18,7 @@ class MenuDetail extends MenuIndexView
         if (isset($_SESSION['role'])) {
             $role = $_SESSION['role'];
         }
-        if(!isset($_SESSION['role'])){
+        if (!isset($_SESSION['role'])) {
             $role = 0;
         }
 
@@ -35,6 +35,7 @@ class MenuDetail extends MenuIndexView
         $product = $menuItem->getProduct();
         $image = $menuItem->getImage();
         $category = $menuItem->getCategory();
+        $qty = $menuItem->getQty();
         if ($category == 1) {
             $category = $categories[1];
         }
@@ -56,7 +57,13 @@ class MenuDetail extends MenuIndexView
         <!--<div id="main-header">Menu Details</div>-->
 
         <br>
+        <!-- Display message if item is added to cart-->
+        <div id="button-group">
+            <div id="message"
+                 style="background-color: rgba(255, 215, 0, 0.90); margin: auto; border: 2px solid black; width: 80%"></div>
+        </div>
 
+        <br>
         <!-- Display menu details in a table -->
         <table id="menu-detail">
             <tr class="detail-image">
@@ -86,9 +93,17 @@ class MenuDetail extends MenuIndexView
             <input class="detail-buttons" type="button" id="return-button" value="Return to Menu"
                    onclick="window.location.href='<?= BASE_URL ?>/menu/index/<?= $id ?>'">
 
-            <input class="detail-buttons" type="button" id="add-to-button" value="Add to Cart"
-                   onclick="window.location.href='<?= BASE_URL ?>/menu/addToCart/<?= $id ?>'">
-
+            <form action="" class="form-submit">
+                <!-- Hidden input vars to store product info-->
+                <input type="number" class="pqty" value="<?= $qty ?>">
+                <input type="hidden" class="pid" value="<?= $id ?>">
+                <input type="hidden" class="pname" value="<?= $product ?>">
+                <input type="hidden" class="pprice" value="<?= $price ?>">
+                <input type="hidden" class="pimage" value="<?= $image ?>">
+                <input type="hidden" class="pcode" value="<?= $id ?>">
+                <!-- Submit button -->
+                <button class="detail-buttons" id="addItemBtn" value=" Add to Cart ">Add to Cart</button>
+            </form>
             <!---display edit, delete and add buttons if user role is 1 -->
             <?php if ($role === 1) { ?>
 
@@ -103,6 +118,48 @@ class MenuDetail extends MenuIndexView
 
             <?php } ?>
         </div>
+
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                // Send product details in the server
+                $("#addItemBtn").click(function (e) {
+                    e.preventDefault();
+                    var $form = $(this).closest(".form-submit");
+                    var pid = $form.find(".pid").val();
+                    var pname = $form.find(".pname").val();
+                    var pprice = $form.find(".pprice").val();
+                    var pimage = $form.find(".pimage").val();
+                    var pcode = $form.find(".pcode").val();
+
+                    var pqty = $form.find(".pqty").val();
+
+                    $.ajax({
+                        url: '<?= BASE_URL ?>/cart/add/',
+                        method: 'post',
+                        data: {
+                            pid: pid,
+                            pname: pname,
+                            pprice: pprice,
+                            pqty: pqty,
+                            pimage: pimage,
+                            pcode: pcode
+                        },
+                        success: function (response) {
+                            $("#message").html(response);
+                            window.scrollTo(0, 0);
+                            load_cart_item_number();
+                        }
+                    });
+                });
+
+                // Load total no.of items added in the cart and display in the navbar
+                load_cart_item_number();
+            });
+        </script>
 
         <div id="confirm-message"><?= $confirm ?></div>
 

@@ -23,55 +23,7 @@ class CartIndex extends CartIndexView
         <!--<div>Shopping Cart</div>-->
         <br><br><br><br><br>
         <?php
-        // preset vars
-        $cart = $_SESSION['cart'];
-        $total = 0;
 
-
-        if (!isset($_SESSION['cart']) || !$_SESSION['cart']) {
-            echo "<h1 style='text-align: center; background-color: rgba(255, 215, 0, 0.85); padding: 40px 40px; width: 50%; margin: auto; font-size: 2.75em'>You currently have no items within your cart!</h1>";
-            exit();
-        } else {
-
-            foreach ($cart as $menuItem) {
-                $id = $menuItem->getId();
-                $Product = $menuItem->getProduct();
-                $category = $menuItem->getCategory();
-
-                if ($category == 1) {
-                    $category = $categories[1];
-                }
-                if ($category == 2) {
-                    $category = $categories[2];
-                }
-                if ($category == 3) {
-                    $category = $categories[3];
-                }
-                $price = $menuItem->getPrice();
-                echo "
-                    <table id='menu-detail'>
-                        <tr class='detail-labels'>
-                            <th>Item:</th>
-                            <th>Category:</th>
-                            <th>Price:</th>
-                       
-                        </tr>
-                        <tr class='detail-info'>
-                            <td>$Product</td>
-                            <td>$category</td>
-                            <td>$$price</td>
-                       
-                        </tr>    
-                        <tr>
-                        </tr>
-                    </table>
-                ";
-                //   echo $price . "<br>";
-                // setting a price var that holds the amount of the order.
-            }
-        }
-        $tax = 0.07 * $total;
-        $total = $total + $tax;
 
         ?>
 

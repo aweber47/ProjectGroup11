@@ -14,7 +14,8 @@ class Database{
         'database' => 'lewiesdb',
         'tblMenu' => 'menu_items',
         'tblCategory' => 'categories',
-        'tblUsers' => 'users'
+        'tblUsers' => 'users',
+        'tblCart' => 'cart'
     );
 
     // define the database connection object
@@ -60,5 +61,8 @@ class Database{
 
     public function getUsersTable(){
         return $this->param['tblUsers'];
+    }
+    public function getCartTable(){
+        return $this->param['tblCart'];
     }
 }
