@@ -31,17 +31,21 @@ class MenuIndex extends MenuIndexView
         if (isset($_SESSION['role'])) {
             $role = $_SESSION['role'];
         }
-        //define guest account session
-        if(isset($_SESSION['check'])){
-          //  echo $_SESSION['check'];
-        }else{
-            unset($_SESSION['check']);
+        if (isset($_SESSION['login_status'])) {
+            $login_status = $_SESSION['login_status'];
         }
-
 
         //display page header
         parent::displayHeader("Our Menu");
 
+
+        if ($login_status == 0) { ?>
+            <div id="advanced-features">
+                <h4><span style="color: red"><strong>ALERT: <br> You must be logged in or signed in as a guest account; <br>In order to send items to the cart!</strong></span>
+                </h4>
+            </div>
+        <?php } ?>
+        <?php
         //If user is an admin allow the 'add menu item' button show on the list menu page
         if ($role == 1) { ?>
             <!---QUICK WAY TO ADD A MENU ITEM-->
