@@ -10,6 +10,7 @@ class CartView extends CartIndexView
     {
         parent::displayHeader("Your Shopping Cart");
         ?>
+        <br><br><br><br>
         <head>
             <meta charset="UTF-8">
             <meta name="author" content="Sahil Kumar">
@@ -39,22 +40,26 @@ class CartView extends CartIndexView
                         <table class="table table-bordered table-striped text-center">
                             <thead>
                             <tr>
-                                <td colspan="7">
-                                    <h4 class="text-center text-info m-0">Products in your cart!</h4>
+                                <td colspan="7"
+                                    style="background-color: rgba(255, 215, 0, 0.75); margin: auto; border: 2px solid black;">
+                                    <h4 class="text-center text-info m-0"><span
+                                                style="color: black; font-weight: bold; ">Products in your cart!</span>
+                                    </h4>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>ID</th>
-                                <th>Image</th>
-                                <th>Product</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total Price</th>
-                                <th>
+                            <tr style="background-color: rgba(255,215,0,0.75); margin: auto; border: 2px solid black;">
+                                <th style="background-color: rgba(255, 215, 0, 0.75);">ID</th>
+                                <th style="background-color: rgba(255, 215, 0, 0.75);">Image</th>
+                                <th style="background-color: rgba(255, 215, 0, 0.75);">Product</th>
+                                <th style="background-color: rgba(255, 215, 0, 0.75);">Price</th>
+                                <th style="background-color: rgba(255, 215, 0, 0.75);">Quantity</th>
+                                <th style="background-color: rgba(255, 215, 0, 0.75);">Total Price</th>
+                                <th style="background-color: rgba(255, 215, 0, 0.75);">
                                     <form action="" class="form-submit">
-                                        <button class="emptyCart"
+                                        <button class="emptyCart" style="background-color: black;"
                                                 onclick="return confirm('Are you sure want to clear your cart?');"><i
-                                                    class="fas fa-trash"></i>&nbsp;&nbsp;Clear Cart
+                                                    class="fas fa-trash" style='color: red'></i>&nbsp;&nbsp;<span
+                                                    style="color: red">Clear Cart</span>
                                         </button>
                                     </form>
                                 </th>
@@ -80,45 +85,54 @@ class CartView extends CartIndexView
                             $grand_total = 0;
                             while ($row = $result->fetch_assoc()):
                                 ?>
-                                <tr>
-                                    <td><?= $row['id'] ?></td>
+                                <tr style="background-color: rgba(255,215,0,0.90); margin: auto; border: 2px solid black;">
+                                    <td style="background-color: rgba(255, 215, 0, 0.75);"><?= $row['id'] ?></td>
                                     <input type="hidden" class="pid" value="<?= $row['id'] ?>">
-                                    <td><img src="<?= $row['product_image'] ?>" width="50"></td>
-                                    <td><?= $row['product_name'] ?></td>
-                                    <td>
-                                        <i class="fas fa-rupee-sign"></i>&nbsp;&nbsp;<?= number_format($row['product_price'], 2); ?>
-                                    </td>
+
+                                    <td style="background-color: rgba(255, 215, 0, 0.75);"><img
+                                                src="<?= $row['product_image'] ?>" width="50"></td>
+
+                                    <td style="background-color: rgba(255, 215, 0, 0.75);"><?= $row['product_name'] ?></td>
+
+                                    <td style="background-color: rgba(255, 215, 0, 0.75);">
+                                        $<?= number_format($row['product_price'], 2); ?></td>
                                     <input type="hidden" class="pprice" value="<?= $row['product_price'] ?>">
-                                    <td>
+                                    <td style="background-color: rgba(255, 215, 0, 0.75);">
                                         <input type="number" class="form-control itemQty" value="<?= $row['qty'] ?>"
                                                style="width:75px;">
                                     </td>
-                                    <td>
-                                        <i class="fas fa-rupee-sign"></i>&nbsp;&nbsp;<?= number_format($row['total_price'], 2); ?>
-                                    </td>
-                                    <td>
+
+
+                                    <td style="background-color: rgba(255, 215, 0, 0.75);">
+                                        $<?= number_format($row['total_price'], 2); ?></td>
+
+
+                                    <td style="background-color: rgba(255, 215, 0, 0.75);">
                                         <form action="" class="form-submit">
                                             <button class="removeId" value="<?= $row['id'] ?>"
+                                                    style="background-color: black"
                                                     onclick="return confirm('Are you sure want to remove this item?');">
                                                 <i
-                                                        class="fas fa-trash-alt"></i></button>
+                                                        class="fas fa-trash-alt" style="color: red"></i></button>
                                         </form>
                                     </td>
                                 </tr>
                                 <?php $grand_total += $row['total_price']; ?>
                             <?php endwhile; ?>
-                            <tr>
+                            <tr style="background-color: rgba(255,215,0,0.90); margin: auto; border: 2px solid black;">
                                 <td colspan="3">
-                                    <a href="<?= BASE_URL ?>/menu/index/" class="btn btn-success"><i
+                                    <a href="<?= BASE_URL ?>/menu/index/" style="background-color: #7e57c2"
+                                       class="btn btn-success"><i
                                                 class="fas fa-cart-plus"></i>&nbsp;&nbsp;Continue
                                         Shopping</a>
                                 </td>
                                 <td colspan="2"><b>Grand Total</b></td>
-                                <td>
-                                    <b><i class="fas fa-rupee-sign"></i>&nbsp;&nbsp;<?= number_format($grand_total, 2); ?>
+                                <td style="background-color: rgba(255, 215, 0, 0.75);">
+                                    <b>$<?= number_format($grand_total, 2); ?>
                                     </b></td>
                                 <td>
                                     <a href="<?= BASE_URL ?>/cart/CartCheckout/"
+                                       style="background-color: #7e57c2"
                                        class="btn btn-info <?= ($grand_total > 1) ? '' : 'disabled'; ?>"><i
                                                 class="far fa-credit-card"></i>&nbsp;&nbsp;Checkout</a>
                                 </td>
@@ -130,6 +144,7 @@ class CartView extends CartIndexView
             </div>
         </div>
 
+        <br>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
 
@@ -149,7 +164,7 @@ class CartView extends CartIndexView
                     $.ajax({
                         url: '<?= BASE_URL ?>/cart/add/',
                         method: 'post',
-                        cache: false,
+                        cache: true,
                         data: {
                             qty: qty,
                             pid: pid,
