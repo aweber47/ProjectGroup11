@@ -32,13 +32,8 @@ class CartController
 
     public function cart()
     {
-
-
         $view = new CartView();
         $view->display();
-        if (!$view) {
-            echo "didn't work";
-        }
     }
 
     // start methods here
@@ -81,7 +76,8 @@ class CartController
         return $view;
     }
 
-    public function pastTransactions(){
+    public function pastTransactions()
+    {
         $view = new PastTransactions();
         $view->display();
 
