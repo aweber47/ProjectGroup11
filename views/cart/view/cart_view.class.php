@@ -16,29 +16,6 @@ class CartView extends CartIndexView
         if (isset($_SESSION['login_status'])) {
             $login_status = $_SESSION['login_status'];
         }
-        // echo $login_status;
-        if (!isset($_SESSION['login_status'])) {
-            $deleteCART = TRUE;
-        } else {
-            $deleteCART = FALSE;
-        }
-        // need a php session that would hold the cart data
-        if ($deleteCART === TRUE) {
-            $host = "localhost";
-            $login = "root";
-            $password = "";
-            $database = "lewiesdb";
-
-            $conn = @ new mysqli($host, $login, $password, $database);
-
-            if ($conn->connect_errno) {
-                $error = $conn->connect_error;
-                exit();
-            }
-
-            $stmt = $conn->prepare('DELETE FROM cart');
-            $stmt->execute();
-        }
 
         parent::displayHeader("Your Shopping Cart");
         ?>
