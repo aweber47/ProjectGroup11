@@ -16,7 +16,6 @@ class CartView extends CartIndexView
         if (isset($_SESSION['login_status'])) {
             $login_status = $_SESSION['login_status'];
         }
-
         parent::displayHeader("Your Shopping Cart");
         ?>
         <br><br><br><br>
@@ -26,6 +25,7 @@ class CartView extends CartIndexView
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <title style="background-color: black">Cart</title>
+
             <link style="background-color: black" rel='stylesheet'
                   href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css'/>
             <link style="background-color: black" rel='stylesheet'
