@@ -66,10 +66,10 @@ class CartView extends CartIndexView
                                 <th style="background-color: rgba(255, 215, 0, 0.75);">Total Price</th>
                                 <th style="background-color: rgba(255, 215, 0, 0.75);">
                                     <form action="" class="form-submit">
-                                        <button class="emptyCart" style="background-color: black;"
+                                        <button class="emptyCart" style="background-color: #7e57c2;"
                                                 onclick="return confirm('Are you sure want to clear your cart?');"><i
-                                                    class="fas fa-trash" style='color: red'></i>&nbsp;&nbsp;<span
-                                                    style="color: red">Clear Cart</span>
+                                                    class="fas fa-trash" style='color: whitesmoke'></i>&nbsp;&nbsp;<span
+                                                    style="color: white; background-color: #7e57c2">Clear Cart</span>
                                         </button>
                                     </form>
                                 </th>
@@ -120,9 +120,9 @@ class CartView extends CartIndexView
                                     <td style="background-color: rgba(255, 215, 0, 0.75);">
                                         <form action="" class="form-submit">
                                             <button class="removeId" value="<?= $row['id'] ?>"
-                                                    style="background-color: black"
+                                                    style="background-color: #7e57c2"
                                                     onclick="return confirm('Are you sure want to remove this item?');">
-                                                <i class="fas fa-trash-alt" style="color: red"></i></button>
+                                                <i class="fas fa-trash-alt" style="color: whitesmoke"></i></button>
                                         </form>
                                     </td>
                                 </tr>
