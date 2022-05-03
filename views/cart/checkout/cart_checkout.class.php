@@ -44,6 +44,9 @@ class CartCheckout extends CartIndexView
         } else {
             $login_status = $_SESSION['login_status'];
         }
+        if ($login_status === 4) {
+            $guestAccount = TRUE;
+        }
 
         if (isset($_SESSION['name']) and isset($_SESSION['user_email'])) {
             $username = $_SESSION['name'];
@@ -67,7 +70,8 @@ class CartCheckout extends CartIndexView
             </div>
         </div>
         <br>
-        <?php if ($login_status === FALSE){ ?>
+
+        <?php if ($login_status === 4) { ?>
         <div class="detail-info-all">
             <form action="" method="post" id="edit-form" class="placeOrder">
                 <!--Hidden values but get placed into the database-->
@@ -117,65 +121,117 @@ class CartCheckout extends CartIndexView
             </form>
         </div>
         <br>
-    <?php }else{ ?>
-        <div class="detail-info-all">
-        <form action="" method="post" id="edit-form" class="placeOrder">
-            <!--Hidden values but get placed into the database-->
-            <input class="edit-right" type="hidden" name="products" value="<?= $allItems; ?>">
-            <input class="edit-right" type="hidden" name="grand_total" value="<?= $grand_total; ?>">
+    <?php } else { ?>
+        <?php if ($login_status === FALSE) { ?>
+            <div class="detail-info-all">
+                <form action="" method="post" id="edit-form" class="placeOrder">
+                    <!--Hidden values but get placed into the database-->
+                    <input class="edit-right" type="hidden" name="products" value="<?= $allItems; ?>">
+                    <input class="edit-right" type="hidden" name="grand_total" value="<?= $grand_total; ?>">
 
-            <!--User displayed form-->
-            <fieldset id="edit-fieldset">
-                <legend>Checkout Form</legend>
-
-                <!-- Message that displays the current logged in user -->
-                <label for="message" style="font-style: italic" class="edit-left">Hello: </label>
-                <h3 id="message" style="font-style: italic" class="edit-right"><b
-                            style="color: #7e57c2"><?php echo $username; ?></b>, please fill out the rest of the
-                    checkout form to ensure order confirmation! </h3>
-
-                <br>
-
-                <label for="name" class="edit-left">Name: </label>
-                <input id="name" class="edit-right" type="text" name="name" value="<?= $username ?>">
-
-                <br>
-
-                <label for="email" class="edit-left">Email: </label>
-                <input id="email" class="edit-right" type="email" name="email" value="<?= $user_email ?>">
-
-                <br>
-
-                <label for="phone" class="edit-left">Phone: </label>
-                <input id="phone" class="edit-right" type="tel" name="phone" placeholder="Enter Phone" required>
-
-                <br>
-
-                <label for="address" class="edit-left">Address: </label>
-                <textarea id="address" class="edit-right" name="address"
-                          placeholder="Enter Delivery Address Here..."></textarea>
+                    <!--User displayed form-->
+                    <fieldset id="edit-fieldset">
+                        <legend>Checkout Form</legend>
 
 
-                <label for="pmode" class="edit-left">Payment: </label>
-                <select id="pmode" class="edit-right" name="pmode">
-                    <option value="" selected disabled>-Method of Payment-</option>
-                    <option value="Cash on Delivery">Cash On Delivery</option>
-                    <option value="Network Banking">Net Banking</option>
-                    <option value="Credit/Debit Card">Debit/Credit Card</option>
-                </select>
+                        <label for="name" class="edit-left">Name: </label>
+                        <input id="name" class="edit-right" type="text" name="name" placeholder="Enter Name" required>
 
-                <br>
+                        <br>
 
-                <div id="button-group">
-                    <input type="submit" name="submit" value="Place Order" class="edit-buttons">
-                    <input type="button" value=" Back to Cart " class="edit-buttons"
-                           onclick="window.location.href='<?= BASE_URL ?>/cart/cart/'">
-                </div>
-            </fieldset>
-        </form>
-        <br>
-    <?php } ?>
+                        <label for="email" class="edit-left">Email: </label>
+                        <input id="email" class="edit-right" type="email" name="email" placeholder="Enter E-Mail"
+                               required>
+
+                        <br>
+
+                        <label for="phone" class="edit-left">Phone: </label>
+                        <input id="phone" class="edit-right" type="tel" name="phone" placeholder="Enter Phone" required>
+
+                        <br>
+
+                        <label for="address" class="edit-left">Address: </label>
+                        <textarea id="address" class="edit-right" name="address"
+                                  placeholder="Enter Delivery Address Here..."></textarea>
+
+
+                        <label for="pmode" class="edit-left">Payment: </label>
+                        <select id="pmode" class="edit-right" name="pmode">
+                            <option value="" selected disabled>-Method of Payment-</option>
+                            <option value="Cash on Delivery">Cash On Delivery</option>
+                            <option value="Network Banking">Net Banking</option>
+                            <option value="Credit/Debit Card">Debit/Credit Card</option>
+                        </select>
+
+                        <div id="button-group">
+                            <input type="submit" name="submit" value="Place Order" class="edit-buttons">
+                            <input type="button" value=" Back to Cart " class="edit-buttons"
+                                   onclick="window.location.href='<?= BASE_URL ?>/cart/cart/'">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <br>
+        <?php } else { ?>
+            <div class="detail-info-all">
+            <form action="" method="post" id="edit-form" class="placeOrder">
+                <!--Hidden values but get placed into the database-->
+                <input class="edit-right" type="hidden" name="products" value="<?= $allItems; ?>">
+                <input class="edit-right" type="hidden" name="grand_total" value="<?= $grand_total; ?>">
+
+                <!--User displayed form-->
+                <fieldset id="edit-fieldset">
+                    <legend>Checkout Form</legend>
+
+                    <!-- Message that displays the current logged in user -->
+                    <label for="message" style="font-style: italic" class="edit-left">Hello: </label>
+                    <h3 id="message" style="font-style: italic" class="edit-right"><b
+                                style="color: #7e57c2"><?php echo $username; ?></b>, please fill out the rest of the
+                        checkout form to ensure order confirmation! </h3>
+
+                    <br>
+
+                    <label for="name" class="edit-left">Name: </label>
+                    <input id="name" class="edit-right" type="text" name="name" value="<?= $username ?>">
+
+                    <br>
+
+                    <label for="email" class="edit-left">Email: </label>
+                    <input id="email" class="edit-right" type="email" name="email" value="<?= $user_email ?>">
+
+                    <br>
+
+                    <label for="phone" class="edit-left">Phone: </label>
+                    <input id="phone" class="edit-right" type="tel" name="phone" placeholder="Enter Phone" required>
+
+                    <br>
+
+                    <label for="address" class="edit-left">Address: </label>
+                    <textarea id="address" class="edit-right" name="address"
+                              placeholder="Enter Delivery Address Here..."></textarea>
+
+
+                    <label for="pmode" class="edit-left">Payment: </label>
+                    <select id="pmode" class="edit-right" name="pmode">
+                        <option value="" selected disabled>-Method of Payment-</option>
+                        <option value="Cash on Delivery">Cash On Delivery</option>
+                        <option value="Network Banking">Net Banking</option>
+                        <option value="Credit/Debit Card">Debit/Credit Card</option>
+                    </select>
+
+                    <br>
+
+                    <div id="button-group">
+                        <input type="submit" name="submit" value="Place Order" class="edit-buttons">
+                        <input type="button" value=" Back to Cart " class="edit-buttons"
+                               onclick="window.location.href='<?= BASE_URL ?>/cart/cart/'">
+                    </div>
+                </fieldset>
+            </form>
+            <br>
+        <?php } ?>
         </div>
+    <?php } ?>
 
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>

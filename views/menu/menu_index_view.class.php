@@ -17,6 +17,10 @@ class MenuIndexView extends IndexView
         if (isset($_SESSION['role'])) {
             $role = $_SESSION['role'];
         }
+        if (isset($_SESSION['login_status'])) {
+            $login_status = $_SESSION['login_status'];
+        }
+        echo $login_status;
         ?>
 
         <!-- Script and media type, forms, suggestions and search box would go here. -->
@@ -38,6 +42,12 @@ class MenuIndexView extends IndexView
          ************************************************************************************/
         ?>
 
+        <?php if ($login_status == 0) { ?>
+        <div id="advanced-features">
+            <h4><span style="color: red"><strong>ALERT: <br> You must be logged in or signed in as a guest account; <br>In order to send items to the cart!</strong></span>
+            </h4>
+        </div>
+    <?php } ?>
         <div id="advanced-features">
             <a onclick="toggleText()">[ Advanced Search Features ]<br></a>
         </div>

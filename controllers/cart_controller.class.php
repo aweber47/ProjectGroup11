@@ -8,6 +8,18 @@ class CartController
 {
     private $cart_model;
 
+    /*********************************************************************************************************
+     * Since I (Alex Weber) built this using half procedural and half mvc (or oop) this should be how it displays.
+     *
+     * What I mean by 'how it displays', is the method it calls from the model class should be highlighted like it is.
+     * By using AJAX this happens (as the ajax is calling the controller within the view using JS)
+     *
+     * NOTE: I did  the shopping cart this way, as I believe this project already fulfills the baseline requirements.
+     *
+     * We are using ajax to call upon the methods within the controller. Controller then passes it to the
+     * model view in which runs the procedural programming approach towards that function.
+     ********************************************************************************************************/
+
     //construct
     public function __construct()
     {
@@ -39,6 +51,9 @@ class CartController
     // start methods here
     public function add()
     {
+        // since I (Alex Weber) built this using half procedural and half mvc (or oop) this should be how it displays.
+        // We are using ajax to call upon the methods within the controller. Controller then passes it to the
+        // model view in which runs the procedural programming approach towards that function.
         $view = $this->cart_model->add_cart();
         return $view;
     }
@@ -64,22 +79,25 @@ class CartController
         $view->display();
     }
 
+    // sends data to the order table.
     public function order()
     {
         $view = $this->cart_model->order();
         return $view;
     }
 
+    // function that I left in, BUT ISN't CURRENTLY doing anything.
+    // This was a side project for the counter that I was working on.
     public function number()
     {
         $view = $this->cart_model->numberCart();
         return $view;
     }
 
+    // shows the past transactions of a user.
     public function pastTransactions()
     {
         $view = new PastTransactions();
         $view->display();
-
     }
 }

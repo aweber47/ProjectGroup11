@@ -20,6 +20,12 @@ class MenuSearch extends MenuIndexView
         if (isset($_SESSION['categories'])) {
             $categories = $_SESSION['categories'];
         }
+        //define guest account session
+        if(isset($_SESSION['check'])){
+            //echo $_SESSION['check'];
+        }else{
+            unset($_SESSION['check']);
+        }
 
         ?>
         <div id="search-results">

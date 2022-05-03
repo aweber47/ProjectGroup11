@@ -176,6 +176,11 @@ class UserController
         return true;
     }
 
+    public function guest(){
+        $view = new GuestUser();
+        $view->display();
+    }
+
     //handle calling inaccessible methods
     public function __call($name, $arguments)
     {

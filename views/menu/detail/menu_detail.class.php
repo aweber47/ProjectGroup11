@@ -18,14 +18,12 @@ class MenuDetail extends MenuIndexView
         if (isset($_SESSION['role'])) {
             $role = $_SESSION['role'];
         }
-        if (!isset($_SESSION['role'])) {
-            $role = 0;
-        }
 
         //get categories from a session variable
         if (isset($_SESSION['categories'])) {
             $categories = $_SESSION['categories'];
         }
+
 
         // echo is here (and commented out to fool the variable).
         //echo $role;
@@ -88,35 +86,46 @@ class MenuDetail extends MenuIndexView
         // display edit and delete buttons if user role is 1
         ?>
         <div id="button-group">
-
-
-            <input class="detail-buttons" type="button" id="return-button" value="Return to Menu"
-                   onclick="window.location.href='<?= BASE_URL ?>/menu/index/<?= $id ?>'">
-
             <form action="" class="form-submit">
                 <!-- Hidden input vars to store product info-->
-                <input type="number" class="pqty" value="<?= $qty ?>">
                 <input type="hidden" class="pid" value="<?= $id ?>">
                 <input type="hidden" class="pname" value="<?= $product ?>">
                 <input type="hidden" class="pprice" value="<?= $price ?>">
                 <input type="hidden" class="pimage" value="<?= $image ?>">
                 <input type="hidden" class="pcode" value="<?= $id ?>">
                 <!-- Submit button -->
+                <input type="number" class="pqty" value="<?= $qty ?>">
                 <button class="detail-buttons" id="addItemBtn" value=" Add to Cart ">Add to Cart</button>
+
+                <input class="detail-buttons" type="button" id="return-button" value="Return to Menu"
+                       onclick="window.location.href='<?= BASE_URL ?>/menu/index/<?= $id ?>'">
+
+                <!---display edit, delete and add buttons if user role is 1 -->
+                <?php
+                if (session_status() == PHP_SESSION_NONE) {
+                    session_start();
+                }
+
+                if (isset($_SESSION['role'])) {
+                    $role = $_SESSION['role'];
+
+                    // put it into a copycat
+                    $userrole = $role;
+                }
+                if ($userrole == 1) { ?>
+
+                    <input class="detail-buttons" type="button" id="edit-button" value="Edit Item"
+                           onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">
+
+                    <input class="detail-buttons" type="button" id="delete-button" value="Delete Item"
+                           onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">
+
+                    <input class="detail-buttons" type="button" id="edit-button" value="Add Menu Item"
+                           onclick="window.location.href = '<?= BASE_URL ?>/menu/addDisplay/'">
+
+                <?php } ?>
+
             </form>
-            <!---display edit, delete and add buttons if user role is 1 -->
-            <?php if ($role === 1) { ?>
-
-                <input class="detail-buttons" type="button" id="edit-button" value="Edit Item"
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/edit/<?= $id ?>'">
-
-                <input class="detail-buttons" type="button" id="delete-button" value="Delete Item"
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/deleteDisplay/<?= $id ?>'">
-
-                <input class="detail-buttons" type="button" id="edit-button" value="Add Menu Item"
-                       onclick="window.location.href = '<?= BASE_URL ?>/menu/addDisplay/'">
-
-            <?php } ?>
         </div>
 
         <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>

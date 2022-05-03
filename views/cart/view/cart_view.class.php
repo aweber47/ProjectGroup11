@@ -6,8 +6,40 @@
  * Description: Displays the cart */
 class CartView extends CartIndexView
 {
+
     public function display()
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        // need a php session that would hold the cart data
+        if (isset($_SESSION['login_status'])) {
+            $login_status = $_SESSION['login_status'];
+        }
+        // echo $login_status;
+        if (!isset($_SESSION['login_status'])) {
+            $deleteCART = TRUE;
+        } else {
+            $deleteCART = FALSE;
+        }
+        // need a php session that would hold the cart data
+        if ($deleteCART === TRUE) {
+            $host = "localhost";
+            $login = "root";
+            $password = "";
+            $database = "lewiesdb";
+
+            $conn = @ new mysqli($host, $login, $password, $database);
+
+            if ($conn->connect_errno) {
+                $error = $conn->connect_error;
+                exit();
+            }
+
+            $stmt = $conn->prepare('DELETE FROM cart');
+            $stmt->execute();
+        }
+
         parent::displayHeader("Your Shopping Cart");
         ?>
         <br><br><br><br>
@@ -19,7 +51,8 @@ class CartView extends CartIndexView
             <title style="background-color: black">Cart</title>
             <link style="background-color: black" rel='stylesheet'
                   href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css'/>
-            <link  style="background-color: black" rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'/>
+            <link style="background-color: black" rel='stylesheet'
+                  href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css'/>
         </head>
         <div class="container">
             <div class="row justify-content-center">
@@ -149,8 +182,6 @@ class CartView extends CartIndexView
         <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js'></script>
 
         <script type="text/javascript">
-
-
             $(document).ready(function () {
 
                 // Change the item quantity
@@ -214,10 +245,8 @@ class CartView extends CartIndexView
                 });
             });
             // Load total no.of items added in the cart and display in the navbar
-            load_cart_item_number();
 
         </script>
-
         <?php
         parent::displayFooter();
     }

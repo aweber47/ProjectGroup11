@@ -31,6 +31,13 @@ class MenuIndex extends MenuIndexView
         if (isset($_SESSION['role'])) {
             $role = $_SESSION['role'];
         }
+        //define guest account session
+        if(isset($_SESSION['check'])){
+          //  echo $_SESSION['check'];
+        }else{
+            unset($_SESSION['check']);
+        }
+
 
         //display page header
         parent::displayHeader("Our Menu");

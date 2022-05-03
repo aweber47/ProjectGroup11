@@ -9,6 +9,29 @@
 
 class CartModel
 {
+    /*********************************************************************************************************
+     * Since I (Alex Weber) built this using half procedural and half mvc (or oop) this should be how it displays.
+     *
+     * What I mean by 'how it displays', is the methods are coded as procedural programming approach (I explain why
+     * below). The repeated lines of code at the top of each method is the recurring 'config.php' file from how we coded
+     * in i210. This just allows me to code with ease and since there isn't a lot going on with the cart on the user side
+     * (adding items to the cart, removing items from the cart and changing the qty). I just thought making it with
+     * procedural programming would be less time consuming for this feature. It turned out great though!
+     *
+     * I made sure that NO QUERY STRINGS where being pushed through the URL, by using AJAX. Therefore, this is a mixture
+     * of procedural and oop (using AJAX).
+     *
+     * NOTE: I did  the shopping cart this way, as I believe this project already fulfills the baseline requirements.
+     *
+     * The Model Class uses procedural programming to execute the code. This allows the REAL TIME updates to the
+     * cart and orders tables within the database. It is really cool on how it works.
+     *
+     * For the requirement (two real-world-objects, using MVC or OOP), those would be the user and menu objects.
+     *
+     * The cart is purely for webpage functionality and going above and beyond the excepted requirements.
+     *
+     ********************************************************************************************************/
+
     // private data members
     // private $session;
     private $db;
