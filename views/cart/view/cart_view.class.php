@@ -122,8 +122,7 @@ class CartView extends CartIndexView
                                             <button class="removeId" value="<?= $row['id'] ?>"
                                                     style="background-color: black"
                                                     onclick="return confirm('Are you sure want to remove this item?');">
-                                                <i
-                                                        class="fas fa-trash-alt" style="color: red"></i></button>
+                                                <i class="fas fa-trash-alt" style="color: red"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -184,41 +183,62 @@ class CartView extends CartIndexView
                     });
                 });
                 $(".removeId").click(function (e) {
-                    e.preventDefault();
-                    var $form = $(this).closest(".form-submit");
-                    var removeId = $form.find(".removeId").val();
+                    var confirmationUser;
+                    var result = confirm("Are you sure?");
+                    if (result == true) {
+                        confirmationUser = true;
+                    } else {
+                        confirmationUser = false;
+                    }
 
-                    $.ajax({
-                        url: '<?= BASE_URL?>/cart/remove/',
-                        method: 'get',
-                        data: {
-                            remove: removeId
-                        },
-                        success: function (response) {
-                            $("#message").html(response);
-                            window.scrollTo(0, 0);
-                            window.location.reload();
-                        }
-                    });
+                    if (confirmationUser == true) {
+                        e.preventDefault();
+                        var $form = $(this).closest(".form-submit");
+                        var removeId = $form.find(".removeId").val();
+
+                        $.ajax({
+                            url: '<?= BASE_URL?>/cart/remove/',
+                            method: 'get',
+                            data: {
+                                remove: removeId
+                            },
+                            success: function (response) {
+                                $("#message").html(response);
+                                window.scrollTo(0, 0);
+                                window.location.reload();
+                            }
+                        });
+                    }
                 });
 
                 $(".emptyCart").click(function (e) {
-                    e.preventDefault();
-                    var $form = $(this).closest(".form-submit");
-                    var emptyCart = $form.find(".emptyCart").val();
+                    var confirmationUser;
+                    var result = confirm("Are you sure?");
+                    if (result == true) {
+                        confirmationUser = true;
+                    } else {
+                        confirmationUser = false;
+                    }
 
-                    $.ajax({
-                        url: '<?= BASE_URL ?>/cart/emptyCart/',
-                        method: 'get',
-                        data: {
-                            clear: emptyCart
-                        },
-                        success: function (response) {
-                            $("#message").html(response);
-                            window.scrollTo(0, 0);
-                            window.location.reload();
-                        }
-                    });
+                    if (confirmationUser == true) {
+                        e.preventDefault();
+                        var $form = $(this).closest(".form-submit");
+                        var emptyCart = $form.find(".emptyCart").val();
+
+                        $.ajax({
+                            url: '<?= BASE_URL ?>/cart/emptyCart/',
+                            method: 'get',
+                            data: {
+                                clear: emptyCart
+                            },
+                            success: function (response) {
+                                $("#message").html(response);
+                                window.scrollTo(0, 0);
+                                window.location.reload();
+                            }
+
+                        });
+                    }
                 });
             });
             // Load total no.of items added in the cart and display in the navbar
